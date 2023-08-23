@@ -1,0 +1,7 @@
+nav:
+    - ingestion.md
+    - storage.md
+    - processor.md
+    - serving.md
+    - arkkitehtuurit.md
+    - ...
