@@ -2,4 +2,5 @@ nav:
     - historia.md
     - Hyödyt bisnekselle: hyodyt.md
     - terminologia.md
+    - "OLAP vs OLTP": olap.md
     - ...
