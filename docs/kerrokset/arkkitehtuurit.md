@@ -30,4 +30,6 @@ Aihesanoja avuksi: Modern Data Stack, Data Lakehouse
 
 ## Yhden koneen alusta
 
-![yhden-koneen-alusta](../images/yhden-koneen-alusta.png)
+Tähän lisää tekstiä myöhemmin. Esimerkki DuckDB-tyylisestä alusta, jossa kaikki data mahtuu yhden tietokoneen rammiin vähintään paloiteltuna.
+
+![yhden-koneen-alusta](../images/yhden-koneen-data-alusta.png)
