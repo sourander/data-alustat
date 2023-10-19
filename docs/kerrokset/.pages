@@ -1,5 +1,4 @@
 nav:
-  - arkkitehtuurit.md
   - ingestion.md
   - storage.md
   - processor.md

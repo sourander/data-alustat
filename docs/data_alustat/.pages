@@ -1,6 +1,7 @@
 nav:
     - historia.md
     - Hyödyt bisnekselle: hyodyt.md
-    - terminologia.md
+    - arkkitehtuurit.md
     - "OLAP vs OLTP": olap.md
     - ...
+    - terminologia.md
