@@ -12,11 +12,10 @@ Tietokantojen normalisointiprosessin keksi IBM:n tutkija E.F. ”Ted” Codd 197
     
     Lähde: [Relaatiotietokantasanasto, Harri Laine, Helsingin Yliopisto](https://www.cs.helsinki.fi/u/laine/relaatiosanasto/)
 
-Huomaa, että yllä esitelty monikko on englanniksi tuple. Pythonia osaaville tämä on entuudestaan tuttu sekvenssitietotyyppi. Relaatiotietokannan taulu voidaan sii nähdä listana monikkoja: ja näin database-connectorin cursor sen usein palauttaakin.
+Huomaa, että yllä esitelty monikko on englanniksi tuple. Pythonia osaaville tämä on entuudestaan tuttu sekvenssitietotyyppi. Relaatiotietokannan taulu voidaan siis nähdä listana monikkoja: ja näin database-connectorin cursor sen usein palauttaakin.
 
 ```python
-# Schema: (id: int, name: str, height: int)
-taulu = [
+taulu: list[tuple[int, str, int]] = [
     (1, "Rose", 167),
     (2, "Lisa", 182),
     (3, "Jack", 180),
