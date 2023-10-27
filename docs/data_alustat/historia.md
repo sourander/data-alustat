@@ -103,16 +103,16 @@ Lopulta yhden taulun presentaation saa muodostettua SQL:n avulla. Näennäisesti
 
 ```sql
 SELECT
-    CONCAT(C.first_name, ' ', C.last_name) AS full_name,
-    A.salary,
-    A.currency,
-    G.phone_number AS gsm_nr,
-    L.phone_number AS landline_nr
-FROM CUSTOMER AS C
-LEFT JOIN ANNUAL_SALARY AS A ON C.customer_id = A.fk_customer_id
-LEFT JOIN CUSTOMER_PHONENUMBER AS CP ON C.customer_id = CP.fk_customer_id
-LEFT JOIN PHONENUMBER AS G ON CP.fk_phone_number_id = G.phone_number_id AND G.phone_type = 'gsm'
-LEFT JOIN PHONENUMBER AS L ON CP.fk_phone_number_id = L.phone_number_id AND L.phone_type = 'landline';
+    CONCAT(c.first_name, ' ', c.last_name) AS full_name,
+    ann.salary,
+    ann.currency,
+    gsm.phone_number AS gsm_nr,
+    land.phone_number AS landline_nr
+FROM customer c
+LEFT JOIN annual_salary ann ON c.customer_id = ann.fk_customer_id
+LEFT JOIN customer_phonenumber AS mm ON c.customer_id = mm.fk_customer_id
+LEFT JOIN phonenumber gsm ON mm.fk_phone_number_id = gsm.phone_number_id AND gsm.phone_type = 'gsm'
+LEFT JOIN phonenumber land ON mm.fk_phone_number_id = land.phone_number_id AND land.phone_type = 'landline';
 ```
 
 !!! question "Tehtävä"
