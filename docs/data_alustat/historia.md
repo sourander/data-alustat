@@ -38,7 +38,7 @@ Tietokannoista tai tauluista puhuttaessa tulee herkästi mieleen Excel tai Googl
 | Lisa        | 100,000.0 £ | N/A                    | 09 222 4444          |
 | -- "" --    | -- "" --    | Toi on mökin numero => | 05 333 7777          |
 
-Jotta tieto on järjestettävissä millän tavoin normalisoiduksi, pitää kunkin rivin taulussa noudattaa yhtä, selkeää skeemaa. Mikäli lähdedata olisi alla olevan skeeman mukaista, olisi sitä jo jossain määrin mahdollista alkaan normalisoida pidemmälle.
+Jotta tieto on järjestettävissä millään tavoin normalisoiduksi, pitää kunkin rivin taulussa noudattaa yhtä, selkeää skeemaa. Mikäli lähdedata olisi alla olevan skeeman mukaista, olisi sitä jo jossain määrin mahdollista alkaan normalisoida pidemmälle.
 
 ```mermaid
 erDiagram
@@ -55,7 +55,7 @@ erDiagram
 
 ### Normaalimuodot
 
-Codd jakoi tietokantojen normalisoinnin asteet järjestysluvuilla eri muotoihin, jotka ovat ensimmäinen, toinen ja kolmas normaalimuoto. Näistä käytetään lyhenteitä: ==1NF, 2NF ja 3NF==.
+Codd jakoi tietokantojen normalisoinnin asteet järjestysluvuilla eri muotoihin, jotka ovat ensimmäinen, toinen ja kolmas normaalimuoto. Näistä käytetään lyhenteitä: ==1NF, 2NF ja 3NF==. Muissa teoksissa tai lähteissä saattaa törmätä myös 0NF, 4NF, 5NF tai BCNF -lyhenteisiin.
 
 Näiden vaatimukset ovat lyhyesti:
 
