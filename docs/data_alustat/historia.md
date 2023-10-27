@@ -63,7 +63,7 @@ Näiden vaatimukset ovat lyhyesti:
 * 2NF : Taulun jokainen sarake on suoraan riippuvainen primääriavaimesta
 * 3NF : Taulun jokainen sarake on suoraan riippuvainen primääriavaimesta, eikä muiden sarakkeiden kautta
 
-Käytännössä tämä ajaa siihen, että useimmat normalisoidun tietokannan taulut edustavat joitain entiteettejä. Yksi taulu voi olla customer, toinen phone numbers, ja niin edelleen. Tietokantajärjestelmä ylläpitää näiden taulujen välisiä suhteita. Alla esimerkki normalisoidusta tietokannasta, jossa on kolmen entiteetit taulut: `customer`, `phonenumber` ja `annual_salary`. Lisäksi on taulu `customer_phonenumber`, joka yhdistää asiakkaat ja heidän puhelinnumeronsa. Tämä on tarpeellinen many-to-many -suhteiden mallintamiseksi. Sama puhelinnumero, varsinkin landline, voi olla useammalla asiakkaalla. Toisaalta asiakkaalla voi olla useampi puhelinnumero.
+Käytännössä tämä ajaa siihen, että useimmat normalisoidun tietokannan taulut edustavat joitain entiteettejä. Yksi taulu voi olla customer, toinen phone numbers, ja niin edelleen. Tietokantajärjestelmä ylläpitää näiden taulujen välisiä suhteita. Alla esimerkki normalisoidusta tietokannasta, jossa on kolmen entiteetit taulut: `CUSTOMER`, `PHONENUMBER` ja `ANNUAL_SALARY`. Lisäksi on taulu `CUSTOMER_PHONENUMBER`, joka yhdistää asiakkaat ja heidän puhelinnumeronsa. Tämä on tarpeellinen many-to-many -suhteiden mallintamiseksi. Sama puhelinnumero, varsinkin landline, voi olla useammalla asiakkaalla. Toisaalta asiakkaalla voi olla useampi puhelinnumero.
 
 ```mermaid
 erDiagram
@@ -99,27 +99,29 @@ erDiagram
     }
 ```
 
-Lopulta yhden taulun presentaation saa muodostettua SQL:n avulla, pseudo-SQL-koodina näin:
+Lopulta yhden taulun presentaation saa muodostettua SQL:n avulla. Näennäisesti toimiva SQL-koodi olisi:
 
 ```sql
 SELECT
-  CONCAT(a.first_name, " ", a.last_name) AS full_name,
-  salary,
-  currency,
-  gsm.phone_number AS gsm_nr,
-  landline.phone_number AS landline_nr
-FROM
-  customer a
-  LEFT JOIN annual_salary s ON a.customer_id = s.fk_customer_id
-    LEFT JOIN phonenumber AS gsm ON a.customer_id = gsm.fk_customer_id 
-      AND gsm.phone_type = "gsm"
-    LEFT JOIN PHONENUMBER AS landline ON a.customer_id = landline.fk_customer_id 
-      AND landline.phone_type = "landline"
+    CONCAT(C.first_name, ' ', C.last_name) AS full_name,
+    A.salary,
+    A.currency,
+    G.phone_number AS gsm_nr,
+    L.phone_number AS landline_nr
+FROM CUSTOMER AS C
+LEFT JOIN ANNUAL_SALARY AS A ON C.customer_id = A.fk_customer_id
+LEFT JOIN CUSTOMER_PHONENUMBER AS CP ON C.customer_id = CP.fk_customer_id
+LEFT JOIN PHONENUMBER AS G ON CP.fk_phone_number_id = G.phone_number_id AND G.phone_type = 'gsm'
+LEFT JOIN PHONENUMBER AS L ON CP.fk_phone_number_id = L.phone_number_id AND L.phone_type = 'landline';
 ```
 
 !!! question "Tehtävä"
 
     Pohdi, kuinka esittäisit palkan vertailukelpoisena eri valuutoissa. Taulussa on valuuttakoodi, mutta se ei ole sinällään vertailukelpoinen. Taulussa on myös vuosiluku. Miten ratkaisisit tämän ongelman?
+
+!!! question "Tehtävä"
+
+    Merkkijonokenttä "phone_type" on yhä normalisoimatta. Kuinka ratkaisisit tämän ongelman?
 
 
 ### Relaatiotietokannoista tietovarastoihin
@@ -155,7 +157,11 @@ Joitakin eroja legacyn ja modernin välillä:
 
 Hadoop yhdistetään usein termiin tietoallas eli data lake, joka on pahimmillaan yrityksen jaettua levyä muistuttava datan hautausmaa tai "data swamp". Handy määrittelee modernin siten, että moderni datan aikakausi alkoi Hadoopin ja perinteisten tietoaltaiden kuoppauksesta. Ekosysteemiin on sittemmin liittynyt melkoinen määrä erilaisia työkaluja ja uudenlaisia paradigmoja. Snowflaken yksi merkittävä kilpailija on Databricks, jonka tuotteen sydämenä toimii heidän aloittamansa Apache Spark. Sekä Snowflake että Hadoop, kuten myös monet muut toimijat, eriyttivät laskennan ja tallennuksen. Tallennustilana toimii tietoallas, tavallaan, mutta mieluiten siten, että datan skeema ja sijainti ylläpidetään katalogissa. Nykyään tästä hybridistä käytetään termiä Data Lakehouse (Data **Lake** + Data Ware**house**), ja sen pyrkimyksenä on yhdistää näiden parhaat puolet. Nämä "parhaat puolet" tiivistyvät usein lyhenteeseen ACID, joka on ikään kuin laatukriteeristö tai määritelmä tietokantaoperaatioille, jotka tyypillisesti ovat relaatiotietokantahallintajärjestelmän (RDBMS) heiniä. Ideaalitilanteessa Lakehouse käyttäytyy kuin Warehouse, mutta data on tallennettuna edulliseen Lakeen. Tällöin "warehouse" on esimerkiksi Apache Hive, ja "lake" on esimerkiksi Amazon S3. ACID käsitellään myöhemmin [Storage](../kerrokset/storage.md)- eli tallennuskerroksen yhteydessä. Toisin kuin tyypillinen warehouse, lakehouse mahdollistaa kuitenkin minkä tahansa tiedon tallentamisen altaaseen (kuvat, videot, raaka sensoridata, ...)
 
-On syntynyt myös liikehdintää suuntaan, jossa pienemmille toimijoille tarjotaan ei-niin-big-datan työkaluja, kuten DuckDB, jota kaupallistaa MotherDuck. Monet yritykset toistavat samaa kaavaa, mukaan lukien aiemmin mainittu Fishtown Analytics: päätuote on open source, mutta sitä kaupallistetaan yritysasiakkaille managed SaaS-palveluna. Tämän voi nähdä datan käytön demokratisointina: yrityksellä ei tarvitse olla varaa Clouderan, Oraclen, IBM:n tai muiden jättien lisensseihin käsitelläkseen dataa.
+On syntynyt myös liikehdintää suuntaan, jossa pienemmille toimijoille tarjotaan ei-niin-big-datan työkaluja, kuten DuckDB, jota kaupallistaa MotherDuck. 
+
+!!! tip
+
+    Useat muutkin yritykset toimivat kuten MotherDuck. Näihin lukeutuvat muiden muassa Databricks (Spark), GitLab, Nginx, MongoDB, Confluent (Kafka), HashiCorp (Terraform), Red Hat (RHEL, CentOS). Bisnesmallin pohjalla oleva päätuote on open source, mutta sitä kaupallistetaan yritysasiakkaille managed SaaS-palveluna. Tämän voi nähdä datan käytön demokratisointina: yrityksellä ei tarvitse olla varaa Clouderan, Oraclen, IBM:n tai muiden jättien lisensseihin käsitelläkseen dataa.
 
 ## Landscape ja Moderni tänään
 
