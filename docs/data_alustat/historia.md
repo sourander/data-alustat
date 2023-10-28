@@ -68,7 +68,7 @@ Käytännössä tämä ajaa siihen, että useimmat normalisoidun tietokannan tau
 ```mermaid
 erDiagram
     CUSTOMER ||--o{ CUSTOMER_PHONENUMBER : associates_with
-    PHONENUMBER ||--o{ CUSTOMER_PHONENUMBER : has
+    PHONENUMBER ||--o{ CUSTOMER_PHONENUMBER : is
     CUSTOMER ||--o{ ANNUAL_SALARY : has
 
     CUSTOMER {
@@ -99,7 +99,9 @@ erDiagram
     }
 ```
 
-Lopulta yhden taulun presentaation saa muodostettua SQL:n avulla. Näennäisesti toimiva SQL-koodi olisi:
+Lopulta alkuperäisen kaltaisen, yhden ison taulun presentaation, saa muodostettua liittämällä taulut yhteen primääri- ja viiteavaimia käyttäen. Tämä vaihe tunnetaan nimellä ==denormalization==. Huomaa, että taulujen liittäminen (eng. joining) on I/O:n näkökulmasta kallis operaatio. Operatiiviset kannoissa normalisointi estää tiedon päivittämisestä tai poistamisesta syntyviä anomalioita, mutta analytiikkaan käytettävissä kannoissa, jotka esitellään hieman alempana, on usein hyödyllistä mallintaa tieto hieman vähemmän normalisoituun muotoon. Äärimmäinen normaliuden purkamisen muoto on One Big Table; hieman yleisempi on analytiikan tarpeisiin suunniteltu tähtiskeema.
+
+SQL on tietovarastoissa yleinen kieli, joten liitetään normalisoidut taulut yhdeksi suurekti tauluksi SQL:ää hyödyntäen esimerkin vuoksi. Koodi alla:
 
 ```sql
 SELECT
