@@ -32,6 +32,8 @@ Big data -projektien kaatuminen on yleinen aihe esimerkiksi Medium-sivuston post
 
     Jos data-alustan yksi hyöty (ja samalla menestyksen vaatimus) on datakulttuurin ja datanlukutaidon kehittyminen, mieti, kuinka data-alustan luomisen voi ulkoistaa. Millainen ulkoistetun projektin tulee olla, jotta se kehittää tilaajayrityksen sisäistä datakulttuuria?
 
+    Vihje: vertaa tätä tietoturvan kulttuuriin. Tietoturva on yrityksen kaikkien työntekijöiden vastuulla. Yksi tiimi ei voi "hoitaa hommaa". Tietoturva on myös jatkuvaa työtä, ei yksittäinen projekti.
+
 ## Onnistumisen edellytykset
 
 Yllä mainitut syyt projektien kaatumiselle voi käännetään myös onnistumisen edellytyksiksi. Mikäli oletetaan aiempi lista riittävän kattavaksi, niin tarkistuslista onnistumisen tielle voisi olla:
@@ -40,13 +42,43 @@ Yllä mainitut syyt projektien kaatumiselle voi käännetään myös onnistumise
 
 Data-alustalle asetetut tavoitteet ovat bisnesvetoisia ja mitattavissa. Tavoitteet ovat realistisia ja niiden saavuttamiseksi on olemassa suunnitelma. Ensimmäinen tavoite on matalan kynnyksen ==Proof of Concept== (lyhyesti PoC), jonka tulisi tuottaa ensimmäisiä realistisia tuloksia hyvinkin lyhyessä ajassa (kuukausi tai kaksi). Näin data-alustajan kasaajat ja liiketoiminnan edustajat saavat käsiinsä jotain konkreettista, jonka avulla on helppo puhua samoista asioista.
 
+Projektia käynnistäessä on tärkeää, että teknologia tai lopputuote ei ole itseisarvo, vaan tavoitteet ovat liiketoiminnallisia. Ensimmäisissä palavereissa on hyvä vältellä turhia muotisanoja (eng. buzzword, kuten LLM, NLP, semantic layer, data vault) sekä nimettyjä teknologioita tai palveluntarjoajia (Apache Spark, Apache Kafka, Snowflake, AWS EMR, jne.) Myöskään pelkkään lopputulokseen, kuten "me halutaan tämmönen interaktiivinen Dashboard", ei kannata takertua. Ethän siis teet datatiedettä ihan vain datatieteen takia - tai siksi että muutkin - vaan tarpeen määrittelemänä.
+
+Tavoitteita laatiessa on tärkeää tavoittaa ja kuulla kaikkia niitä, joita **projektissa ratkaistava ongelma koskettaa**. Ota heidät mukaan kokoukseen. Kun tiedät, ketä ongelma koskettaa, voit kokeilla seuraavia:
+
+1. Rautakoodaa tai tee muutoin itse PoC, joka ratkaisee ongelman.
+2. Kysy loppukäyttäjältä, onko ratkaisu käyttökelpoinen, ja kuinka se muuttaisi hänen toimintaansa.
+
+!!! tip
+
+    Kuvittele, että olet myymäläpäällikkö Kajaanin Tilpehööri Oy:ssä. Aulassanne on Hype2Reality Oy -konsulttitalon toteuttavat asiakastyytyväisyysmittaus, joka perustuu viiteen hymiöön: :rage:, :frowning:, :neutral_face:, :slight_smile:, :laughing:, edustaen arvosanoja 1-5.
+
+    Vastauksien määrä ja hajonta pysyy samana, mutta keskiarvona tulokset ovat:
+
+    Viikko 33: :slight_smile: (# 4) <br /> 
+    Viikko 34: :neutral_face: (# 3)
+
+    Kuinka korjaat tämän negatiivisen kehityssuunnan?
+
+Jos loppukäyttäjä ei osaa kertoa, kuinka hänen edessään näkyvä ratkaisu muuttaisi hänen toimintaansa, on todennäköistä, että ratkaisu ei ole liiketoiminnallisesti merkittävä. Toki tietoalustan voi myös kasata *"If you build it, they will come"*-periaatteella, jossa luotetaan siihen, että mahdollisuus luo käyttötarkoituksia.
+
+!!! question "Tehtävä"
+
+    Keksi esimerkkejä ratkaisuista, jotka olisi mahdollista rakentaa ja jotka aiheuttavat Wow-efektin, mutta joista ei kaikesta hienoudesta huolimatta ole minkään sortin hyötyä.
+
+    Pohjana voit käyttää: "Ammattikorkeakoulun sisäänkäyntiin tuodaan Info-näyttö, jossa näkyy xxxxxx. Siihen kerätään automaattisesti dataa yyyyyy ja zzzzzzz."
+
+!!! question "Tehtävä"
+
+    Tee yllä oleva uusiksi, mutta yritä löytää oikea ongelma, ja ratkaisu siihen. Mitä dataa käytät? Kuinka se kerätään?
+
 ### Osaamisen kehittäminen
 
 Data-alustat ja niihin liittyvä ekosysteemi kehittyy nopeasti. Tämä tarkoittaa, että osaamisen kehittäminen on jatkuvaa, ja työntekijöiden etsiminen "5+ vuoden kokemuksella" on naiivia. Aiemmassa kohdassa mainitun PoC:n voi hyvin toteuttaa muutamalla eri työkalulla, jotta tulee kokeiltua, mitkä työkalut istuvat juuri tähän caseen parhaiten. On äärimmäisen todennäköistä, että kukaan yrityksen työntekijöistä (tai edes hakijoista) ei ole käyttänyt kaikkia työkaluja - jos mitään. Iteratiivinen kehitys, jossa työkaluja, käytänteitä, datakulttuuria, osaamista ja liiketoimintaa kehitetään yhdessä, on todennäköisesti paras tapa edetä. Osaamista ja jossain määrin valmiiksi koeponnistettuja ratkaisuita voi hankkia myös konsulttitaloilta, mutta tässäkin tapauksessa pitäisi onnistua varmistamaan, että oman talon datakulttuuri kehittyy.
 
 ### Kulttuurin muutos
 
-Datavetoisen päätöksenteon kulttuurin luominen on pitkäjänteistä työtä. Kulttuurin muutos ei tapahdu yhdessä yössä, eikä se tapahdu, jos data-alustan käyttöönotto on pelkkä IT-projekti. Dataan tottuminen vaatii samankaltaista muutosta kuin digitalisaatio joitakin vuosia sitten. 
+Datavetoisen päätöksenteon kulttuurin luominen on pitkäjänteistä työtä. Kulttuurin muutos ei tapahdu yhdessä yössä, eikä se tapahdu, jos data-alustan käyttöönotto on pelkkä IT-projekti. Dataan tottuminen vaatii samankaltaista muutosta kuin digitalisaatio joitakin vuosia sitten.
 
 !!! tip
 
@@ -54,7 +86,7 @@ Datavetoisen päätöksenteon kulttuurin luominen on pitkäjänteistä työtä. 
 
 ### Datan laatu
 
-Ilman laadukasta dataa tietoalustan onnistumisen mahdollisuudet ovat todella heikot. Datan laatua ei voi myöskään kokonaisuudessaan ulkoistaa data engineereille, jotka saattavat tiedon Bronze tai Silver tasolle. Osa vastuusta on dataa tuottavilla tiimeillä. Vastuu jakautuu myös liiketoiminnan suuntaan: he määrittelevät bisnestermistön. Kaiken alla pitäisi olla ??==datastrategia==, joka läpäisee koko yrityksen toiminnan.
+Ilman laadukasta dataa tietoalustan onnistumisen mahdollisuudet ovat todella heikot. Datan laatua ei voi myöskään kokonaisuudessaan ulkoistaa data engineereille, jotka saattavat tiedon Bronze tai Silver tasolle. Osa vastuusta on dataa tuottavilla tiimeillä. Vastuu jakautuu myös liiketoiminnan suuntaan: he määrittelevät bisnestermistön. Kaiken perustana pitäisi olla ==datastrategia==, joka läpäisee koko yrityksen toiminnan.
 
 !!! warning
 

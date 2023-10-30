@@ -10,3 +10,12 @@ TODO
 | D       | Pysyvyys   | Onnistuneiden transaktioiden pysyvyys pyritään säilyttämään vikatilanteissa.                                                                                                                                                                            |
 
 TODO: Esittele Delta Lake, Hudi, Iceberg, jotka mahdollista omalta osaltaan ACID:n object storageen.
+
+## Ihmisluettavat vs. binääriset tiedostot
+
+TODO: Esittele JSON Lines vs. Parquet tai ORC.
+
+## Row vs Columnar
+
+Esittele Parquet.
+

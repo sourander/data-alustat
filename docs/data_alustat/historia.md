@@ -126,16 +126,18 @@ LEFT JOIN phonenumber land ON mm.fk_phone_number_id = land.phone_number_id AND l
     Merkkijonokenttä "phone_type" on yhä normalisoimatta. Kuinka ratkaisisit tämän ongelman?
 
 
-### Relaatiotietokannoista tietovarastoihin
+## Relaatiotietokannoista tietovarastoihin
 
 Käyttöjärjestelmien ja ohjelmointikielien runsaus sekä standardien puute muodostivat kaaoksen 1960-luvua edeltävänä aikana. Vuosikymmen 1960 oli IBM 360 -suurtietokoneiden ja saman yrityksen tietokannan hallintajärjestelmän, IMS:n, valtaaikaa. Tällöin, kauan sitten, eli ennen 1980- ja 1990-lukujen vaihdetta, samoja kantoja käytettiin sekä operatiiviseen käyttöön että datan analysointiin. Nämä transaktiokannat mahdollistivat yrityksille nykypäivänä itsestäänselviä prosesseja, kuten käteisnoston pankkiautomaatilla tai lennon varauksen, mutta niitä käytettiin ==myös analyyttisiin kyselyihin==. Mikäli yrityksen johtoa kiinnosti kokonaismyynti tammikuussa, data haettiin samasta tuotantokannasta, mihin se oli kirjoitettukin. Kyselykieli oli sekä OLTP- että OLAP-kyselyissä yleisimmin SQL.
+
+### Datan määrän kasvu
+
+Datan määrän sekä analytiikan tarpeen kasvaessa yritykset alkoivat  integroida tuotantojärjestelmien dataa keskitettyyn varastoon, joka ==on optimoitu OLAP-käyttöä varten==. Näistä järjestelmistä käytetään nimeä tietovarasto (eng. data warehouse). Tietovarasto  sisältää siis yhden tai useamman tuotantokannan dataa. 1990-luvulla IBM:n haastaja  eli Teradata-yhtiö mahdollisti MPP:n (eng. massively parallel processing) eli massiivisen rinnakkaislaskennan. 2000 luvun puolella kuvioihin astui hajautettuun tallennukseen ja laskentaan perustuva Apache Hadoop, jonka reppuselässä IBM, Cloudera, Hortonworks ja muut ratsastivat. Hadoop itsessään talsii Googlen GFS:n (Google File Systemin) jalanjäljissä.
 
 !!! tip "Sanastoa"
 
     **OLTP** = Transaktioihin liittyvät kyselyt (Online Transaction Processing)<br />
     **OLAP** = Analytiikkaan liittyvät kyselyt (Online Analytical Processing)
-
-Datan määrän sekä analytiikan tarpeen kasvaessa yritykset alkoivat  integroida tuotantojärjestelmien dataa keskitettyyn varastoon, joka ==on optimoitu OLAP-käyttöä varten==. Näistä järjestelmistä käytetään nimeä tietovarasto (eng. data warehouse). Tietovarasto  sisältää siis yhden tai useamman tuotantokannan dataa. 1990-luvulla IBM:n haastaja  eli Teradata-yhtiö mahdollisti MPP:n (eng. massively parallel processing) eli massiivisen rinnakkaislaskennan. 2000 luvun puolella kuvioihin astui hajautettuun tallennukseen ja laskentaan perustuva Apache Hadoop, jonka reppuselässä IBM, Cloudera, Hortonworks ja muut ratsastivat. Hadoop itsessään talsii Googlen GFS:n (Google File Systemin) jalanjäljissä.
 
 !!! question "Tehtävä"
 
@@ -143,7 +145,15 @@ Datan määrän sekä analytiikan tarpeen kasvaessa yritykset alkoivat  integroi
 
     * [Google File System](https://static.googleusercontent.com/media/research.google.com/fi//archive/gfs-sosp2003.pdf)
     * [MapReduce: Simplified Data Processing on Large Clusters](https://static.googleusercontent.com/media/research.google.com/fi//archive/mapreduce-osdi04.pdf)
-  
+
+### Tietokanta ja -varasto rinnakkain
+
+On tärkeää ymmärtää, että tietovarasto sisältää ==kopion useiden lähdejärjelmien datasta==. Tietovarasto ei ole siis vaihtoehto operatiiviselle kannalle. Se on tekninen ratkaisu, joka mahdollistaa analyyttiset kyselyt, jotka olisivat liian raskaita operatiiviselle kannalle.
+
+* **ETL vs. ELT **: Perinteisesti data on siirretty ETL:n (Extract, Transform, Load) avulla. Moderneissa järjestelmissä data alettiin tuoda tietovaraston stagingiin `as-raw-as-possible`-hengessä, ja muokkaus (Transform) laskettiin tietovarastossa eikä ingestion toolilla.
+* **Monoliitti vs. Best-of-breed**: Perinteisesti tietovarasto on ollut monoliittinen, mutta modernissa ekosysteemissä on useita eri työkaluja, jotka on integroitu toisiinsa.
+* **Eritetty laskenta ja talennus**: Perinteisesti tietovarastossa tallennus ja sen laskenta ovat olleet saman instanssin sisällä. Jos skaalaat instanssia suuremmaksi, hinta nousee sekä tallenuskapasiteetin että laskentehon mukaan, vaikka olisit tarvinnut vain. Modernissa ekosysteemissä laskenta on irrotettu (eng. decoupled) tallennuksesta. Laskenta tapahtuu esimerkiksi Apache Sparkilla, tallennus esimerkiksi Amazon S3:een. Näitä voidaan skaalata erikseen.
+* **Indeksointi**: Usein tietovarastot ovat indeksoimattomia. Tietovarasto tiedä taulujen välisistä linkeistä (primary keys, foreign keys) mitään. Hakuja optimoidaan toisella tavoin.
 
 ## Modern Data Stack
 
@@ -151,23 +161,17 @@ Fishtown Analyticsin [Tristan Handy tiivistää](https://www.getdbt.com/blog/fut
 
 Joitakin eroja legacyn ja modernin välillä:
 
-* ETL vs. ELT : Perinteisesti data on siirretty ETL:n (Extract, Transform, Load) avulla. Moderneissa järjestelmissä data alettiin tuoda tietovaraston stagingiin `as-raw-as-possible`-hengessä, ja muokkaus (Transform) laskettiin tietovarastossa eikä ingestion toolilla.
-* Monoliitti vs. Best-of-breed : Perinteisesti tietovarasto on ollut monoliittinen, mutta modernissa ekosysteemissä on useita eri työkaluja, jotka on integroitu toisiinsa.
-* Laskenta keskitettyä vs. irrotettu tallennuksesta : Perinteisesti tietovarastossa on ollut sekä data että laskenta. Modernissa ekosysteemissä laskenta on irrotettu tallennuksesta, ja laskenta tapahtuu esimerkiksi Apache Sparkilla tai Snowflaken omalla laskentapalvelulla.
 
-### Lake
+### Data Lake
 
 Hadoop yhdistetään usein termiin tietoallas eli data lake, joka on pahimmillaan yrityksen jaettua levyä muistuttava datan hautausmaa tai "data swamp". Handy määrittelee modernin siten, että moderni datan aikakausi alkoi Hadoopin ja perinteisten tietoaltaiden kuoppauksesta. Ekosysteemiin on sittemmin liittynyt melkoinen määrä erilaisia työkaluja ja uudenlaisia paradigmoja. Snowflaken yksi merkittävä kilpailija on Databricks, jonka tuotteen sydämenä toimii heidän aloittamansa Apache Spark. Sekä Snowflake että Hadoop, kuten myös monet muut toimijat, eriyttivät laskennan ja tallennuksen. Tallennustilana toimii tietoallas, tavallaan, mutta mieluiten siten, että datan skeema ja sijainti ylläpidetään katalogissa. Nykyään tästä hybridistä käytetään termiä Data Lakehouse (Data **Lake** + Data Ware**house**), ja sen pyrkimyksenä on yhdistää näiden parhaat puolet. Nämä "parhaat puolet" tiivistyvät usein lyhenteeseen ACID, joka on ikään kuin laatukriteeristö tai määritelmä tietokantaoperaatioille, jotka tyypillisesti ovat relaatiotietokantahallintajärjestelmän (RDBMS) heiniä. Ideaalitilanteessa Lakehouse käyttäytyy kuin Warehouse, mutta data on tallennettuna edulliseen Lakeen. Tällöin "warehouse" on esimerkiksi Apache Hive, ja "lake" on esimerkiksi Amazon S3. ACID käsitellään myöhemmin [Storage](../kerrokset/storage.md)- eli tallennuskerroksen yhteydessä. Toisin kuin tyypillinen warehouse, lakehouse mahdollistaa kuitenkin minkä tahansa tiedon tallentamisen altaaseen (kuvat, videot, raaka sensoridata, ...)
 
-On syntynyt myös liikehdintää suuntaan, jossa pienemmille toimijoille tarjotaan ei-niin-big-datan työkaluja, kuten DuckDB, jota kaupallistaa MotherDuck. 
 
-!!! tip
-
-    Useat muutkin yritykset toimivat kuten MotherDuck. Näihin lukeutuvat muiden muassa Databricks (Spark), GitLab, Nginx, MongoDB, Confluent (Kafka), HashiCorp (Terraform), Red Hat (RHEL, CentOS). Bisnesmallin pohjalla oleva päätuote on open source, mutta sitä kaupallistetaan yritysasiakkaille managed SaaS-palveluna. Tämän voi nähdä datan käytön demokratisointina: yrityksellä ei tarvitse olla varaa Clouderan, Oraclen, IBM:n tai muiden jättien lisensseihin käsitelläkseen dataa.
-
-## Landscape ja Moderni tänään
+### Landscape ja Moderni tänään
 
 Modern data stack on siitä hassu sanavalinta, että "modern" on kohtalaisen suhteellinen käsite - aivan samalla tavalla kuin big datan "big". Aika näyttää, jäävätkö kummatkin termit elämään, jolloin joka vuosi sekä modernius että suuruus määrittyvät uusiksi. Oli termi mikä tahansa, data landscape pitänee katsastaa joka vuosi hieman uusin silmin, sillä muutos ja kasvu on ollut 2000-luvulla nopeaa.
+
+On syntynyt myös liikehdintää suuntaan, jossa pienemmille toimijoille tarjotaan ei-niin-big-datan työkaluja, kuten DuckDB, jota kaupallistaa MotherDuck. 
 
 ![ecosystem_over_time](../images/ecosystem_over_time.png)
 
@@ -177,7 +181,8 @@ Modern data stack on siitä hassu sanavalinta, että "modern" on kohtalaisen suh
 
 	Kuvassa näkyvä 2023 arkkitehtuuri löytyy interaktiivisena versiona täältä: [FirstMark | 2023 MAD (ML/AI/Data) Landscape](https://mad.firstmark.com/). Tutustu otsikkotasolla graafiin. Mitä eri kategorioita kokonaisuuteen kuuluu?
 
-!!! question "Tehtävä"
+!!! tip
 
-	Matt Turck:n sivuilla on myös tälle kurssille hyvin istuva [MAD 2023, PART III: TRENDS IN DATA INFRASTRUCTURE – Matt Turck](https://mattturck.com/mad2023-part-iii/)-kirjoitus. Silmäile dokumentti läpi. Teksti voi olla juuri kurssin aloitettua vaikeasti lähestyttävää, mutta kurssin päätteeksi sinulla pitäisi olla valmiudet keskustella kirjoituksen sisällöstä.
+    Useat muutkin yritykset toimivat kuten MotherDuck eli kaupallistavat avointa lähdekoodia. Näihin lukeutuvat muiden muassa Databricks (Spark), GitLab, Nginx, MongoDB, Confluent (Kafka), HashiCorp (Terraform), Red Hat (RHEL, CentOS). Bisnesmallin pohjalla oleva päätuote on open source, mutta sitä kaupallistetaan yritysasiakkaille managed SaaS-palveluna. Tämän voi nähdä datan käytön demokratisointina: yrityksellä ei tarvitse olla varaa Clouderan, Oraclen, IBM:n tai muiden jättien lisensseihin käsitelläkseen dataa.
+
 
