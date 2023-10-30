@@ -2,7 +2,7 @@ Datan tallentaminen maksaa. Mikäli yritys siirtää tiedot operatiivisista kann
 
 ## Hyödyt
 
-Hyötyjä ovat muiden muassa:
+Hyötyjä siihen tilanteeseen verrattuna, että tietoalustaa ei ole, ovat muiden muassa alla listatut. Vaihtoehto tietoalustan puuttumiselle on Excel-tiedostot ja muut kopiot tai dumpit.
 
 * **Datan laadun paraneminen.** Loppukäyttäjät uskaltavat luottaa dataan, joka on tallennettu yhteen paikkaan. Tämä vähentää datan duplikaatiota ja parantaa datan laatua.
 * **Tietosuojan paraneminen**. Datan hallinta on keskitettyä, jolloin tietosuojan hallinta on helpompaa.
@@ -42,7 +42,7 @@ Yllä mainitut syyt projektien kaatumiselle voi käännetään myös onnistumise
 
 Data-alustalle asetetut tavoitteet ovat bisnesvetoisia ja mitattavissa. Tavoitteet ovat realistisia ja niiden saavuttamiseksi on olemassa suunnitelma. Ensimmäinen tavoite on matalan kynnyksen ==Proof of Concept== (lyhyesti PoC), jonka tulisi tuottaa ensimmäisiä realistisia tuloksia hyvinkin lyhyessä ajassa (kuukausi tai kaksi). Näin data-alustajan kasaajat ja liiketoiminnan edustajat saavat käsiinsä jotain konkreettista, jonka avulla on helppo puhua samoista asioista.
 
-Projektia käynnistäessä on tärkeää, että teknologia tai lopputuote ei ole itseisarvo, vaan tavoitteet ovat liiketoiminnallisia. Ensimmäisissä palavereissa on hyvä vältellä turhia muotisanoja (eng. buzzword, kuten LLM, NLP, semantic layer, data vault) sekä nimettyjä teknologioita tai palveluntarjoajia (Apache Spark, Apache Kafka, Snowflake, AWS EMR, jne.) Myöskään pelkkään lopputulokseen, kuten "me halutaan tämmönen interaktiivinen Dashboard", ei kannata takertua. Ethän siis teet datatiedettä ihan vain datatieteen takia - tai siksi että muutkin - vaan tarpeen määrittelemänä.
+Projektia käynnistäessä on tärkeää, että teknologia tai lopputuote ei ole itseisarvo, vaan tavoitteet ovat liiketoiminnallisia. Ensimmäisissä palavereissa on hyvä vältellä turhia muotisanoja (eng. buzzword, kuten LLM, NLP, semantic layer, data vault) sekä nimettyjä teknologioita tai palveluntarjoajia (Apache Spark, Apache Kafka, Snowflake, AWS EMR, jne.) Myöskään pelkkään lopputulokseen, kuten "me halutaan tämmönen interaktiivinen Dashboard", ei kannata takertua. Ethän siis tee datatiedettä ihan vain datatieteen takia - tai siksi että muutkin - vaan tarpeen määrittelemänä.
 
 Tavoitteita laatiessa on tärkeää tavoittaa ja kuulla kaikkia niitä, joita **projektissa ratkaistava ongelma koskettaa**. Ota heidät mukaan kokoukseen. Kun tiedät, ketä ongelma koskettaa, voit kokeilla seuraavia:
 
