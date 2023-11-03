@@ -21,7 +21,7 @@ Hyötyjä siihen tilanteeseen verrattuna, että tietoalustaa ei ole, ovat muiden
 
 Big data -projektien kaatuminen on yleinen aihe esimerkiksi Medium-sivuston postauksissa, LinkedIn-alustan keskusteluissa sekä konsulttitalojen julkaisemissa artikkeleissa. Joitakin yleisiä, kirjoituksesta toiseen toistuvia syitä ovat:
 
-* **Datan laadun tärkeys aliarvioidaan.** Garbage in, gargabe out.
+* **Datan laadun tärkeys aliarvioidaan.** Garbage in, garbage out.
 * **Tavoitteiden hataruus.** Tavoitteet ovat vaikeasti mitattavissa, eivät ole liiketoiminnan kannalta merkittäviä tai realistia, tai tavoitteet ovat liian kauaskantoisia.
 * **Projektin väärä omistajuus.** Big data -alusta nähdään teknologisena ratkaisuna, ei liiketoiminnallisena ratkaisuna. Mikäli data-alusta on "IT-hanke", se kaatuu lähes varmasti.
 * **Raakadatan kerääminen ilman tarkoitusta.** Pelkällä datan keräämisellä ei ole liiketoiminnallista arvoa. Tässä on kenties taustalla FOMO (Fear of Missing Out) eli *"koska muutkin, niin meidänkin pitää."*
