@@ -189,3 +189,8 @@ On syntynyt myös liikehdintää suuntaan, jossa pienemmille toimijoille tarjota
     Useat muutkin yritykset toimivat kuten MotherDuck eli kaupallistavat avointa lähdekoodia. Näihin lukeutuvat muiden muassa Databricks (Spark), Nginx, MongoDB, Confluent (Kafka), HashiCorp (Terraform), Red Hat (RHEL, CentOS). Bisnesmallin pohjalla oleva päätuote on open source, mutta sitä kaupallistetaan yritysasiakkaille managed SaaS-palveluna. Tämän voi nähdä datan käytön demokratisointina: yrityksellä ei tarvitse olla varaa Clouderan, Oraclen, IBM:n tai muiden jättien lisensseihin käsitelläkseen dataa.
 
 
+## Historia videona
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-wCzn9gKoUk?si=EVkxdjh_6WnDZiPn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+**Video 1:** *Hannes Mühleisen, joka on DuckDB:n perustajajäsen ja MotherDuckin toimitusjohtaja, kertoo tietokantojen historiasta. Huomaa, että varsinkin videon lopun osalta Hannesilla on oma agenda.*
