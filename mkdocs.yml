@@ -5,6 +5,7 @@ theme:
   features:
     - content.code.copy     # add copy button to code blocks
     - content.code.annotate # add annotation support to code blocks
+    - content.tabs.link     # link tabs in content tabs
   # Day and night mode
   palette:
     # Palette toggle for dark mode
@@ -44,7 +45,10 @@ markdown_extensions:
   - pymdownx.mark
   # Admonition call-outs such as "!!! note", and support for making call-outs collapsible
   - admonition
+  # Content tabs
   - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
 
 plugins:
   # Navigation page ordering
