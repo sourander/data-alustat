@@ -1,3 +1,5 @@
+Tämä materiaali pyrkii esittelemään yleispiirteittäin, mihin käyttöön relaatiotietokannat ja sen kyselykieli SQL on alunperin kehitetty, miksi tietovarastoja tarvitaan täydentämään niihin liittyviä puutteita, ja mikä 2010 Web 2.0 buumeissa syntynyt tietojärvi on, ja mitä näin 2024 oikeastaan kuuluu yrityksen *"analytics/data stäkkiin tai platformiin"*.
+
 ## Transaktiokannat
 
 ### SQL synty
@@ -217,13 +219,13 @@ On tärkeää ymmärtää, että tietovarasto sisältää ==kopion useiden lähd
 
     Yllä mainitut HTAP-järjestelmät ovat lupaus tulevaisuudesta, jossa nämä muodostavat jonkin sortin keskitetyn monitoimikoneen, joka pystyy suorittamaan sekä transaktioita että analytiikkaa. Tämä ei kuitenkaan tarkoita, että nämä olisivat myöskään "zero copy", vaan konepellin alla voidaan hyvinkin säilöä data rivi- tai saraketasolla duplikaatteina.
 
-## Tietolammet
+## Tietojärvi
 
 ### Data Lake
 
-**Tietolampi** (engl. data lake) syntyi Hadoop-ekosysteemin myötä. Tietolampi on suuri, hajautettu tiedostojärjestelmä, johon dataa voidaan tallentaa raakamuodossa. Tietolampi on tarkoitettu suurten datamäärien tallentamiseen ja analysointiin. Tietolammen riskinä on, että yhteen laariin kaadettu skeematon data muodostaa ns. **datasuon** (engl. data swamp). Dataa siis on terakaupalla, mutta kukaan ei tiedä, missä se lienee.
+**Tietojärvi** (engl. data lake) syntyi Hadoop-ekosysteemin myötä. Tietojärvi on suuri, hajautettu tiedostojärjestelmä, johon dataa voidaan tallentaa raakamuodossa. Tietojärvi on tarkoitettu suurten datamäärien tallentamiseen ja analysointiin. Tietolammen riskinä on, että yhteen laariin kaadettu skeematon data muodostaa ns. **datasuon** (engl. data swamp). Dataa siis on terakaupalla, mutta kukaan ei tiedä, missä se lienee.
 
-Tietolampi on kenties helpoin selittää koodin avulla. Kuvitellaan koodi, jossa hajautettu laskentamoottori Apache Spark lataa dataa Amazon S3:sta, käsittelee sitä ja tallentaa tuloksen takaisin S3:een Parquet-formaatissa. Tässä tapauksessa Amazon S3 on siis tietolampi; Apache Spark on laskentamoottori, joka käsittelee dataa; ja Parquet on tallennusformaatti, joka on optimoitu analytiikkaa varten.
+Tietojärvi on kenties helpoin selittää koodin avulla. Kuvitellaan koodi, jossa hajautettu laskentamoottori Apache Spark lataa dataa Amazon S3:sta, käsittelee sitä ja tallentaa tuloksen takaisin S3:een Parquet-formaatissa. Tässä tapauksessa Amazon S3 on siis Tietojärvi; Apache Spark on laskentamoottori, joka käsittelee dataa; ja Parquet on tallennusformaatti, joka on optimoitu analytiikkaa varten.
 
 Alla oleva koodi tekee seuraavat vaiheet:
 
