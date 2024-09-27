@@ -235,7 +235,7 @@ Alla oleva koodi tekee seuraavat vaiheet:
 
 ```python
 # Path to the dataset
-dataset_path = "s3://bucket-name/path/to/2024/10/31/*.png"
+dataset_path = "s3://bucket-name/path/to/2024/10/31/"
 
 # Read PNG files from the given path
 df = spark.read.format("binaryFile").option("pathGlobFilter", "*.png").load(dataset_path)
@@ -257,7 +257,7 @@ df_feat = df.withColumn("feature_vector", udf_feat_desc(df.content))
 
 # Write the DataFrame to Parquet format
 output_path = "s3://bucket-name/output/feature-vector-table/2024-10-31-table.parquet"
-df_with_features.write.mode("append").parquet(output_path)
+df_feat.write.mode("append").parquet(output_path)
 ```
 
 Jokin myöhempi koodinpätkä voisi sitten ladata tämän Parquet-tiedoston ja käyttää sitä koneoppimismallin opettamiseen. Esimerkiksi näin:
