@@ -5,8 +5,8 @@
 .DS_Store
 
 # Environments
-.env
-.venv
+.env/
+.venv/
 env/
 venv/
 ENV/
