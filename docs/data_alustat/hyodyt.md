@@ -1,3 +1,5 @@
+# Hyödyt bisnekselle
+
 Datan tallentaminen maksaa. Mikäli yritys siirtää tiedot operatiivisista kannoista analyyttisiin kantoihin (warehouse, lake, lakehouse), datan säilytyksen ja käsittelyn kulut luonnollisesti kasvavat. Mikäli dataa säilötään mikropalveluista vastaavien tiimien omien kantojen ulkopuolella, tästä aiheutuu myös uusia tarpeita kommunikaatiolle. Kommunikaatio on lähtökohtaisesti vaikeaa. Lisäksi jokainen uusi järjestelmä, jossa tietoa säilötään, lisää myös tietoturvariskiä. Lisääntyneet kulut eivät välttämättä edes kuittaa itseään: vain murto-osa (~15%) big data projekteista onnistuu tuottamaan selkeää bisnesarvoa tavoitteiden mukaisesti. Tästä herää kysymys: ==mitä hyötyä siitä on businekselle?==
 
 ## Hyödyt
