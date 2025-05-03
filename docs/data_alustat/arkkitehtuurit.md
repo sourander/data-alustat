@@ -32,7 +32,7 @@ Huomaathan, että yllä olevassa Kuvio 2:ssa on jo valittu tiettyjä palveluita 
 
 Kaikki eivät niele täysin purematta big datan tarpeellisuutta kaikissa maailman yrityksissä. Tästä 2023 vuoden näkyvimpänä esimerkkinä on MotherDuck-yrityksen yhden noden kolumnaarinen OLAP-engine nimeltään [DuckDB](https://duckdb.org/). DuckDB ei siis ole tietokanta vaan Apache Sparkin kaltainen laskenta-engine. Tietokanta voi kuitenkin olla tiedostossa (esim. `db.duckdb`.)
 
-Huomaa, että 50,000 jalan päästä katseltuna kaikki arkkitehtuurit näyttävät yllättävän samalta. Periaatteessa DuckDB:n arkkitehtuuri on myös vähän lähempääin katseltuna yllättävän samanlainen kuin modernien tietoalustojen "big data"-versionsa. Yllä esitelty 30,000 jalan näkymä on hyvinkin toteutettavissa DuckDB:n avulla.
+Huomaa, että 50,000 jalan päästä katseltuna kaikki arkkitehtuurit näyttävät yllättävän samalta. Periaatteessa DuckDB:n arkkitehtuuri on myös vähän lähempääin katsottuna yllättävän samanlainen kuin modernien tietoalustojen "big data"-versionsa. Yllä esitelty 30,000 jalan näkymä on hyvinkin toteutettavissa DuckDB:n avulla.
 
 !!! question "Tehtävä"
 
@@ -86,17 +86,20 @@ Yritykselle itselleen hyvin yksinkertainen ratkaisu on ostaa ratkaisut SaaS (Sof
 
 Hadoop-ekosysteemi on toteutettavissa joko itse hostattuna, Databricksin avulla tai käyttäen hyperscalereiden tarjoamia vastaavia ratkaisuja. Alla taulukossa muut paitsi Databricks, joka esitellään alempana.
 
-|               | Open Source | AWS                           | Azure             | GCP           |
-| ------------- | ----------- | ----------------------------- | ----------------- | ------------- |
-| Ingestion     | Airbyte     | AWS Lake Formation, DMS       | Data Factory      | Data Fusion   |
-| Orchestration | Airflow     | Data Pipeline, MWAA (Airflow) | Data Factory      | Dataproc      |
-| Streaming     | Kafka       | Kinesis, MSK (Kafka)          | Event Hubs        | Pub/Sub       |
-| SQL (Query)   | Hive        | Athena, Redshift              | Synapse           | BigQuery      |
-| Storage       | HDFS        | S3                            | Data Lake Storage | Cloud Storage |
-| Compute       | Spark       | EMR                           | HDInsight         | Dataproc      |
-| Auth          | ???         | IAM                           | Azure Entra ID    | Cloud IAM     |
-| BI            | Superset    | QuickSight                    | Power BI          | Looker        |
+|               | Open Source | AWS                           | Fabric (Azure)                                | GCP           |
+| ------------- | ----------- | ----------------------------- | --------------------------------------------- | ------------- |
+| Ingestion     | Airbyte     | AWS Lake Formation, DMS       | Data Factory (Azure Data Factory)             | Data Fusion   |
+| Orchestration | Airflow     | Data Pipeline, MWAA (Airflow) | Data Pipeline (Azure Data Factory)            | Dataproc      |
+| Streaming     | Kafka       | Kinesis, MSK (Kafka)          | Real-Time Intelligence (Event Hubs)           | Pub/Sub       |
+| SQL (Query)   | Hive        | Athena, Redshift              | Data Warehouse (Azure Synapse Analytics)      | BigQuery      |
+| Storage       | HDFS        | S3                            | OneLake (Azure Data Lake Storage)             | Cloud Storage |
+| Compute       | Spark       | EMR                           | Fabric Data Engineering (Azure Synapse Spark) | Dataproc      |
+| Auth          | ???         | IAM                           | Microsoft Entra ID (Azure Entra ID)           | Cloud IAM     |
+| BI            | Superset    | QuickSight                    | Power BI (Same in both)                       | Looker        |
 
+!!! note
+
+    Taulukon Fabric-sarake edustaa Microsofin uutta, pilvipohjaista data-alustaratkaisua, joka yhdistää useita eri työkaluja ja palveluita yhteen kokonaisuuteen. Vanhempi vastine on suluissa perässä. Huomaa, että aivan 1:1 vastinetta ei aina kaikissa tilanteissa löydy, koska uusi, syntynyt kokonaisuus voi erota entisistä työkaluista granulariteetiltaan ja toiminnaltaan. Tässä mielessä Fabric muistuttaa hieman one-stop-shop -ratkaisua, mutta aivan kuten Databricks tai Snowflake, se ei kuitenkaan ole täysin monoliittinen ratkaisu.
 
 ### Databricks
 
@@ -110,25 +113,33 @@ Databricks on Apache Sparkin luojien perustama yritys, joka myy Apache Sparkia h
 
 ### Hyperscalereiden omat
 
-Hyperscalerit (eli AWS, Azure ja GCP) tarjoavat myös omia pilvinatiiveja ratkaisujaan. Huomaa, että jokaisella alustalla on lopulta hyvin samankaltaisia työkaluja. Esimerkiksi datan visualisointiin on kullakin oma työkalunsa: GCP Looker, AWS QuickSight ja Azure Power BI. 
+Hyperscalarit (eli AWS, Azure ja GCP) tarjoavat myös omia pilvinatiiveja ratkaisujaan. Huomaa, että jokaisella alustalla on lopulta hyvin samankaltaisia työkaluja. Esimerkiksi datan visualisointiin on kullakin oma työkalunsa: GCP Looker, AWS QuickSight ja Azure Power BI. 
 
-!!! warning
+Valtaosa tämän kurssin graafeista on yksinkertaistettuja, Excalidraw:lla piirrettyjä diagrammeja. Tämä otsake on ainakin toistaiseksi poikkeus. Voi olla, että jatkossa palveluntarjoajan graafit korvataan yksinkertaistetuilla, Excalidraw:lla piirretyillä graafeilla. Toivon mukaan tästä huolimatta graafeista on kuitenkin luettavissa, että palveluntarjoajilla on hyvin samankaltaisia työkaluja ja koko arkkitehtuurit muistuttavat suuresti toisiaan.
 
-    TODO: Valtaosa tämän kurssin graafeista on yksinkertaistettuja, Excalidraw:lla piirrettyjä diagrammeja. Tämä otsake on toistaiseksi poikkeus. Alla olevat esimerkit ovat suoraan hyperscalereiden dokumentaatioista lainattuja. Nämä tullaan korvaamaan käsin tehdyillä, yksinkertaisemmilla esimerkeillä.
+#### Microsoft/Azure
 
-#### Azure
+Azure data-alusta-arkkitehtuuri perustuu kerroksittaiseen rakenteeseen, jossa data etenee raakadatasta rikastettuun ja kuratoituun muotoon. Arkkitehtuurissa Azure Synapse Analytics toimii keskeisenä komponenttina, joka yhdistää eri toimintoja kuten datan varastointi (Azure Data Lake Storage), prosessointi (SQL ja Spark pools) ja analytiikka. Microsoft Fabric puolestaan edustaa Microsoftin pyrkimystä yhdistää aiemmin erillisinä toimineet palvelut (mm. Azure Synapse, Power BI, Data Factory) yhtenäisemmäksi kokonaisuudeksi – kenties jopa "one-stop-shop"-ratkaisuksi tai kohti monoliittisempaa ratkaisua.
 
 ![Azure end-to-end](../images/hyperscaler-end-to-end-azure.svg)
 
 **Kuvio 5**: *Azure end-to-end ([lähde](https://learn.microsoft.com/en-us/azure/architecture/example-scenario/dataplate2e/data-platform-end-to-end?tabs=portal))*
 
+![Microsoft Fabric](../images/hyperscaler-end-to-end-ms-fabric.png)
+
+**Kuvio 6**: *Microsoft Fabric ([lähde](https://learn.microsoft.com/en-us/fabric/fundamentals/microsoft-fabric-overview)) on Microsoftin uusi, pilvipohjainen data-alustaratkaisu, joka yhdistää useita eri työkaluja ja palveluita yhteen kokonaisuuteen.*
+
 #### AWS
+
+AWS data-alusta-arkkitehtuuri jakautuu toiminnallisiin kerroksiin: sisääntuonti (ingestion), tallennus (storage), luettelointi ja haku (cataloging and search), prosessointi (processing), kulutus (consumption) sekä tietoturva ja hallinta (security and governance). Arkkitehtuuri hyödyntää palveluna tarjottavia (serverless) komponentteja, kuten Amazon S3 data-järven tallennustilana, AWS Glue ETL-prosesseihin ja metatietojen hallintaan, Lake Formation keskitettynä tietoluettelona ja Amazon Athena SQL-kyselyihin. AWS:n malli perustuu resurssien käyttöön pohjautuvaan laskutukseen, jossa infrastruktuurin skaalautuvuus määräytyy tarpeen mukaan ilman etukäteistä kapasiteetin määrittelyä, toisin kuin Fabric, jossa kapasiteetti on määriteltävä etukäteen.
 
 ![AWS end-to-end](../images/hyperscaler-end-to-end-aws.jpg)
 
 **Kuvio 6**: *Amazon Web Services end-to-end ([lähde](https://aws.amazon.com/blogs/big-data/aws-serverless-data-analytics-pipeline-reference-architecture/))*
 
 #### GCP
+
+Google Cloud Platform (GCP) data-alusta-arkkitehtuurissa BigQuery toimii keskeisenä palveluna, joka yhdistää datan varastoinnin ja analytiikan samaan ympäristöön. Arkkitehtuuri koostuu toisiaan täydentävistä palveluista: Data Fusion (datan kerääminen), Cloud Storage (tallennustila), Dataflow (stream- ja batch-prosessointi), Dataproc (Hadoop/Spark-ympäristö) ja Looker (visualisointi). GCP:n arkkitehtuuri on suunniteltu tukemaan erityisesti suurten datamassojen analytiikkaa, geospatiaalista analyysiä sekä integroitumaan Googlen koneoppimispalveluihin.
 
 ![GCP end-to-end](../images/hyperscaler-end-to-end-gcp.svg)
 
