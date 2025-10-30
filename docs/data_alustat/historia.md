@@ -327,4 +327,4 @@ On syntynyt myös liikehdintää suuntaan, jossa pienemmille toimijoille tarjota
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/-wCzn9gKoUk?si=EVkxdjh_6WnDZiPn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-**Video 1:** *Hannes Mühleisen, joka on DuckDB:n perustajajäsen ja MotherDuckin toimitusjohtaja, kertoo tietokantojen historiasta. Huomaa, että varsinkin videon lopun osalta Hannesilla on oma agenda.*
+**Video 1:** *Hannes Mühleisen, joka on DuckDB:n perustajajäsen ja MotherDuckin toimitusjohtaja, kertoo tietokantojen historiasta. Hannes on puhunut myös Helsinki Data Week 2025:ssa ihan Suomen kamaralla.*
