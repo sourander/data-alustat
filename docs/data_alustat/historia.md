@@ -308,7 +308,7 @@ Nykyään tästä hybridistä käytetään termiä Data Lakehouse (Data **Lake**
 
 Modern data stack on siitä hassu sanavalinta, että "modern" on kohtalaisen suhteellinen käsite - aivan samalla tavalla kuin big datan "big". Aika näyttää, jäävätkö kummatkin termit elämään, jolloin joka vuosi sekä modernius että suuruus määrittyvät uusiksi. Oli termi mikä tahansa, data landscape pitänee katsastaa joka vuosi hieman uusin silmin, sillä muutos ja kasvu on ollut 2000-luvulla nopeaa. Termit ja trendit tulevat ja menevät, mutta tarve datan käsittelyyn, analytiikkaan ja liiketoiminnan ongelmien ratkaisemiseen pysyy.
 
-On syntynyt myös liikehdintää suuntaan, jossa pienemmille toimijoille tarjotaan ei-niin-big-datan työkaluja, kuten DuckDB, jota kaupallistaa MotherDuck. SaaS-työkalujen luomalle hajautukselle on syntynyt myös vastarintaa, jossa *unification* on tavoitteena. Esimerkiksi Microsoft Fabric pyrkii olemaan yksi työkalu, joka pyrkii yhdistämään koko data stackin yhden nimikkeen alle.
+On syntynyt myös liikehdintää suuntaan, jossa pienemmille toimijoille tarjotaan ei-niin-big-datan työkaluja, kuten DuckDB, jota kaupallistaa MotherDuck, ja konsultaatiopalveluiden kautta myös DuckDB Labs. SaaS-työkalujen luomalle *best of breed* -hajautukselle on syntynyt myös vastarintaa, jossa *unification* on tavoitteena. Esimerkiksi Microsoft Fabric pyrkii olemaan yksi työkalu, joka pyrkii yhdistämään koko data stackin yhden nimikkeen alle.
 
 ![ecosystem_over_time](../images/ecosystem_over_time.png)
 
@@ -327,4 +327,4 @@ On syntynyt myös liikehdintää suuntaan, jossa pienemmille toimijoille tarjota
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/-wCzn9gKoUk?si=EVkxdjh_6WnDZiPn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-**Video 1:** *Hannes Mühleisen, joka on DuckDB:n perustajajäsen ja MotherDuckin toimitusjohtaja, kertoo tietokantojen historiasta. Hannes on puhunut myös Helsinki Data Week 2025:ssa ihan Suomen kamaralla.*
+**Video 1:** *Hannes Mühleisen, joka on DuckDB:n luoja ja DuckDB Labs:n toimitusjohtaja, kertoo tietokantojen historiasta. Hannes on puhunut myös Helsinki Data Week 2025:ssa ihan Suomen kamaralla.*
