@@ -4,7 +4,9 @@ Tämä materiaali pyrkii esittelemään yleispiirteittäin, mihin käyttöön re
 
 ### SQL synty
 
-Tietokantojen normalisointiprosessin keksi IBM:n tutkija E.F. ”Ted” Codd 1970-luvun alussa, minkä voi nähdä jossain määrin nykymuotoisten tietokantojen syntyhetkenä. Relaatiotietokantamallin peruskäsitteitä ovat relaatiot (eli taulut) ja niiden väliset yhteydet (eng. relationships). Codd havaitsi, että normalisoimattomat taulut johtavat helposti ongelmiin, joita hän kutsui anomalioiksi. Näiden vaikutus on, että tietoa voi olla mahdotonta lisätä, muokata tai poistaa siten, että operaatio rajautuisi vain yhden entiteetin tietoihin. Tietojen esittämiseen ja käsittelyyn sovelletaan joukko-oppiin perustuvaa relaatiotietokantateoriaa.
+Tietokantojen normalisointiprosessin keksi IBM:n tutkija E.F. ”Ted” Codd 1970-luvun alussa, minkä voi nähdä jossain määrin nykymuotoisten tietokantojen syntyhetkenä. Codd julkaisi artikkelin nimeltä "A Relational Model of Data for Large Shared Data Banks", jossa hän esitteli relaatiotietokantamallin. Tämä malli perustui joukko-oppiin ja tarjosi tavan järjestää tietoa taulukoihin, joissa tiedot esitettiin riveinä ja sarakkeina. Coddin malli mahdollisti tehokkaan tiedonhallinnan ja -hakemisen, mikä oli merkittävä parannus aikaisempiin hierarkkisiin ja verkkomalleihin verrattuna. [^coddpaper]
+
+Relaatiotietokantamallin peruskäsitteitä ovat relaatiot (eli taulut) ja niiden väliset yhteydet (eng. relationships). Codd havaitsi, että normalisoimattomat taulut johtavat helposti ongelmiin, joita hän kutsui anomalioiksi. Näiden vaikutus on, että tietoa voi olla mahdotonta lisätä, muokata tai poistaa siten, että operaatio rajautuisi vain yhden entiteetin tietoihin. Tietojen esittämiseen ja käsittelyyn sovelletaan joukko-oppiin perustuvaa relaatiotietokantateoriaa.
 
 !!! tip "Tietokantateorian sanastoa"
 
@@ -27,6 +29,12 @@ taulu: list[tuple[int, str, int]] = [
     (3, "Jack", 180),
 ]
 ```
+
+Kielen SQL syntyyn Codd ei suoraan osallistunut, mutta hänen työnsä innoitti muita tutkijoita kehittämään kieltä. Työ jatkui IBM:llä, tutkimusprojektissa nimeltään System/R, jossa Donald D. Chamberlin ja kollegat kehittivät SEQUEL (Structured English Query Language) -kielen, joka myöhemmin lyhennettiin SQL:ksi. SQL:n ensimmäinen versio julkaistiin 1970-luvun lopulla, ja se on sittemmin kehittynyt merkittävästi. SQL on nykyään standardoitu kieli, jota käytetään laajalti relaatiotietokantojen hallintaan ja tiedon käsittelyyn. Varsinainen kanta, jossa tätä uutta deklaratiivista englantia muistuttavaa kieltä alettiin käyttää, oli SEQUEL-XRM, ja vuosi oli 1974. Saman vuosikymmenen aikana kehittyi SEQUEL/2, joka myöhemmin nimettiin uudelleen SQL:ksi juridisten syiden takia. IBM sulki projektin 1979, mutta projektin aikana kieli kuitenkin todettiin toteutuskelpoiseksi, joskin sen ajan laitteistoteknologia vaati käyttäjältä merkittävää kärsivällisyyttä. [^sqlmortals]
+
+> I remember seeing a demonstration of System R in the late 1970s. It had lots of “wow” factor, but on the hardware technology available at the time, even a simple query took minutes to run.
+>
+> — John L. Viescas [^sqlmortals]
 
 ### Kuin Excel?
 
@@ -328,3 +336,9 @@ On syntynyt myös liikehdintää suuntaan, jossa pienemmille toimijoille tarjota
 <iframe width="560" height="315" src="https://www.youtube.com/embed/-wCzn9gKoUk?si=EVkxdjh_6WnDZiPn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 **Video 1:** *Hannes Mühleisen, joka on DuckDB:n luoja ja DuckDB Labs:n toimitusjohtaja, kertoo tietokantojen historiasta. Hannes on puhunut myös Helsinki Data Week 2025:ssa ihan Suomen kamaralla.*
+
+
+## Lähteet
+
+[^coddpaper]: Codd, E.F. *A Relational Model of Data for Large Shared Data Banks*. https://www.seas.upenn.edu/~zives/03f/cis550/codd.pdf
+[^sqlmortals]: Viescas, J. *SQL Queries for Mere Mortals: A Hands-On Guide to Data Manipulation in SQL, 4th Edition*. Addison-Wesley Professional, 2018.
