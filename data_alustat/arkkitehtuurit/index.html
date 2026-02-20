@@ -1,0 +1,1399 @@
+
+<!doctype html>
+<html lang="fi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../hyodyt/">
+      
+      
+        <link rel="next" href="../olap/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Arkkitehtuurit - Data-alustat</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#yleisnakyma" class="md-skip">
+          Hyppää sisältöön
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Ylätunniste">
+    <a href="../.." title="Data-alustat" class="md-header__button md-logo" aria-label="Data-alustat" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Data-alustat
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Arkkitehtuurit
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Hae" placeholder="Hae" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Haku">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Tyhjää" aria-label="Tyhjää" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Aloitetaan hakua
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigaatio" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Data-alustat" class="md-nav__button md-logo" aria-label="Data-alustat" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Data-alustat
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tervetuloa kurssille
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data-alustat
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data-alustat
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../historia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Historia
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hyodyt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hyödyt bisnekselle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arkkitehtuurit
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arkkitehtuurit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Sisällysluettelo">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sisällysluettelo
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#yleisnakyma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yleisnäkymä
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Yleisnäkymä">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#50000-jalan-nakyma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        50,000 jalan näkymä
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#30000-jalan-nakyma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        30,000 jalan näkymä
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#datan-maara" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Datan määrä
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Datan määrä">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anti-big-data-duckdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anti Big Data: DuckDB
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pro-big-data-muut" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pro Big Data: Muut
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kaytannon-toteutuksia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Käytännön toteutuksia
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Käytännön toteutuksia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#saas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SaaS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hadoop-like" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hadoop-like
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#databricks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Databricks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hyperscalereiden-omat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hyperscalereiden omat
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hyperscalereiden omat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#microsoftazure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Microsoft/Azure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../olap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OLAP vs OLTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../terminologia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Terminologia
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kerrokset
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Kerrokset
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kerrokset/ingestion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ingestion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kerrokset/storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kerrokset/processor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Processor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../kerrokset/serving/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Serving
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tietomalli
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tietomalli
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tietomalli/tietomalli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tietomalli
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tietomalli/kuutio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OLAP-kuutio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Sisällysluettelo">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sisällysluettelo
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#yleisnakyma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Yleisnäkymä
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Yleisnäkymä">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#50000-jalan-nakyma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        50,000 jalan näkymä
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#30000-jalan-nakyma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        30,000 jalan näkymä
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#datan-maara" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Datan määrä
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Datan määrä">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anti-big-data-duckdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Anti Big Data: DuckDB
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pro-big-data-muut" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pro Big Data: Muut
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kaytannon-toteutuksia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Käytännön toteutuksia
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Käytännön toteutuksia">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#saas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SaaS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hadoop-like" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hadoop-like
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#databricks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Databricks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hyperscalereiden-omat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hyperscalereiden omat
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hyperscalereiden omat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#microsoftazure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Microsoft/Azure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AWS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GCP
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Arkkitehtuurit</h1>
+
+<p>On tärkeää muistaa, että data-alusta ei ole yksittäinen tuote vaan kollaasi eri työkaluja. Loppukäyttäjän näkökulmasta alusta voi olla <em>"se meiän firman power bi"</em>, mutta todellisuudessa kokonaisuus koostuu useista eri työkaluista. Lisäksi eri yritysten data-alustat voivat olla keskenään hyvin erilaisia. Yrityksellä voi olla yksi monoliittinen, keskitetty tietoalusta, tai hyvinkin hajautettu data-alustojen patteristo.</p>
+<h2 id="yleisnakyma">Yleisnäkymä</h2>
+<h3 id="50000-jalan-nakyma">50,000 jalan näkymä</h3>
+<p><img alt="architecture-50000-foot" src="../../images/architecture-50000-foot.svg" /></p>
+<p><strong>Kuvio 1:</strong> <em>Karkea 50,000 jalan näkymä data-alustan arkkitehtuuriin.</em></p>
+<p>Yllä olevan graafin (Kuvio 1) komponentit ovat vasemmalta lukien:</p>
+<ul>
+<li><strong>Sininen</strong>: Lähdejärjestelmät (source system)<ul>
+<li>Datan alkuperäiset lähteet, kuten operatiiviset tietokannat.</li>
+</ul>
+</li>
+<li><strong>Hopea</strong>: Sisääntuonnin työkalut (ingestion tools)<ul>
+<li>Kerros, joka louhii tai vastaanottaa datan tietoalustaan.</li>
+</ul>
+</li>
+<li><strong>Oranssi</strong>: Toistaiseksi mustana laatikkona nähty kokonaisuus, joka sisältää tallennuksen ja laskennan (eng. storage &amp; compute.)</li>
+<li><strong>Violetti</strong>: Datan tarjoilukerros (eng. serving layer) on loppukäyttäjän näkymä dataan. Tyypillinen esimerkki on BI-työkalu kuten Power BI, Qlik tai Tableau, mutta kyseessä voi hyvin olla myös käyttötarpeeseen räätälöity verkkosivusto (esim. Plotly, JavaScript D3, React) tai suoraa kantayhteyttä muistuttava connector (esim. ODBC connector). Tietoalusta voi myös puskea dataa ulos, jolloin sitä ei ylipäätänsä noudeta, vaan se syötetään järjestelmään X.</li>
+<li><strong>Ihmisfiguuri</strong>: Tietoalustan loppukäyttäjä. Heidän tarpeitaan varten koko alusta luodaan. Loppukäyttäjiä voi olla useita erilaisia, kuten myynti, ylin johto, tutkimus ja tuotekehitys, ohjelmistonkehittäjät, tietoturva-asiantuntijat, ja niin edelleen.</li>
+</ul>
+<h3 id="30000-jalan-nakyma">30,000 jalan näkymä</h3>
+<p><img alt="architecture-30000-foot" src="../../images/architecture-30000-foot.svg" /></p>
+<p><strong>Kuvio 2</strong>: <em>Edellistä kuviota yksityiskohtaisempi 30,000 jalan näkymä data-alustan arkkitehtuuriin.</em></p>
+<p>Huomaathan, että yllä olevassa Kuvio 2:ssa on jo valittu tiettyjä palveluita esimerkeiksi. Data-alustan <strong>ei ole pakko</strong> käyttää medaljonkiarkkitehtuuria (bronze, silver, gold) eikä mitään muutakaan yksittäistä valittua tuotetta. Työkalut ovat esillä liiallisen abstraktion välttelemiseksi.</p>
+<h2 id="datan-maara">Datan määrä</h2>
+<h3 id="anti-big-data-duckdb">Anti Big Data: DuckDB</h3>
+<p>Kaikki eivät niele täysin purematta big datan tarpeellisuutta kaikissa maailman yrityksissä. Tästä esimerkkinä on yhden noden kolumnaarinen OLAP-engine nimeltään <a href="https://duckdb.org/">DuckDB</a>. DuckDB ei ole perinteinen tietokantapalvelin vaan in-process tietokanta. Tietokanta voi olla tiedostossa (esim. <code>db.duckdb</code>) tai käytössä voi olla DuckLake, jolloin kannan metadata on katalogitiedostossa (tai tietokannassa) ja data tallennetaan tiedostoina (esim. Parquet) tiedostojärjestelmään tai pilveen.</p>
+<p>Huomaa, että 50,000 jalan päästä katseltuna kaikki arkkitehtuurit näyttävät yllättävän samalta. Periaatteessa DuckDB:n arkkitehtuuri on myös vähän lähempääin katsottuna yllättävän samanlainen kuin modernien tietoalustojen "big data"-versionsa. Yllä esitelty 30,000 jalan näkymä on hyvinkin toteutettavissa DuckDB:n avulla.</p>
+<div class="admonition question">
+<p class="admonition-title">Tehtävä</p>
+<p>Lue MotherDuckin Jordan Tiganin kirjoitus <a href="https://motherduck.com/blog/big-data-is-dead/">Big Data is Dead</a>. Mihin Jordan perustaa väitteensä?</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>DuckDB on oikeasti olemassa oleva projekti, joka on julkaistu avoimen lähdekoodin lisenssillä. DuckDB on SQL-tietokanta, joka on suunniteltu toimimaan yhdellä tietokoneella. DuckDB on myös yksi esimerkki siitä, että data-alustan ei tarvitse olla monoliittinen, vaan se voi koostua useista eri työkaluista.</p>
+</div>
+<p>Alla esimerkki DuckDB-tyylisestä alusta, jossa kaikki data mahtuu yhden tietokoneen rammiin vähintään paloiteltuna. Huomaa, että arkkitehtuuri ei loogisella tasolla eroa kovinkaan paljon esimerkiksi yllä olevasta 30,000 jalan näkymästä, vaikka fyysisellä tasolla ero onkin merkittävämpi (yksi tietokone vs. monta hajautetun laskennan klusteria.) Kuvan alusta on jotakin, mikä on täysin tehtävissä 3 opintopisteen kurssin aikana.</p>
+<p><img alt="yhden-koneen-alusta" src="../../images/yhden-koneen-data-alusta.png" /></p>
+<p><strong>Kuvio 3</strong>: <em>Yhden koneen ja yhden tietolähteen data-alusta. Alustaa on helppo jatkaa suuremmaksi. Siihen voi tuoda uusia tietolähteitä, siirtää laskennan pilveen, siirtää tallennuksen pilveen, vaihtaa BI-työkalun, ottaa orkestrointiin dbt Cloudin ja/tai Airflow:n. Oikein käytettynä alustasta voisi olla hyvinkin realistista bisneshyötyä.</em></p>
+<div class="admonition question">
+<p class="admonition-title">Tehtävä</p>
+<p>Vertaa yllä esiteltyä alustaa Christophe Blefarin <a href="https://www.blef.fr/the-fancy-data-stack/">Fancy Data Stackiin</a>. Kuinka paljon yhtäläisyyksiä ja eroja löydät?</p>
+</div>
+<h3 id="pro-big-data-muut">Pro Big Data: Muut</h3>
+<p>Mikäli voidaan olettaa, että dataa on paljon, ja että dataa on useista eri lähteistä, on todennäköistä, että dataa ei voida tallentaa yhdelle koneelle (esim. <code>db.duckdb</code>-tiedostoon). Vaikka data hajautettaisiin pilvipalvelun tarjoamaan loputtamasti skaalautuvaan tallennustilaan eri tiedostoihin partitioituina, sen prosessointi yhdellä koneella ei välttämättä ole realistista. Tällöin tarvitaan hajautettua laskentaa. Hajautettu laskenta käsitellään <a href="../../kerrokset/processor/">Kerrokset/Processor</a>-osiossa.</p>
+<p>Big data -tyyliset modernit tietoalustat ovat siis, kuten aiemmin todettua, 50,000 ja 30,000 jalan etäisyydeltä katsottuna loogisesti hyvinkin samanlaisia kuin sinun tietokoneeseesi viritelty DuckDB, jossa kaikki kerrokset (tietojen lataus, mallinnus ja esitys) pyörivät yhden tietokoneen muistissa. Yhden tietokoneen työkalut kuten Pythonin Pandas-kirjasto, perinteinen Jupyter Notebook sekä DuckDB eivät edusta hajautetun laskennan työkaluja, joten ne menevät vaihtoon big dataa käsitellessä. Yritys voi valita ainakin seuraavista vaihtoehdoista:</p>
+<ul>
+<li><strong>Hallittuja</strong>, suljetun lähdekoodin pilvipalveluita<ul>
+<li>Hyperscalereiden (AWS, Azure, GCP) omat ratkaisut </li>
+<li>Muut SaaS-tarjoajat (Snowflake, Fivetran)</li>
+</ul>
+</li>
+<li><strong>Hallittuja</strong>, avointa lähdekoodia olevia pilvipalveluita<ul>
+<li>Hyperscalereiden avoimen lähdekoodin versiot (esim. AWS MSK = Apache Kafka)</li>
+<li>Muut SaaS-tarjoajat (esim. Confluent = Apache Kafka, Databricks = Apache Spark)</li>
+</ul>
+</li>
+<li><strong>Itse hostattuja</strong> avoimen lähdekoodin palveluita<ul>
+<li>Apache Spark, Kafka etc.</li>
+</ul>
+</li>
+</ul>
+<p>Yllä olevan listan itemit eivät ole toisiaan poissulkevia. On mahdollista ottaa hallittu alusta esimerkiksi tietovarastoksi (esim. Snowflake), mutta koodata tee se itse -periaatteella ohjelmisto, joka kirjoittaa datan tietoalustaan. On myös mahdollista koodata koko ratkaisu itse, mitä valtavat IT-jätit kuten Google ja Netflix tekevätkin. Jätetään tämä vaihtoehto kuitenkin käsittelemättä useimmiten täysin epärealistisena.</p>
+<h2 id="kaytannon-toteutuksia">Käytännön toteutuksia</h2>
+<p>Oletetaan, että Yritys X tarvitsee nimenomaan big dataan kykenevän, hajautetun alustan. Alla on pari esimerkkiä, jotka noudattavat aiemmin esiteltyjä hallittuja (eng. managed) ja itse hostattuja (eng. self-hosted) vaihtoehtoja. Huomaa, että itse hostattu voi kuitenkin olla pilvipalvelussa (esim. AWS EC2) tai omassa konesalissa (eli on-premise.)</p>
+<h3 id="saas">SaaS</h3>
+<p>Yritykselle itselleen hyvin yksinkertainen ratkaisu on ostaa ratkaisut SaaS (Software as a service) -palveluntarjojilta palveluina. Hintalappu saattaa osoittautua korkeammaksi kuin räätälöidymmillä vaihtoehdoilla, mutta toisaalta ratkaisu on nopea ja helppo ottaa käyttöön. Snowflake hallinnoi AWS/Azure/Google tallennustilan, laskennan ja muun. Data ja laskenta ovat heidän pilvitileillään. Annetut tuotteet ovat esimerkkejä. Snowflaken voi korvata esimerkiksi <a href="https://www.dremio.com/">Dremio</a>:lla ja Tableaun esimerkiksi <a href="https://www.qlik.com/us/">Qlik Sense</a>:llä tai <a href="https://powerbi.microsoft.com/en-us/">Power BI Pro</a>:lla. Fivetran:n voi korvata esimerkiksi <a href="https://www.stitchdata.com/">Stitch</a>:llä. Dbt:n voi korvata esimerkiksi <a href="https://www.matillion.com/">Matillion</a>:lla tai jopa HashiCorp:n <a href="https://www.terraform.io/">Terraform</a>:lla.</p>
+<p><img alt="SaaS Snowflake" src="../../images/architecture-saas-only.png" /></p>
+<p><strong>Kuvio 4</strong>: <em>SaaS-ratkaisu, jossa kaikki on ostettu palveluna.</em></p>
+<h3 id="hadoop-like">Hadoop-like</h3>
+<p>Hadoop-ekosysteemi on toteutettavissa joko itse hostattuna, Databricksin avulla tai käyttäen hyperscalereiden tarjoamia vastaavia ratkaisuja. Alla taulukossa muut paitsi Databricks, joka esitellään alempana.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Open Source</th>
+<th>AWS</th>
+<th>Fabric (Azure)</th>
+<th>GCP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ingestion</td>
+<td>Airbyte</td>
+<td>AWS Lake Formation, DMS</td>
+<td>Data Factory (Azure Data Factory)</td>
+<td>Data Fusion</td>
+</tr>
+<tr>
+<td>Orchestration</td>
+<td>Airflow</td>
+<td>Data Pipeline, MWAA (Airflow)</td>
+<td>Data Pipeline (Azure Data Factory)</td>
+<td>Dataproc</td>
+</tr>
+<tr>
+<td>Streaming</td>
+<td>Kafka</td>
+<td>Kinesis, MSK (Kafka)</td>
+<td>Real-Time Intelligence (Event Hubs)</td>
+<td>Pub/Sub</td>
+</tr>
+<tr>
+<td>SQL (Query)</td>
+<td>Hive</td>
+<td>Athena, Redshift</td>
+<td>Data Warehouse (Azure Synapse Analytics)</td>
+<td>BigQuery</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>HDFS</td>
+<td>S3</td>
+<td>OneLake (Azure Data Lake Storage)</td>
+<td>Cloud Storage</td>
+</tr>
+<tr>
+<td>Compute</td>
+<td>Spark</td>
+<td>EMR</td>
+<td>Fabric Data Engineering (Azure Synapse Spark)</td>
+<td>Dataproc</td>
+</tr>
+<tr>
+<td>Auth</td>
+<td>???</td>
+<td>IAM</td>
+<td>Microsoft Entra ID (Azure Entra ID)</td>
+<td>Cloud IAM</td>
+</tr>
+<tr>
+<td>BI</td>
+<td>Superset</td>
+<td>QuickSight</td>
+<td>Power BI (Same in both)</td>
+<td>Looker</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Taulukon Fabric-sarake edustaa Microsofin uutta, pilvipohjaista data-alustaratkaisua, joka yhdistää useita eri työkaluja ja palveluita yhteen kokonaisuuteen. Vanhempi vastine on suluissa perässä. Huomaa, että aivan 1:1 vastinetta ei aina kaikissa tilanteissa löydy, koska uusi, syntynyt kokonaisuus voi erota entisistä työkaluista granulariteetiltaan ja toiminnaltaan. Tässä mielessä Fabric muistuttaa hieman one-stop-shop -ratkaisua, mutta aivan kuten Databricks tai Snowflake, se ei kuitenkaan ole täysin monoliittinen ratkaisu.</p>
+</div>
+<h3 id="databricks">Databricks</h3>
+<p>Databricks on Apache Sparkin luojien perustama yritys, joka myy Apache Sparkia heidän hallinnoimana. Databricks ei siis ylläpidä omia palvelimiaa ja vuokraa niitä samalla tavalla kuin AWS, Azure tai GCP. Päinvastoin: asiakas antaa Databricksille luvan hallinnoida virtuaalikoneita heidän virtuaaliympäristössään. Asiakkaan rajapinta (esim. <code>asiakas.databricks.com</code>) ja siihen liittyvä metadata (kuten ajastetut Jobin) ylläpidetään Databricksin hallinnoimalla tilillä. Sen sijaan asiakkaan data pysyy heidän omalla tilillään. Data ei poistu asiakkaan AWS/Azure/GCP-tililtä.</p>
+<div class="admonition question">
+<p class="admonition-title">Tehtävä</p>
+<p>Tutustu siihen, miltä Databricks näyttää käytännössä. Databricks Web UI sekä siihen kuuluva (Jupyter) Notebook interface näkyy näissä videoissa: <a href="https://www.youtube.com/playlist?list=PLTPXxbhUt-YWyPmBDlFffnSJNrqIyla5F">How to Build a Cloud Data Platform - Workshop Series</a>. Playlistillä on kestoa 4 x 2 tuntia, joten ei ole välttämätöntä, että katsot sen kokonaan. Kelaile, silmäile ja tutustu siten, kuten ajankäyttösi sallii. Videolla näkyy käytännön tasolla useita tämän kurssin aiheita, joten videon katsominen voi selkeyttää useita termejä merkittävällä tavalla. </p>
+<p>Mikäli aiot yritykseen töihin, joka käyttää Databricksiä mihinkään, katso koko videosarja kokonaisuudessaan.</p>
+</div>
+<h3 id="hyperscalereiden-omat">Hyperscalereiden omat</h3>
+<p>Hyperscalarit (eli AWS, Azure ja GCP) tarjoavat myös omia pilvinatiiveja ratkaisujaan. Huomaa, että jokaisella alustalla on lopulta hyvin samankaltaisia työkaluja. Esimerkiksi datan visualisointiin on kullakin oma työkalunsa: GCP Looker, AWS QuickSight ja Azure Power BI. </p>
+<p>Valtaosa tämän kurssin graafeista on yksinkertaistettuja, Excalidraw:lla piirrettyjä diagrammeja. Tämä otsake on ainakin toistaiseksi poikkeus. Voi olla, että jatkossa palveluntarjoajan graafit korvataan yksinkertaistetuilla, Excalidraw:lla piirretyillä graafeilla. Toivon mukaan tästä huolimatta graafeista on kuitenkin luettavissa, että palveluntarjoajilla on hyvin samankaltaisia työkaluja ja koko arkkitehtuurit muistuttavat suuresti toisiaan.</p>
+<h4 id="microsoftazure">Microsoft/Azure</h4>
+<p>Azure data-alusta-arkkitehtuuri perustuu kerroksittaiseen rakenteeseen, jossa data etenee raakadatasta rikastettuun ja kuratoituun muotoon. Arkkitehtuurissa Azure Synapse Analytics toimii keskeisenä komponenttina, joka yhdistää eri toimintoja kuten datan varastointi (Azure Data Lake Storage), prosessointi (SQL ja Spark pools) ja analytiikka. Microsoft Fabric puolestaan edustaa Microsoftin pyrkimystä yhdistää aiemmin erillisinä toimineet palvelut (mm. Azure Synapse, Power BI, Data Factory) yhtenäisemmäksi kokonaisuudeksi – kenties jopa "one-stop-shop"-ratkaisuksi tai kohti monoliittisempaa ratkaisua.</p>
+<p><img alt="Azure end-to-end" src="../../images/hyperscaler-end-to-end-azure.svg" /></p>
+<p><strong>Kuvio 5</strong>: <em>Azure end-to-end (<a href="https://learn.microsoft.com/en-us/azure/architecture/example-scenario/dataplate2e/data-platform-end-to-end?tabs=portal">lähde</a>)</em></p>
+<p><img alt="Microsoft Fabric" src="../../images/hyperscaler-end-to-end-ms-fabric.png" /></p>
+<p><strong>Kuvio 6</strong>: <em>Microsoft Fabric (<a href="https://learn.microsoft.com/en-us/fabric/fundamentals/microsoft-fabric-overview">lähde</a>) on Microsoftin uusi, pilvipohjainen data-alustaratkaisu, joka yhdistää useita eri työkaluja ja palveluita yhteen kokonaisuuteen.</em></p>
+<h4 id="aws">AWS</h4>
+<p>AWS data-alusta-arkkitehtuuri jakautuu toiminnallisiin kerroksiin: sisääntuonti (ingestion), tallennus (storage), luettelointi ja haku (cataloging and search), prosessointi (processing), kulutus (consumption) sekä tietoturva ja hallinta (security and governance). Arkkitehtuuri hyödyntää palveluna tarjottavia (serverless) komponentteja, kuten Amazon S3 data-järven tallennustilana, AWS Glue ETL-prosesseihin ja metatietojen hallintaan, Lake Formation keskitettynä tietoluettelona ja Amazon Athena SQL-kyselyihin. AWS:n malli perustuu resurssien käyttöön pohjautuvaan laskutukseen, jossa infrastruktuurin skaalautuvuus määräytyy tarpeen mukaan ilman etukäteistä kapasiteetin määrittelyä, toisin kuin Fabric, jossa kapasiteetti on määriteltävä etukäteen.</p>
+<p><img alt="AWS end-to-end" src="../../images/hyperscaler-end-to-end-aws.jpg" /></p>
+<p><strong>Kuvio 6</strong>: <em>Amazon Web Services end-to-end (<a href="https://aws.amazon.com/blogs/big-data/aws-serverless-data-analytics-pipeline-reference-architecture/">lähde</a>)</em></p>
+<h4 id="gcp">GCP</h4>
+<p>Google Cloud Platform (GCP) data-alusta-arkkitehtuurissa BigQuery toimii keskeisenä palveluna, joka yhdistää datan varastoinnin ja analytiikan samaan ympäristöön. Arkkitehtuuri koostuu toisiaan täydentävistä palveluista: Data Fusion (datan kerääminen), Cloud Storage (tallennustila), Dataflow (stream- ja batch-prosessointi), Dataproc (Hadoop/Spark-ympäristö) ja Looker (visualisointi). GCP:n arkkitehtuuri on suunniteltu tukemaan erityisesti suurten datamassojen analytiikkaa, geospatiaalista analyysiä sekä integroitumaan Googlen koneoppimispalveluihin.</p>
+<p><img alt="GCP end-to-end" src="../../images/hyperscaler-end-to-end-gcp.svg" /></p>
+<p><strong>Kuvio 7</strong>: <em>Google Cloud Platform end-to-end (<a href="https://cloud.google.com/architecture/marketing-data-warehouse-on-gcp">lähde</a>)</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 <a href="https://www.kamk.fi">Kajaanin Ammattikorkeakoulu Oy</a>. 
+Licenced under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Kopioitu leikep\u00f6yd\u00e4lle", "clipboard.copy": "Kopioi leikep\u00f6yd\u00e4lle", "search.result.more.one": "1 lis\u00e4\u00e4 t\u00e4ll\u00e4 sivulla", "search.result.more.other": "# lis\u00e4\u00e4 t\u00e4ll\u00e4 sivulla", "search.result.none": "Ei t\u00e4sm\u00e4\u00e4vi\u00e4 dokumentteja", "search.result.one": "1 t\u00e4sm\u00e4\u00e4v\u00e4 dokumentti", "search.result.other": "# t\u00e4sm\u00e4\u00e4v\u00e4\u00e4 dokumenttia", "search.result.placeholder": "Kirjoita aloittaaksesi haun", "search.result.term.missing": "Puuttuu", "select.version": "Valitse versio"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
