@@ -331,6 +331,19 @@ On syntynyt myös liikehdintää suuntaan, jossa pienemmille toimijoille tarjota
     Useat muutkin yritykset toimivat kuten MotherDuck eli kaupallistavat avointa lähdekoodia. Näihin lukeutuvat muiden muassa Databricks (Spark), Nginx, MongoDB, Confluent (Kafka), HashiCorp (Terraform), Red Hat (RHEL, CentOS). Bisnesmallin pohjalla oleva päätuote on open source, mutta sitä kaupallistetaan yritysasiakkaille managed SaaS-palveluna. Tämän voi nähdä datan käytön demokratisointina: yrityksellä ei tarvitse olla varaa Clouderan, Oraclen, IBM:n tai muiden jättien lisensseihin käsitelläkseen dataa.
 
 
+## Hyödyt
+
+Hyötyjä siihen tilanteeseen verrattuna, että tietoalustaa ei ole, ovat muiden muassa alla listatut. Vaihtoehto tietoalustan puuttumiselle on Excel-tiedostot ja muut kopiot tai dumpit.
+
+* **Datan laadun paraneminen.** Loppukäyttäjät uskaltavat luottaa dataan, joka on tallennettu yhteen paikkaan. Tämä vähentää datan duplikaatiota ja parantaa datan laatua.
+* **Tietosuojan paraneminen**. Datan hallinta on keskitettyä, jolloin tietosuojan hallinta on helpompaa.
+* **Datakulttuurin kehittyminen**. Datakulttuuri kehittyy, kun dataa käytetään liiketoiminnan päätöksenteossa ja työnteon arjessa.
+* **Siilojen ja heimotietouden purku**. Data-alustan käyttöönotto edellyttää yhteistyötä eri tiimien välillä. Tämä purkaa siiloja ja heimotietoutta.
+
+!!! tip
+
+    Jos termi heimostietous on vieras, tutustu asiaan. Englanniksi termi on *tribal knowledge*.
+
 ## Historia videona
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/-wCzn9gKoUk?si=EVkxdjh_6WnDZiPn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
