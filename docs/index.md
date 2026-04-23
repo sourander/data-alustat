@@ -33,18 +33,18 @@ Kertoimet on valittu siten, että *max pisteet* kuvastaa *keskimääräisiä* op
 
 Alla listattuna kurssin harjoitukset (==HUOM! TÄMÄ ON YHÄ TODO eli WORK IN PROGRESS==):
 
-| ID    | Otsikko      | Harjoituksen lyhyt kuvaus                                                                           | Max pisteet (≈tunnit) |
-| ----- | ------------ | --------------------------------------------------------------------------------------------------- | --------------------- |
-| CSC01 | CSC Pouta    | Metaharjoitus, jossa opit ajamaan seuraavat harjoitukset oman koneen sijasta CSC Pouta -palvelussa. | 5                     |
-| LAK01 | Duck Lake    | Duck Lake -harjoitus, jossa kasataan minimaalinen Data Lakehouse.                                   | 10                    |
-| SRK01 | Apache Spark | Apache Spark -tutuksi lokaalin `pyspark`:n avulla.                                                  | 5                     |
-| SRK02 | Spark Delta  | Apache Spark -harjoitus, jossa käytetään Delta Lakea.                                               | 10                    |
-| CDC01 | Mealie CDC   | Mealie-sovelluksen CDC-tiedonkeruuharjoitus.                                                        | 20                    |
-| STR01 | Streaming    | Redpanda Streaming -harjoitus. Kafka producer ja consumer toteutetaan Pythonilla.                   | 15                    |
-| AUR01 | Airflow      | Orkestraatioharjoitus, jossa käytetään Airflow-työkalua.                                            | 10                    |
-| KIM01 | Kimball      | Dimensionaalisen mallintamisen harjoitus.                                                           | 10                    |
-| CUB01 | OLAP-kuutio  | OLAP-kuutio rakentaminen Marimo Notebookissa.                                                       | 5                     |
-| BIG01 | Juna-alusta  | Digitrafficin Rautatieliikennedataa hyödyntävä End-to-End OLAP-alusta.                              | 30                    |
+| ID    | Otsikko      | Harjoituksen lyhyt kuvaus                                                                            | Max pisteet (≈tunnit) |
+| ----- | ------------ | ---------------------------------------------------------------------------------------------------- | --------------------- |
+| CSC01 | cPouta       | Metaharjoitus, jossa opit ajamaan seuraavat harjoitukset oman koneen sijasta CSC cPouta -palvelussa. | 5                     |
+| LAK01 | Duck Lake    | Duck Lake -harjoitus, jossa kasataan minimaalinen Data Lakehouse.                                    | 10                    |
+| SRK01 | Apache Spark | Apache Spark -tutuksi lokaalin `pyspark`:n avulla.                                                   | 5                     |
+| SRK02 | Spark Delta  | Apache Spark -harjoitus, jossa käytetään Delta Lakea.                                                | 10                    |
+| CDC01 | Mealie CDC   | Mealie-sovelluksen CDC-tiedonkeruuharjoitus.                                                         | 20                    |
+| STR01 | Streaming    | Redpanda Streaming -harjoitus. Kafka producer ja consumer toteutetaan Pythonilla.                    | 15                    |
+| AUR01 | Airflow      | Orkestraatioharjoitus, jossa käytetään Airflow-työkalua.                                             | 10                    |
+| KIM01 | Kimball      | Dimensionaalisen mallintamisen harjoitus.                                                            | 10                    |
+| CUB01 | OLAP-kuutio  | OLAP-kuutio rakentaminen Marimo Notebookissa.                                                        | 5                     |
+| BIG01 | Juna-alusta  | Digitrafficin Rautatieliikennedataa hyödyntävä End-to-End OLAP-alusta.                               | 30                    |
 
 Saamasi arvosana riippuu kokonaispisteitä, jotka olet kerännyt eri harjoitukset palauttamalla. Arvosanat määräytyvät seuraavasti:
 
