@@ -35,7 +35,7 @@ Alla listattuna kurssin harjoitukset (==HUOM! TÄMÄ ON YHÄ TODO eli WORK IN PR
 
 | ID    | Otsikko      | Harjoituksen lyhyt kuvaus                                                                           | Max pisteet (≈tunnit) |
 | ----- | ------------ | --------------------------------------------------------------------------------------------------- | --------------------- |
-| PUH01 | CSC Puhti    | Metaharjoitus, jossa opit ajamaan seuraavat harjoitukset oman koneen sijasta CSC Puhti -palvelussa. | 5                     |
+| CSC01 | CSC Pouta    | Metaharjoitus, jossa opit ajamaan seuraavat harjoitukset oman koneen sijasta CSC Pouta -palvelussa. | 5                     |
 | LAK01 | Duck Lake    | Duck Lake -harjoitus, jossa kasataan minimaalinen Data Lakehouse.                                   | 10                    |
 | SRK01 | Apache Spark | Apache Spark -tutuksi lokaalin `pyspark`:n avulla.                                                  | 5                     |
 | SRK02 | Spark Delta  | Apache Spark -harjoitus, jossa käytetään Delta Lakea.                                               | 10                    |
