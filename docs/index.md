@@ -26,7 +26,7 @@ for harjoitus in tehdyt_harjoitukset:
     tehtyjen_harjoitusten_pisteet.append(painotettu)
 
 # Kurssin kokonaispistemäärä on kaikkien harjoitusten pisteiden summa
-kurssin_kokonaispistemaara = sum(harjoitusten_pisteet)
+kurssin_kokonaispistemaara = sum(tehtyjen_harjoitusten_pisteet)
 ```
 
 Kertoimet on valittu siten, että *max pisteet* kuvastaa *keskimääräisiä* opiskelijan tehtävään kuluttamia tunteja. Kerään tilastotietoa harjoituksiin käyttämästänne ajasta, jotta voin optimoida tätä pisteytysmallia tulevaisuudessa. Sinun tulee siis kertoa tehtävään käyttämäsi aika videodemossa.
