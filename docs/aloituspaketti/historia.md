@@ -318,7 +318,7 @@ Modern data stack on siitä hassu sanavalinta, että "modern" on kohtalaisen suh
 
 On syntynyt myös liikehdintää suuntaan, jossa pienemmille toimijoille tarjotaan ei-niin-big-datan työkaluja, kuten DuckDB, jota kaupallistaa MotherDuck, ja konsultaatiopalveluiden kautta myös DuckDB Labs. SaaS-työkalujen luomalle *best of breed* -hajautukselle on syntynyt myös vastarintaa, jossa *unification* on tavoitteena. Esimerkiksi Microsoft Fabric pyrkii olemaan yksi työkalu, joka pyrkii yhdistämään koko data stackin yhden nimikkeen alle.
 
-![ecosystem_over_time](../images/ecosystem_over_time.png)
+![ecosystem_over_time](images/ecosystem_over_time.png)
 
 **Kuvio 1:** *Ekosysteemien muutos vuosista 2012 alkaen. Työkalujen määrä on kasvanut reippaalla tahdilla.* (Lähde: [Matt Turck](https://mattturck.com/))
 

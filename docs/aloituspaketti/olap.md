@@ -4,7 +4,7 @@
 
 Tietokannat voidaan jakaa kahteen luokkaan käyttötarkoituksen mukaan: operatiivisiin kantoihin ja tietovarastoihin (eng. data warehouse). Operatiiviset transaktiokannat käsittelevät tilauksia, varauksia, ottoja ja muita tilamuutoksia pääasiassa rivi errallaan. Nämä tuotannon kannalta kriittiset kannat eivät tyypillisesti tallenna historiadataa vaan edustavat datan nykytilannetta. Tietovarastot toimivat hyvin päinvastaisesti: tietokannan haut käsittelevät useita tuhansia tai miljoonia rivejä kerrallaan, ja haettu tieto edustaa esimerkiksi keskimääräistä varausmäärää per tietty asiakassektori. Näille tiedon käsittelyn malleille on vakiintuneet lyhenteet: tietovarastokäyttöä vastaa lyhenne OLAP (Online Analytics Processing), ja operatiivisten kantojen käyttöä OLTP (Online Transaction Processing). Mallien eroavaisuudet on esitelty alla olevassa taulukossa.
 
-![olap-varastosofta](../images/olap-varastosofta.svg)
+![olap-varastosofta](images/olap-varastosofta.svg)
 
 **Kuvio 1**: *Eri applikaatioiden data virtaa usein eri kantoihin. Data saatetaan kerätysti yhteen tietovarastoon, jotta analyytikko, ylin johto, tai joku muu yrityksen sisäinen taho voi sitä tarkastella.*
 
