@@ -357,7 +357,7 @@ docker compose down -v
 
 !!! tip "Kuinka tästä eteenpäin?"
 
-    Jos haluat jatkaa Apache Sparkin opiskelua, suosittelen jättämään konfiguroinnin pienelle. Ota käyttöön **Databricks Free Edition**. Sinulla ei kuitenkaan ole isoja datamääriä, joten pärjännet kyseisen palvelun rajoituksilla.
+    Jos haluat jatkaa Apache Sparkin opiskelua, suosittelen jättämään konfiguroinnin pienelle. Ota käyttöön **Databricks Free Edition**. Sinulla ei kuitenkaan ole isoja datamääriä, joten pärjännet kyseisen palvelun rajoituksilla. Sisältöä on netissä enemmän kuin ihminen ehtii lukea. Yksi hyvä paikka aloittaa on Databricksin oma dokumentaatio, toinen ovat ohjesivustot kuten [sparklearning](https://vinodkc.github.io/sparklearning/).
 
 ## Videolla esitettävä
 
