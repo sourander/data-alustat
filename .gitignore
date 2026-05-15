@@ -15,3 +15,6 @@ venv.bak/
 
 # mkdocs documentation local build
 /site
+
+# Marimo
+__marimo__/
