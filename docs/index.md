@@ -37,7 +37,7 @@ Alla listattuna kurssin harjoitukset (==HUOM! TÄMÄ ON YHÄ TODO eli WORK IN PR
 | --------------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------- | --------------------- |
 | [CSC01](harjoitukset/csc01_cpouta.md)   | cPouta       | Metaharjoitus, jossa opit ajamaan seuraavat harjoitukset oman koneen sijasta CSC cPouta -palvelussa. | 10                    |
 | [LAK01](harjoitukset/lak01_ducklake.md) | Duck Lake    | Duck Lake -harjoitus, jossa kasataan minimaalinen Data Lakehouse.                                    | 20                    |
-| SRK01                                   | Apache Spark | Apache Spark -tutuksi lokaalin `pyspark`:n avulla.                                                   | 10                    |
+| [SRK01](harjoitukset/srk01_spark.md)    | Apache Spark | Apache Spark -tutuksi kontitetun `Spark`:n ja `spark-client`:n avulla.                               | 10                    |
 | SRK02                                   | Spark Delta  | Apache Spark -harjoitus, jossa käytetään Delta Lakea.                                                | 10                    |
 | [CDC01](harjoitukset/cdc01_mealie.md)   | Mealie CDC   | Mealie-sovelluksen CDC-tiedonkeruuharjoitus.                                                         | 20                    |
 | STR01                                   | Streaming    | Redpanda Streaming -harjoitus. Kafka producer ja consumer toteutetaan Pythonilla.                    | 10                    |
