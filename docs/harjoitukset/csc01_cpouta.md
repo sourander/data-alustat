@@ -6,17 +6,14 @@ Tässä harjoituksessa otat käyttöön CSC:n cPouta -pilvipalvelun. Tämä teht
 
 Tee nämä ajoissa, koska Account ja/tai Project luomiseen voi mennä tunteja.
 
-* Luo CSC Account
-    * Tähän käytetään korkeakoulun tarjoamia HAKA-tunnuksia.
-* :clock: Odota, että saat CSC:ltä sähköpostia, että Account on luotu. Tässä voi mennä tunteja.
-* Luo CSC Student Project
-    * Tämä neuvotaan CSC:n sivuilla: [Creating a new project: Student](https://docs.csc.fi/accounts/how-to-create-new-project/#student)
-    * Lisää cPouta-palvelu projektiin luomisvaiheessa (tai myöhemmin).
-* :clock: Odota, että saat CSC:ltä sähköpostia, että alusta on valmis. Tässä voi mennä tunteja.
+* **Luo CSC Account**. Tähän käytetään korkeakoulun tarjoamia HAKA-tunnuksia.
+    * :clock: Odota, että saat CSC:ltä sähköpostia, että Account on luotu. Tässä voi mennä tunteja.
+* **Luo CSC Student Project**. Tämä neuvotaan CSC:n sivuilla: [Creating a new project: Student](https://docs.csc.fi/accounts/how-to-create-new-project/#student) Lisää cPouta-palvelu projektiin luomisvaiheessa.
+    * :clock: Odota, että saat CSC:ltä sähköpostia, että alusta on valmis. Tässä voi mennä tunteja.
 
 ## Tehtävänanto
 
-Kun alkuvaiheet on tehty, tee alla olevat vaiheet. Jos haluat video-ohjeen, voit tutustua [cPouta and ePouta related videos](https://docs.csc.fi/cloud/pouta/tutorials/pouta-videos/)-sivun sisältöön.
+Kun alkuvaiheet on tehty, voit siirtyä hauskaan vaiheeseen eli virtuaalikoneen luomiseen. Jos haluat video-ohjeen, voit tutustua [cPouta and ePouta related videos](https://docs.csc.fi/cloud/pouta/tutorials/pouta-videos/)-sivun sisältöön.
 
 ### cPouta
 
