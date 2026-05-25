@@ -3,4 +3,8 @@ nav:
   - csc01_cpouta.md
   - lak01_ducklake.md
   - srk01_spark.md
+  - srk02_delta.md
   - cdc01_mealie.md
+  - orc01_airflow.md
+  - orc02_dagster.md
+

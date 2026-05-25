@@ -87,7 +87,7 @@ Tässä välissä kannattaa avata selaimessa `localhost:4040`, josta näet Spark
 
 ## Tehtävänanto
 
-Seuraa [Spark Getting Started -ohjetta](https://spark.apache.org/docs/latest/getting-started/index.html) ja rakenna alla kuvattu kokonaisuus.
+Seuraa [Spark Getting Started -ohjetta](https://spark.apache.org/docs/latest/api/python/getting_started/index.html) ja rakenna alla kuvattu kokonaisuus.
 
 ### 1. Testaa komentorivillä
 
