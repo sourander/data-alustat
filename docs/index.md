@@ -51,7 +51,7 @@ Alla listattuna kurssin harjoitukset (==HUOM! TÄMÄ ON YHÄ TODO eli WORK IN PR
 | SRK02                                   | Spark Delta  | Apache Spark -harjoitus, jossa käytetään Delta Lakea.                                                | 15                    | A        |
 | [CDC01](harjoitukset/cdc01_mealie.md)   | Mealie CDC   | Mealie-sovelluksen CDC-tiedonkeruuharjoitus.                                                         | 20                    | A        |
 | STR01                                   | Streaming    | Redpanda Streaming -harjoitus. Kafka producer ja consumer toteutetaan Pythonilla.                    | 10                    | B        |
-| ORC01                                   | Airflow      | Orkestraatioharjoitus, jossa käytetään Airflow-työkalua.                                             | 15                    | B        |
+| [ORC01](harjoitukset/orc01_airflow.md)  | Airflow      | Orkestraatioharjoitus, jossa käytetään Airflow-työkalua.                                             | 15                    | B        |
 | ORC02                                   | Dagster      | Orkestraatioharjoitus, jossa käytetään Dagster-työkalua.                                             | 10                    | B        |
 | KIM01                                   | Kimball      | Dimensionaalisen mallintamisen harjoitus.                                                            | 10                    | B        |
 | CUB01                                   | OLAP-kuutio  | OLAP-kuutio rakentaminen Marimo Notebookissa.                                                        | 10                    | B        |
