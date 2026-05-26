@@ -46,9 +46,9 @@ Alla listattuna kurssin harjoitukset (==HUOM! TÄMÄ ON YHÄ TODO eli WORK IN PR
 | ID                                      | Otsikko      | Harjoituksen lyhyt kuvaus                                                                            | Max Pisteet (≈tunnit) | Deadline |
 | --------------------------------------- | ------------ | ---------------------------------------------------------------------------------------------------- | --------------------- | -------- |
 | [CSC01](harjoitukset/csc01_cpouta.md)   | cPouta       | Metaharjoitus, jossa opit ajamaan seuraavat harjoitukset oman koneen sijasta CSC cPouta -palvelussa. | 10                    | A        |
-| [LAK01](harjoitukset/lak01_ducklake.md) | Duck Lake    | Duck Lake -harjoitus, jossa kasataan minimaalinen Data Lakehouse.                                    | 20                    | A        |
+| [LAK01](harjoitukset/lak01_ducklake.md) | Duck Lake    | Duck Lake -harjoitus, jossa kasataan minimaalinen Data Lakehouse.                                    | 10                    | A        |
 | [SRK01](harjoitukset/srk01_spark.md)    | Apache Spark | Apache Spark -tutuksi kontitetun `Spark`:n ja `spark-client`:n avulla.                               | 10                    | A        |
-| SRK02                                   | Spark Delta  | Apache Spark -harjoitus, jossa käytetään Delta Lakea.                                                | 10                    | A        |
+| SRK02                                   | Spark Delta  | Apache Spark -harjoitus, jossa käytetään Delta Lakea.                                                | 15                    | A        |
 | [CDC01](harjoitukset/cdc01_mealie.md)   | Mealie CDC   | Mealie-sovelluksen CDC-tiedonkeruuharjoitus.                                                         | 20                    | A        |
 | STR01                                   | Streaming    | Redpanda Streaming -harjoitus. Kafka producer ja consumer toteutetaan Pythonilla.                    | 10                    | B        |
 | ORC01                                   | Airflow      | Orkestraatioharjoitus, jossa käytetään Airflow-työkalua.                                             | 10                    | B        |
