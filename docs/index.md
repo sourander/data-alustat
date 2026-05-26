@@ -36,7 +36,7 @@ Kustakin videosta saa `raakapistemäärän`, joka on välillä 0–5. Tämä pis
     Moodlen Grabook:ssa laskukaava on Course Totalin osalta:
 
     ```
-    =sum([[CSC01]] * 2, [[LAK01]] * 4, [[SRK01]] * 2, ..., [[BIG01]] * 8)
+    =sum([[CSC01]] * 2, [[LAK01]] * 2, [[SRK01]] * 2, ..., [[BIG01]] * 8)
     ```
 
 Kertoimet on valittu siten, että *max pisteet* kuvastaa *keskimääräisiä* opiskelijan tehtävään kuluttamia tunteja. Kerään tilastotietoa harjoituksiin käyttämästänne ajasta, jotta voin optimoida tätä pisteytysmallia tulevaisuudessa. Sinun tulee siis kertoa tehtävään käyttämäsi aika videodemossa.
