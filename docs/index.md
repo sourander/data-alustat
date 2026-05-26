@@ -55,7 +55,7 @@ Alla listattuna kurssin harjoitukset (==HUOM! TÄMÄ ON YHÄ TODO eli WORK IN PR
 | ORC02                                   | Dagster      | Orkestraatioharjoitus, jossa käytetään Dagster-työkalua.                                             | 10                    | B        |
 | KIM01                                   | Kimball      | Dimensionaalisen mallintamisen harjoitus.                                                            | 10                    | B        |
 | CUB01                                   | OLAP-kuutio  | OLAP-kuutio rakentaminen Marimo Notebookissa.                                                        | 10                    | B        |
-| BIG01                                   | Juna-alusta  | Digitrafficin Rautatieliikennedataa hyödyntävä End-to-End OLAP-alusta.                               | 40                    | B        |
+| [BIG01](harjoitukset/big01_juna.md)     | Juna-alusta  | Digitrafficin Rautatieliikennedataa hyödyntävä End-to-End OLAP-alusta.                               | 40                    | B        |
 
 ??? question "Mitä tarkoittaa Deadline?"
 
