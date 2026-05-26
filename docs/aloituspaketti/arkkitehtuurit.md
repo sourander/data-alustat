@@ -1,5 +1,9 @@
 On tärkeää muistaa, että data-alusta ei ole yksittäinen tuote vaan kollaasi eri työkaluja. Loppukäyttäjän näkökulmasta alusta voi olla _"se meiän firman power bi"_, mutta todellisuudessa kokonaisuus koostuu useista eri työkaluista. Lisäksi eri yritysten data-alustat voivat olla keskenään hyvin erilaisia. Yrityksellä voi olla yksi monoliittinen, keskitetty tietoalusta, tai hyvinkin hajautettu data-alustojen patteristo.
 
+!!! warning
+
+    Ei ole olemassa ns. parasta alustaa. On olemassa vain trade-offeja, joita yrityksen tulee puntaroida omassa kokoluokassaan, kontekstissaan ja tavoitteissaan. Jos haluat syväsukeltaa aiheeseen, suosittelen Joe Reisin ja Matt Housleyn kirjaa [Fundamentals of Data Engineering](https://learning.oreilly.com/library/view/fundamentals-of-data/9781098108298/) sekä Martin Kleppmannin kirjaa [Designing Data-Intensive Applications, 2nd Edition](https://learning.oreilly.com/library/view/designing-data-intensive-applications/9781098119058/).
+
 ## Yleisnäkymä
 
 ### 50,000 jalan näkymä
@@ -76,7 +80,9 @@ Oletetaan, että Yritys X tarvitsee nimenomaan big dataan kykenevän, hajautetun
 
 ### SaaS
 
-Yritykselle itselleen hyvin yksinkertainen ratkaisu on ostaa ratkaisut SaaS (Software as a service) -palveluntarjojilta palveluina. Hintalappu saattaa osoittautua korkeammaksi kuin räätälöidymmillä vaihtoehdoilla, mutta toisaalta ratkaisu on nopea ja helppo ottaa käyttöön. Snowflake hallinnoi AWS/Azure/Google tallennustilan, laskennan ja muun. Data ja laskenta ovat heidän pilvitileillään. Annetut tuotteet ovat esimerkkejä. Snowflaken voi korvata esimerkiksi [Dremio](https://www.dremio.com/):lla ja Tableaun esimerkiksi [Qlik Sense](https://www.qlik.com/us/):llä tai [Power BI Pro](https://powerbi.microsoft.com/en-us/):lla. Fivetran:n voi korvata esimerkiksi [Stitch](https://www.stitchdata.com/):llä. Dbt:n voi korvata esimerkiksi [Matillion](https://www.matillion.com/):lla tai jopa HashiCorp:n [Terraform](https://www.terraform.io/):lla.
+Yritykselle itselleen hyvin yksinkertainen ratkaisu on ostaa ratkaisut SaaS (Software as a service) -palveluntarjojilta palveluina. Hintalappu saattaa osoittautua korkeammaksi kuin räätälöidymmillä vaihtoehdoilla, mutta toisaalta ratkaisu on nopea ja helppo ottaa käyttöön. 
+
+Suomessa on ainakin 2025-2026 tienoilla ollut Snowflake kovin pinnalla; tämä näkyy esimerkiksi Helsinki Data Weekin keskusteluissa. Siksi otan tässä tietovarastona esimerkiksi Snowflaken. hallinnoi AWS/Azure/Google tallennustilan, laskennan ja muun. Data ja laskenta ovat heidän pilvitileillään. Annetut tuotteet ovat esimerkkejä. Snowflaken voi korvata esimerkiksi [Dremio](https://www.dremio.com/):lla ja Tableaun esimerkiksi [Qlik Sense](https://www.qlik.com/us/):llä tai [Power BI Pro](https://powerbi.microsoft.com/en-us/):lla. Fivetran:n voi korvata esimerkiksi [Stitch](https://www.stitchdata.com/):llä. Dbt:n voi korvata esimerkiksi [Matillion](https://www.matillion.com/):lla tai jopa HashiCorp:n [Terraform](https://www.terraform.io/):lla.
 
 ![SaaS Snowflake](images/architecture-saas-only.png)
 
@@ -101,46 +107,14 @@ Hadoop-ekosysteemi on toteutettavissa joko itse hostattuna, Databricksin avulla 
 
     Taulukon Fabric-sarake edustaa Microsofin uutta, pilvipohjaista data-alustaratkaisua, joka yhdistää useita eri työkaluja ja palveluita yhteen kokonaisuuteen. Vanhempi vastine on suluissa perässä. Huomaa, että aivan 1:1 vastinetta ei aina kaikissa tilanteissa löydy, koska uusi, syntynyt kokonaisuus voi erota entisistä työkaluista granulariteetiltaan ja toiminnaltaan. Tässä mielessä Fabric muistuttaa hieman one-stop-shop -ratkaisua, mutta aivan kuten Databricks tai Snowflake, se ei kuitenkaan ole täysin monoliittinen ratkaisu.
 
-### Databricks
+!!! warning 
 
-Databricks on Apache Sparkin luojien perustama yritys, joka myy Apache Sparkia heidän hallinnoimana. Databricks ei siis ylläpidä omia palvelimiaa ja vuokraa niitä samalla tavalla kuin AWS, Azure tai GCP. Päinvastoin: asiakas antaa Databricksille luvan hallinnoida virtuaalikoneita heidän virtuaaliympäristössään. Asiakkaan rajapinta (esim. `asiakas.databricks.com`) ja siihen liittyvä metadata (kuten ajastetut Jobin) ylläpidetään Databricksin hallinnoimalla tilillä. Sen sijaan asiakkaan data pysyy heidän omalla tilillään. Data ei poistu asiakkaan AWS/Azure/GCP-tililtä.
+    Lista on kasattu 2025 ja voi vanhentua nopeasti.
 
-!!! question "Tehtävä"
+### Valmiita kokonaisuuksia
 
-    Tutustu siihen, miltä Databricks näyttää käytännössä. Databricks Web UI sekä siihen kuuluva (Jupyter) Notebook interface näkyy näissä videoissa: [How to Build a Cloud Data Platform - Workshop Series](https://www.youtube.com/playlist?list=PLTPXxbhUt-YWyPmBDlFffnSJNrqIyla5F). Playlistillä on kestoa 4 x 2 tuntia, joten ei ole välttämätöntä, että katsot sen kokonaan. Kelaile, silmäile ja tutustu siten, kuten ajankäyttösi sallii. Videolla näkyy käytännön tasolla useita tämän kurssin aiheita, joten videon katsominen voi selkeyttää useita termejä merkittävällä tavalla. 
-    
-    Mikäli aiot yritykseen töihin, joka käyttää Databricksiä mihinkään, katso koko videosarja kokonaisuudessaan.
+Hyperscalerit (eli AWS, Azure, GCP, jne.) tarjoavat omia alustojaan, jotka joko koostuvat pienemmistä irtopalasista (esim. AWS Glue + EMR + S3 + ...) tai ovat enemmän monoliittisia (esim. Microsoft Fabric).
 
-### Hyperscalereiden omat
+Lisäksi yksittäiset SaaS-tarjoajat (esim. Databricks, Snowflake, Dremio, jne.) tarjoavat alustoja, jotka ovat syöneet sisäänsä sellaisen määrän eri ominaisuuksia, että ne toimivat ns. valmiina kokonaisuuksina, vaikkakin mahdollistavat myös muiden työkalujen integroimisen niiden kylkeen.
 
-Hyperscalarit (eli AWS, Azure ja GCP) tarjoavat myös omia pilvinatiiveja ratkaisujaan. Huomaa, että jokaisella alustalla on lopulta hyvin samankaltaisia työkaluja. Esimerkiksi datan visualisointiin on kullakin oma työkalunsa: GCP Looker, AWS QuickSight ja Azure Power BI. 
-
-Valtaosa tämän kurssin graafeista on yksinkertaistettuja, Excalidraw:lla piirrettyjä diagrammeja. Tämä otsake on ainakin toistaiseksi poikkeus. Voi olla, että jatkossa palveluntarjoajan graafit korvataan yksinkertaistetuilla, Excalidraw:lla piirretyillä graafeilla. Toivon mukaan tästä huolimatta graafeista on kuitenkin luettavissa, että palveluntarjoajilla on hyvin samankaltaisia työkaluja ja koko arkkitehtuurit muistuttavat suuresti toisiaan.
-
-#### Microsoft/Azure
-
-Azure data-alusta-arkkitehtuuri perustuu kerroksittaiseen rakenteeseen, jossa data etenee raakadatasta rikastettuun ja kuratoituun muotoon. Arkkitehtuurissa Azure Synapse Analytics toimii keskeisenä komponenttina, joka yhdistää eri toimintoja kuten datan varastointi (Azure Data Lake Storage), prosessointi (SQL ja Spark pools) ja analytiikka. Microsoft Fabric puolestaan edustaa Microsoftin pyrkimystä yhdistää aiemmin erillisinä toimineet palvelut (mm. Azure Synapse, Power BI, Data Factory) yhtenäisemmäksi kokonaisuudeksi – kenties jopa "one-stop-shop"-ratkaisuksi tai kohti monoliittisempaa ratkaisua.
-
-![Azure end-to-end](images/hyperscaler-end-to-end-azure.svg)
-
-**Kuvio 5**: *Azure end-to-end ([lähde](https://learn.microsoft.com/en-us/azure/architecture/example-scenario/dataplate2e/data-platform-end-to-end?tabs=portal))*
-
-![Microsoft Fabric](images/hyperscaler-end-to-end-ms-fabric.png)
-
-**Kuvio 6**: *Microsoft Fabric ([lähde](https://learn.microsoft.com/en-us/fabric/fundamentals/microsoft-fabric-overview)) on Microsoftin uusi, pilvipohjainen data-alustaratkaisu, joka yhdistää useita eri työkaluja ja palveluita yhteen kokonaisuuteen.*
-
-#### AWS
-
-AWS data-alusta-arkkitehtuuri jakautuu toiminnallisiin kerroksiin: sisääntuonti (ingestion), tallennus (storage), luettelointi ja haku (cataloging and search), prosessointi (processing), kulutus (consumption) sekä tietoturva ja hallinta (security and governance). Arkkitehtuuri hyödyntää palveluna tarjottavia (serverless) komponentteja, kuten Amazon S3 data-järven tallennustilana, AWS Glue ETL-prosesseihin ja metatietojen hallintaan, Lake Formation keskitettynä tietoluettelona ja Amazon Athena SQL-kyselyihin. AWS:n malli perustuu resurssien käyttöön pohjautuvaan laskutukseen, jossa infrastruktuurin skaalautuvuus määräytyy tarpeen mukaan ilman etukäteistä kapasiteetin määrittelyä, toisin kuin Fabric, jossa kapasiteetti on määriteltävä etukäteen.
-
-![AWS end-to-end](images/hyperscaler-end-to-end-aws.jpg)
-
-**Kuvio 6**: *Amazon Web Services end-to-end ([lähde](https://aws.amazon.com/blogs/big-data/aws-serverless-data-analytics-pipeline-reference-architecture/))*
-
-#### GCP
-
-Google Cloud Platform (GCP) data-alusta-arkkitehtuurissa BigQuery toimii keskeisenä palveluna, joka yhdistää datan varastoinnin ja analytiikan samaan ympäristöön. Arkkitehtuuri koostuu toisiaan täydentävistä palveluista: Data Fusion (datan kerääminen), Cloud Storage (tallennustila), Dataflow (stream- ja batch-prosessointi), Dataproc (Hadoop/Spark-ympäristö) ja Looker (visualisointi). GCP:n arkkitehtuuri on suunniteltu tukemaan erityisesti suurten datamassojen analytiikkaa, geospatiaalista analyysiä sekä integroitumaan Googlen koneoppimispalveluihin.
-
-![GCP end-to-end](images/hyperscaler-end-to-end-gcp.svg)
-
-**Kuvio 7**: *Google Cloud Platform end-to-end ([lähde](https://cloud.google.com/architecture/marketing-data-warehouse-on-gcp))*
+Tämä kenttä on sen verran eläväinen, etten koe hyödylliseksi listata kaikkia verkkosivulla. Näitä on helpompi plärätä nopeasti videotallenteessa esim. [MAD Landscapen](https://mad.firstmark.com/) avulla.
