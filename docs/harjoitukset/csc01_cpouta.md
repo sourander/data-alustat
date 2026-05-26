@@ -318,7 +318,7 @@ Käytännössä voit työskennellä aivan kuin sinulla olisi Linux lokaalisti. A
 
     Hyllytystä eli `Shelve Instance`-vaihetta ei tarvitse välttämättä tehdä, jos jatkat työtä esimerkiksi seuraavana päivänä, mutta mikäli taukoa tulee yli 1 päivä, on ehdottoman kannattavaa hyllyttää kone. Muutoin sinulta loppuvat BU:t kesken, ja sinun tulee tehdä uusi Student Project, ja sinne uusi Pouta-projekti, ja sinne uusi virtuaalikone.
 
-## Vinkkejä videota varten
+## Videolla esitettävä
 
 Kurssin palautettava formaatti on video. Yleiset video-ohjeet neuvotaan toisaalla, mutta juuri tätä harjoitusta varten kannattaa huomioida, että videolla näkyy **vähimmillään** seuraavat vaiheet:
 
