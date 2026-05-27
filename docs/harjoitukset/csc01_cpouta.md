@@ -48,7 +48,7 @@ Tallenna tämä IP-osoite, koska tarvitset sitä myöhemmin. Se on esimerkiksi m
     * Lisää Ingress-sääntö, joka sallii SSH-yhdeydet. Tähän löytyy valmis Rule, jonka voit valita alasvetovalikosta.
     * Lisäturvaa varten on suositeltavaa rajata Remote/CIDR säännöllä.
         * Selvitä oma IP (esim. `curl ifconfig.me`).
-        * Lisää CIDR-muodossa, esimerkiksi `77.223.45.0/24`. Tämä sallii SSH-yhteydet vain IP-osoitteista, jotka alkavat `72.14.201.*`.
+        * Lisää CIDR-muodossa, esimerkiksi `77.223.45.0/24`. Tämä sallii SSH-yhteydet vain IP-osoitteista, jotka alkavat `77.223.45.*`.
     * Liitä tämä Security Group koneeseesi: `Compute > Instances > Edit Security Groups`-näppäin. Valitse aiemmin luomasi Security Group listasta.
 
 Lisää tässä välissä Security Group koneeseen. Mene `Compute > Instances`-näkymään, klikkaa koneesi oikealla puolella olevaa kolmea pistettä, ja valitse `Edit Security Groups`. Vasemmalla näkyy kaikki groupit, oikealla instanssiin kiinnitetyt. Paina vasemmalla näkyvän säännön vieressä pientä `+`-ikonia, jolloin se siirtyy oikealle ja tulee osaksi koneesi Security Groupia.
