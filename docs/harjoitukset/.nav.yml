@@ -7,4 +7,5 @@ nav:
   - cdc01_mealie.md
   - orc01_airflow.md
   - orc02_dagster.md
+  - str01_redpanda.md
   - big01_raideliikenne.md
