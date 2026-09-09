@@ -1,0 +1,1681 @@
+
+<!doctype html>
+<html lang="fi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../srk01_spark/">
+      
+      
+        <link rel="next" href="../cdc01_mealie/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>SRK02: Delta Lake - Data-alustat</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#srk02-delta-lake" class="md-skip">
+          Hyppää sisältöön
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Ylätunniste">
+    <a href="../.." title="Data-alustat" class="md-header__button md-logo" aria-label="Data-alustat" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Data-alustat
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SRK02: Delta Lake
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Hae" placeholder="Hae" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Haku">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Tyhjää" aria-label="Tyhjää" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Aloitetaan hakua
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigaatio" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Data-alustat" class="md-nav__button md-logo" aria-label="Data-alustat" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Data-alustat
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tervetuloa kurssille
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aloituspaketti
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Aloituspaketti
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aloituspaketti/aloita_tasta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aloita tästä
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aloituspaketti/olap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OLAP vs OLTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aloituspaketti/historia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Historia
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aloituspaketti/arkkitehtuurit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arkkitehtuurit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Harjoitukset
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Harjoitukset
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../yleisohjeet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Yleisohjeet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csc01_cpouta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSC01: cPouta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lak01_ducklake/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LAK01: Duck Lake
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../srk01_spark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SRK01: Apache Spark
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SRK02: Delta Lake
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SRK02: Delta Lake
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Sisällysluettelo">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sisällysluettelo
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#esivaatimukset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Esivaatimukset
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#valmistelut-spark-delta-lake-ymparisto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valmistelut: Spark + Delta Lake -ympäristö
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tehtavananto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tehtävänanto
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tehtävänanto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#valinnainen-tutki-docker-kontin-sisaltoa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (Valinnainen) Tutki Docker-kontin sisältöä
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-yhdista-marimo-notebookista" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Yhdistä Marimo Notebookista
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-tarkista-sparkin-toimivuus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Tarkista Sparkin toimivuus
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-aja-sama-solu-uudestaan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Aja sama solu uudestaan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-imuroi-roskat-pois" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Imuroi roskat pois
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-10000-rivia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 10,000 riviä
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-10000-rivia-kaksi-tiedostoa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 10,000 riviä, kaksi tiedostoa
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-pingviinit-tietovarastoon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Pingviinit tietovarastoon
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-tutki-dataa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Tutki dataa
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Tutki dataa">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#9-aja-tarvittavat-sql-kyselyt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9 Aja tarvittavat SQL-kyselyt
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#videolla-esitettava" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Videolla esitettävä
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cdc01_mealie/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CDC01: Mealie
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../orc01_airflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ORC01: Apache Airflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../orc02_dagster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ORC02: Dagster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../str01_redpanda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    STR01: Redpanda Streaming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../big01_raideliikenne/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BIG01: Juna-alusta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Sisällysluettelo">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sisällysluettelo
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#esivaatimukset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Esivaatimukset
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#valmistelut-spark-delta-lake-ymparisto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Valmistelut: Spark + Delta Lake -ympäristö
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tehtavananto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tehtävänanto
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tehtävänanto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#valinnainen-tutki-docker-kontin-sisaltoa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        (Valinnainen) Tutki Docker-kontin sisältöä
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-yhdista-marimo-notebookista" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Yhdistä Marimo Notebookista
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-tarkista-sparkin-toimivuus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Tarkista Sparkin toimivuus
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-aja-sama-solu-uudestaan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Aja sama solu uudestaan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-imuroi-roskat-pois" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Imuroi roskat pois
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-10000-rivia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 10,000 riviä
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-10000-rivia-kaksi-tiedostoa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 10,000 riviä, kaksi tiedostoa
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-pingviinit-tietovarastoon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Pingviinit tietovarastoon
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-tutki-dataa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Tutki dataa
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Tutki dataa">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#9-aja-tarvittavat-sql-kyselyt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9 Aja tarvittavat SQL-kyselyt
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#videolla-esitettava" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Videolla esitettävä
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="srk02-delta-lake">SRK02: Delta Lake</h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>On äärimmäisen suositeltavaa suorittaa aiempi <code>SRK01</code>-harjoitus ennen tätä, jotta ymmärrät Spark Connectin ja Apache Sparkin peruskonseptit.</p>
+</div>
+<p>Delta Lake on avoin data lakehouse -kirjasto, joka tarjoaa ACID-takuita, time travel -ominaisuuden ja muita lisämausteita Parquet-tiedoston päälle. Delta Lake tallentaa datan parquet-muodossa ja ylläpitää metatietoa <code>_delta_log</code>-hakemistossa. Tämän hakemiston ja Delta Laken toimintaan tutustuminen on tämän harjoituksen pääasiallinen tavoite.</p>
+<p>Ympäristö poikkeaa SRK01-harjoituksesta siten, että tässä kaikki pyörii Dockerin sisällä: sekä Marimo Notebookin Python-palvelin että PySpark (johon Delta Lake on integroitu). Käytämme bind mounttia, jotta voit tarkastella luotuja tiedostoja suoraan host-koneeltasi, mutta voit myös tutkia niitä Dockerin sisällä Linux-komentorivillä.</p>
+<h2 id="esivaatimukset">Esivaatimukset</h2>
+<ul>
+<li>Docker (Engine)</li>
+<li>Docker Compose</li>
+</ul>
+<h2 id="valmistelut-spark-delta-lake-ymparisto">Valmistelut: Spark + Delta Lake -ympäristö</h2>
+<p>Luo hakemisto harjoitustasi varten. Lisää sinne alla oleva <code>Dockerfile</code>:</p>
+<div class="language-dockerfile highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c"># ------------------------------------------------</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c"># Dockerfile for SRK02: Delta Lake + Marimo</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c"># ------------------------------------------------</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c"># Note: this is heavily based on the delta-spark image, but with Marimo instead of Jupyter Lab</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c"># For the original, see: https://github.com/delta-io/delta-docker/blob/main/Dockerfile</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c">#</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c"># The original file copyright notice is included below, but the modifications are licensed under the same Apache License 2.0.</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c"># Copyright (2023) The Delta Lake Project Authors.</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c">#</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c"># Licensed under the Apache License, Version 2.0 (the "License");</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c"># You may not use this file except in compliance with the License.</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c"># You may obtain a copy of the License at</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c">#</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c"># http://www.apache.org/licenses/LICENSE-2.0</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="k">ARG</span><span class="w"> </span><span class="nv">BASE_CONTAINER</span><span class="o">=</span>apache/spark:4.1.1-scala2.13-java21-python3-ubuntu
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="k">FROM</span><span class="w"> </span><span class="s">${BASE_CONTAINER}</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">spark</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="k">FROM</span><span class="w"> </span><span class="s">spark</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">delta</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="k">LABEL</span><span class="w"> </span><span class="nv">authors</span><span class="o">=</span><span class="s2">"Jani Sourander"</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="k">USER</span><span class="w"> </span><span class="s">root</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="k">ARG</span><span class="w"> </span><span class="nv">DELTA_SPARK_VERSION</span><span class="o">=</span><span class="s2">"4.1.0"</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="k">ARG</span><span class="w"> </span><span class="nv">DELTALAKE_VERSION</span><span class="o">=</span><span class="s2">"1.4.2"</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="k">ARG</span><span class="w"> </span><span class="nv">MARIMO_VERSION</span><span class="o">=</span><span class="s2">"0.23.6"</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="k">ARG</span><span class="w"> </span><span class="nv">SPARK_SCALA_SUFFIX</span><span class="o">=</span><span class="s2">"4.1_2.13"</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--quiet<span class="w"> </span>--no-cache-dir<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">    </span>delta-spark<span class="o">==</span><span class="si">${</span><span class="nv">DELTA_SPARK_VERSION</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">    </span><span class="nv">deltalake</span><span class="o">==</span><span class="si">${</span><span class="nv">DELTALAKE_VERSION</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">    </span><span class="s2">"marimo[recommended]==</span><span class="si">${</span><span class="nv">MARIMO_VERSION</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="c"># Own addition begins ---------------------------</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="k">ENV</span><span class="w"> </span><span class="nv">IVY_HOME</span><span class="o">=</span><span class="s2">"/tmp/.ivy2"</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="k">ENV</span><span class="w"> </span><span class="nv">DELTA_PACKAGE</span><span class="o">=</span><span class="s2">"io.delta:delta-spark_</span><span class="si">${</span><span class="nv">SPARK_SCALA_SUFFIX</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">DELTA_SPARK_VERSION</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="k">RUN</span><span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="si">${</span><span class="nv">IVY_HOME</span><span class="si">}</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a><span class="w">    </span><span class="si">${</span><span class="nv">SPARK_HOME</span><span class="si">}</span>/bin/spark-shell<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="w">        </span>--packages<span class="w"> </span><span class="si">${</span><span class="nv">DELTA_PACKAGE</span><span class="si">}</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="w">        </span>--conf<span class="w"> </span><span class="s2">"spark.jars.ivy=</span><span class="si">${</span><span class="nv">IVY_HOME</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="k">RUN</span><span class="w"> </span>find<span class="w"> </span><span class="si">${</span><span class="nv">IVY_HOME</span><span class="si">}</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">"*.jar"</span><span class="w"> </span>-exec<span class="w"> </span>cp<span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="si">${</span><span class="nv">SPARK_HOME</span><span class="si">}</span>/jars/<span class="w"> </span><span class="se">\;</span>
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="k">RUN</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span><span class="si">${</span><span class="nv">IVY_HOME</span><span class="si">}</span>
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="c"># Own addition ends ---------------------------</span>
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="k">FROM</span><span class="w"> </span><span class="s">delta</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s">startup</span>
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="k">ARG</span><span class="w"> </span><span class="nv">NBuser</span><span class="o">=</span>NBuser
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="k">ARG</span><span class="w"> </span><span class="nv">GROUP</span><span class="o">=</span>NBuser
+</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a><span class="k">ARG</span><span class="w"> </span><span class="nv">WORKDIR</span><span class="o">=</span>/opt/spark/work-dir
+</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a><span class="k">RUN</span><span class="w"> </span>groupadd<span class="w"> </span>-r<span class="w"> </span><span class="si">${</span><span class="nv">GROUP</span><span class="si">}</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>useradd<span class="w"> </span>-r<span class="w"> </span>-m<span class="w"> </span>-g<span class="w"> </span><span class="si">${</span><span class="nv">GROUP</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">NBuser</span><span class="si">}</span>
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a><span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>-qq<span class="w"> </span>update<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a><span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>-qq<span class="w"> </span>-y<span class="w"> </span>install<span class="w"> </span>--no-install-recommends<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a><span class="w">        </span>vim<span class="w"> </span>nano<span class="w"> </span>curl<span class="w"> </span>tree<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a><span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/apt/lists/*
+</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>
+</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a><span class="k">COPY</span><span class="w"> </span>--chown<span class="o">=</span><span class="si">${</span><span class="nv">NBuser</span><span class="si">}</span>:<span class="si">${</span><span class="nv">GROUP</span><span class="si">}</span><span class="w"> </span>startup.sh<span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">WORKDIR</span><span class="si">}</span><span class="s2">/"</span>
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>
+</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a><span class="k">RUN</span><span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/opt/spark/logs<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a><span class="w">    </span>chown<span class="w"> </span>-R<span class="w"> </span><span class="si">${</span><span class="nv">NBuser</span><span class="si">}</span>:<span class="si">${</span><span class="nv">GROUP</span><span class="si">}</span><span class="w"> </span>/opt/spark/logs
+</span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a>
+</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a>
+</span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a><span class="k">RUN</span><span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span><span class="si">${</span><span class="nv">NBuser</span><span class="si">}</span>:<span class="si">${</span><span class="nv">GROUP</span><span class="si">}</span><span class="w"> </span>/home/<span class="si">${</span><span class="nv">NBuser</span><span class="si">}</span>/<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a><span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span><span class="si">${</span><span class="nv">NBuser</span><span class="si">}</span>:<span class="si">${</span><span class="nv">GROUP</span><span class="si">}</span><span class="w"> </span><span class="si">${</span><span class="nv">WORKDIR</span><span class="si">}</span>
+</span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a>
+</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a><span class="k">USER</span><span class="w"> </span><span class="s">${NBuser}</span>
+</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a><span class="k">WORKDIR</span><span class="w"> </span><span class="s">${WORKDIR}</span>
+</span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a>
+</span><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a><span class="k">ENTRYPOINT</span><span class="w"> </span><span class="p">[</span><span class="s2">"bash"</span><span class="p">,</span><span class="w"> </span><span class="s2">"startup.sh"</span><span class="p">]</span>
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Versioiden yhteensopivuus</p>
+<p>Huomaa, että Spark- ja Delta Lake -versioiden yhteensopivuus on tärkeää. Jos haluaisit päivittää jotakin tässä <code>ARG</code>-muuttujan arvoa eli versionumeroa, hyvä paikka aloittaa olisi etsiä tuorein <a href="https://hub.docker.com/r/apache/spark/tags">apache/spark Docker tag</a> muotoa <code>apache/spark:X.Y.Z-scala2.13-java21-python3-ubuntu</code>, ja sitten tarkistaa <a href="https://docs.delta.io/releases/">Delta Lake: Compatibility with Apache Spark</a>-sivun taulukosta, mikä versio tulee sen kanssa toimeen. Nämä eivät aina kulje käsi kädessä. Ajan kanssa myös Scala ja Java versiot voivat päivittyä ja aiheuttaa muutoksia. Näiden suhteen olisi hyvä lukaista <code>gh:delta-io/delta-docker/</code>-repositoryn Dockerfile esimerkkinä.</p>
+</div>
+<p>Tarvitset myös <code>startup.sh</code>-tiedoston, joka käynnistää Marimo Notebookin:</p>
+<div class="language-bash highlight"><span class="filename">startup.sh</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="ch">#!/bin/bash</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nb">exec</span><span class="w"> </span>marimo<span class="w"> </span>edit<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>--port<span class="w"> </span><span class="m">8888</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>--no-token<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span>/opt/spark/work-dir/notebooks/srk02_delta.py
+</span></code></pre></div>
+<p>Lisää samaan hakemistoon <code>compose.yml</code>:</p>
+<div class="language-yaml highlight"><span class="filename">compose.yml</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">services</span><span class="p">:</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">srk02-delta</span><span class="p">:</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">build</span><span class="p">:</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">      </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Dockerfile</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">srk02-delta</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"4040:4040"</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"8888:8888"</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./notebooks:/opt/spark/work-dir/notebooks</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/lake:/opt/spark/work-dir/data/lake/</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./data/warehouse:/opt/spark/work-dir/spark-warehouse/</span>
+</span></code></pre></div>
+<p>Käynnistä ympäristö:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+</span></code></pre></div>
+<p><strong>Käytettävissä olevat portit:</strong></p>
+<ul>
+<li><code>localhost:8888</code> — Marimo Notebook (yksi tiedosto <code>srk02_delta.py</code>)</li>
+<li><code>localhost:4040</code> — Spark Web UI (myöhemmin)</li>
+</ul>
+<h2 id="tehtavananto">Tehtävänanto</h2>
+<h3 id="valinnainen-tutki-docker-kontin-sisaltoa">(Valinnainen) Tutki Docker-kontin sisältöä</h3>
+<p>Käynnistä Docker-palvelu ja tarkastele, mitä hakemistoja on luotu:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>srk02-delta<span class="w"> </span>bash
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>ls<span class="w"> </span>-la<span class="w"> </span>ls<span class="w"> </span><span class="nv">$SPARK_HOME</span>/jars<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>delta
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Voit tarkastella koneen sisältöä pitkin tehtävää. Esimerkiksi hakemisto <code>/opt/spark/work-dir/data</code> on bind mountattu host-koneen työhakemiston <code>bind/data-lake/</code>-hakmeistoon, mutta Windowsin sijasta voit penkoa tiedostoja Linux-tyylisesti Dockerin sisällä. Tämä on hyvä paikka harjoitella Linuxin komentorivin käyttöä. Imageen on asennettu <code>tree</code>, <code>nano</code> ja <code>vim</code>, jotka auttavat tiedostojen tutkimisessa.</p>
+</div>
+<h3 id="1-yhdista-marimo-notebookista">1. Yhdistä Marimo Notebookista</h3>
+<p>Tiedosto <code>notebooks/srk02_delta.py</code> on luotu jo valmiiksi sinulle (käynnistyskomennon <code>marimo edit /opt/spark/work-dir/notebooks/srk02_delta.py</code> toimesta), mutta sisältö luonnollisesti uupuu.</p>
+<ol>
+<li>Avaa Marimo Notebook selaimessasi osoitteessa <code>http://localhost:8888</code></li>
+<li>Tab-täydennä ja aja solu, jossa lukee <code>import marimo as mo</code></li>
+<li>Lisää <code>setup cell</code>, jonka sisälle koodi:</li>
+</ol>
+<div class="language-python highlight"><span class="filename">srk02_delta.py</span><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pyspark.sql.functions</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">F</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pyspark.sql</span><span class="w"> </span><span class="kn">import</span> <span class="n">SparkSession</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">delta.tables</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeltaTable</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">spark</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">"MyApp"</span><span class="p">)</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">"spark.sql.extensions"</span><span class="p">,</span> <span class="s2">"io.delta.sql.DeltaSparkSessionExtension"</span><span class="p">)</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">"spark.sql.catalog.spark_catalog"</span><span class="p">,</span> <span class="s2">"org.apache.spark.sql.delta.catalog.DeltaCatalog"</span><span class="p">)</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>    <span class="o">.</span><span class="n">config</span><span class="p">(</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>        <span class="s2">"spark.hadoop.javax.jdo.option.ConnectionURL"</span><span class="p">,</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>        <span class="s2">"jdbc:derby:;databaseName=/opt/spark/work-dir/catalog/metastore_db;create=true"</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    <span class="p">)</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>    <span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="s2">"spark.sql.catalogImplementation"</span><span class="p">,</span> <span class="s2">"hive"</span><span class="p">)</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>    <span class="o">.</span><span class="n">enableHiveSupport</span><span class="p">()</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>    <span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="p">)</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="n">sc</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="n">sc</span><span class="o">.</span><span class="n">setLogLevel</span><span class="p">(</span><span class="s2">"ERROR"</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Tuon solun ajamisen jälkeen portista <code>localhost:4040</code> löytyy Spark Web UI.</p>
+</div>
+<div class="admonition bug">
+<p class="admonition-title">Bug</p>
+<p>On tyypillistä, että Spark -solujen ajaminen tulostaa kohtalaisen määrän Java-krääsää solun ulostuloon. Tavallisesta <code>WARN</code>-tason varoituksesta ei yleensä ole tarve huolestua. Lue teksti läpi oppimismielessä, mutta älä ylimieti virheilmoituksia. Jos olet epävarma, kysy opettajalta, tekoälyltä tai toisilta opiskelijoilta apua. Jos haluat nähdä vähemmän tietoja, voit lisätä seuraavat rivit yllä olevien perään:</p>
+<div class="language-python highlight"><span class="filename">srk02_delta.py</span><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">sc</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">sc</span><span class="o">.</span><span class="n">setLogLevel</span><span class="p">(</span><span class="s2">"ERROR"</span><span class="p">)</span>
+</span></code></pre></div>
+<p>Huomaa, että tästä on apua vasta <em>seuraavissa</em> soluissa.</p>
+</div>
+<h3 id="2-tarkista-sparkin-toimivuus">2. Tarkista Sparkin toimivuus</h3>
+<p>Aivan kuten Delta Laken omassa <a href="https://github.com/delta-io/delta-docker/blob/main/quickstart.ipynb">gh:delta-io/delta-docker/quickstart.ipynb</a>-Notebookissa, testaa, että Spark toimii odotetusti:</p>
+<div class="language-python highlight"><span class="filename">srk02_delta.py</span><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">_data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="p">(</span><span class="n">_data</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="o">.</span><span class="n">write</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">"delta"</span><span class="p">)</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="c1"># .mode("overwrite")</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    <span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"/opt/spark/work-dir/data/lake/tablename"</span><span class="p">)</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="p">)</span>
+</span></code></pre></div>
+<p>Komento luo äärimmäisen yksinkertaisen 5-rivisen Delta-taulun hakemistoon <code>/tmp/delta-table</code>. Sen ei pitäisi nostaa virhettä. Jos yrität ajaa solun uusiksi, sen tulisi nostaa virhe (<code>[DELTA_PATH_EXISTS]</code>). Voit korjata tämän poistamalla kommenttimerkin <code>.mode("overwrite")</code>-metodikutsun edestä.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Kannattaa nyt ja kaikissa tulevissakin komennoissa kurkata host-koneen <code>./data/lake/tablename</code>-hakemistoon. Uteliaalla insinöörillä olisi oletettavasti mielessään nyt ajatuksia:</p>
+<ul>
+<li>Kuinka monta tiedostoa syntyi? Miksei vain 1? </li>
+<li>Mitä tarkoittaa <code>*.snappy.*</code> tiedostonimessä?</li>
+<li>Miksi kutakin <code>*.parquet</code>-tiedostoa vasten on olemassa yksi <code>*.crc</code>-tiedosto?</li>
+<li>Mitä <code>__delta_log/000.json</code>-tiedosto sisältää?</li>
+</ul>
+</div>
+<h3 id="3-aja-sama-solu-uudestaan">3. Aja sama solu uudestaan</h3>
+<p>Aja sama solu uudestaan poistettuasi kommenttimerkin <code>.mode("overwrite")</code>-metodikutsusta. Nyt sinulla tulisi herätä kysymyksiä, että:</p>
+<ul>
+<li>Ylikirjoittiko Spark (tai Delta Lake) samat tiedostot? Moodihan on <code>overwrite</code>.</li>
+<li>... jos ei, niin mitä tapahtui?</li>
+<li>Mitä tiedosto <code>__delta_log/001.json</code> sisältää?</li>
+</ul>
+<p>Voit ajaa solun niin monta kertaa kuin haluat.</p>
+<h3 id="4-imuroi-roskat-pois">4. Imuroi roskat pois</h3>
+<p>Kuvitellaan, että hyväksyt tilanteen, jossa paluuta vanhaan ei ole. Tuorein versio on hyvä. Tähän auttaa <code>VACUUM</code>-komento, jota voi luonnollisesti käyttää joko SQL-kielellä tai Python-syntaksin läpi. Tämä onnistuu seuraavalla tavalla:</p>
+<div class="language-python highlight"><span class="filename">srk02_delta.py</span><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">_dt</span> <span class="o">=</span> <span class="n">DeltaTable</span><span class="o">.</span><span class="n">forPath</span><span class="p">(</span><span class="n">spark</span><span class="p">,</span> <span class="s2">"/opt/spark/work-dir/data/lake/tablename"</span><span class="p">)</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">_dt</span><span class="o">.</span><span class="n">vacuum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Virheilmoitus on odotettu!</p>
+<p>Yllä oleva ei tule onnistumaan vaan kaatuu <code>IllegalArgumentException</code>-virheeseen. Keksi tapa korjata tämä. Vihje, tai jopa ratkaisu, löytyy virheilmoituksen tekstistä.</p>
+</div>
+<p>Kunhan olet saanut virheilmoituksen pois:</p>
+<ul>
+<li>Tutki <code>__delta_log/*.json</code>-tiedostoista kahta tuoreinta. Mitä löydät?</li>
+<li>Tarkista, mitä <code>*.parquet</code>-tiedostoja hakemistossa yhä on.</li>
+</ul>
+<h3 id="5-10000-rivia">5. 10,000 riviä</h3>
+<p>Tämä vaihe on mukana auttamassa sinua ymmärtämään, miksi Parquet-tiedostona on aina useita. Tutki hakemiston sisältöä, kun ajat seuraavan solun tasan kerran. Laske <code>*.parquet</code>-tiedostot:</p>
+<div class="language-python highlight"><span class="filename">srk02_delta.py</span><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">multiprocessing</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"# of CPUs of Threads available: "</span><span class="p">,</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">())</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">_data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">)</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="p">(</span><span class="n">_data</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    <span class="o">.</span><span class="n">write</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">"delta"</span><span class="p">)</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    <span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="s2">"overwrite"</span><span class="p">)</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    <span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"/opt/spark/work-dir/data/lake/tenthousand"</span><span class="p">)</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="p">)</span>
+</span></code></pre></div>
+<p>Huomaa, että <code>spark.range()</code> luo oletuksena useita partitioita. Partitioiden määrä on tyypillisesti sidoksissa Sparkin oletusparallelismiin, joka yksinkertaisessa yhden noden Docker‑ympäristössä vastaa käytettävissä olevien CPU‑ytimien määrää. Kukin partitio toimii itsenäisesti, joten kukin luo oman tiedostonsa.</p>
+<h3 id="6-10000-rivia-kaksi-tiedostoa">6. 10,000 riviä, kaksi tiedostoa</h3>
+<div class="language-python highlight"><span class="filename">srk02_delta.py</span><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">_data</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">)</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="p">(</span><span class="n">_data</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="o">.</span><span class="n">coalesce</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="o">.</span><span class="n">write</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">"delta"</span><span class="p">)</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>    <span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="s2">"overwrite"</span><span class="p">)</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>    <span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"/opt/spark/work-dir/data/lake/coalescetwo"</span><span class="p">)</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="p">)</span>
+</span></code></pre></div>
+<p>Näiden tutustumisen jälkeen sinulle pitäisi olla riittävä ymmärrys siitä, että eri RDD-partitiot (joita on tässä single-node ympäristössä <code>n_cpu_cores</code>) tuottavat kukin oman Parquet-tiedoston.</p>
+<p>Jos haluat tutkia nykyisiä arvoja, voit ajaa seuraavan solun:</p>
+<div class="language-python highlight"><span class="filename">srk02_delta.py</span><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"SparkContext default parallelism: "</span><span class="p">,</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">defaultParallelism</span><span class="p">)</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"Shuffle partition count: "</span><span class="p">,</span> <span class="n">spark</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"spark.sql.shuffle.partitions"</span><span class="p">))</span>
+</span></code></pre></div>
+<h2 id="7-pingviinit-tietovarastoon">7. Pingviinit tietovarastoon</h2>
+<div class="language-python highlight"><span class="filename">srk02_delta.py</span><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">urllib.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">urlretrieve</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1"># Choose table name</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">table_name</span> <span class="o">=</span> <span class="s2">"d_penguins"</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="c1"># Define schema with DDL syntax</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="n">schema</span> <span class="o">=</span> <span class="s2">"""</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="s2">species STRING,</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="s2">island STRING,</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="s2">bill_length_mm DOUBLE,</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="s2">bill_depth_mm DOUBLE,</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="s2">flipper_length_mm INT,</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="s2">body_mass_g INT,</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="s2">sex STRING</span>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="s2">"""</span>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="k">if</span> <span class="ow">not</span> <span class="n">spark</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">tableExists</span><span class="p">(</span><span class="n">table_name</span><span class="p">):</span>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>    <span class="n">data_url</span> <span class="o">=</span> <span class="s2">"https://raw.githubusercontent.com/mwaskom/seaborn-data/refs/heads/master/penguins.csv"</span>
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>    <span class="n">urlretrieve</span><span class="p">(</span><span class="n">data_url</span><span class="p">,</span> <span class="s2">"/tmp/penguins.csv"</span><span class="p">)</span>
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>
+</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>    <span class="n">df</span> <span class="o">=</span> <span class="p">(</span><span class="n">spark</span><span class="o">.</span><span class="n">read</span>
+</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>          <span class="o">.</span><span class="n">schema</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>          <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">"header"</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>          <span class="o">.</span><span class="n">option</span><span class="p">(</span><span class="s2">"inferSchema"</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>          <span class="o">.</span><span class="n">csv</span><span class="p">(</span><span class="s2">"/tmp/penguins.csv"</span><span class="p">)</span>
+</span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>    <span class="p">)</span>
+</span><span id="__span-12-27"><a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"The CSV was read into N partitions:"</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">rdd</span><span class="o">.</span><span class="n">getNumPartitions</span><span class="p">())</span>
+</span><span id="__span-12-28"><a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a>
+</span><span id="__span-12-29"><a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a>    <span class="c1"># Add artificial ID column for later on MERGE reasons</span>
+</span><span id="__span-12-30"><a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a>    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">F</span><span class="o">.</span><span class="n">monotonically_increasing_id</span><span class="p">()</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"id"</span><span class="p">),</span> <span class="s2">"*"</span><span class="p">)</span>
+</span><span id="__span-12-31"><a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a>
+</span><span id="__span-12-32"><a id="__codelineno-12-32" name="__codelineno-12-32" href="#__codelineno-12-32"></a>    <span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">write</span>
+</span><span id="__span-12-33"><a id="__codelineno-12-33" name="__codelineno-12-33" href="#__codelineno-12-33"></a>       <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">"delta"</span><span class="p">)</span>
+</span><span id="__span-12-34"><a id="__codelineno-12-34" name="__codelineno-12-34" href="#__codelineno-12-34"></a>       <span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="s2">"overwrite"</span><span class="p">)</span>  <span class="c1"># safe because only runs once</span>
+</span><span id="__span-12-35"><a id="__codelineno-12-35" name="__codelineno-12-35" href="#__codelineno-12-35"></a>       <span class="o">.</span><span class="n">saveAsTable</span><span class="p">(</span><span class="n">table_name</span><span class="p">)</span>
+</span><span id="__span-12-36"><a id="__codelineno-12-36" name="__codelineno-12-36" href="#__codelineno-12-36"></a>    <span class="p">)</span>
+</span><span id="__span-12-37"><a id="__codelineno-12-37" name="__codelineno-12-37" href="#__codelineno-12-37"></a>
+</span><span id="__span-12-38"><a id="__codelineno-12-38" name="__codelineno-12-38" href="#__codelineno-12-38"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Table '</span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s2">' created."</span><span class="p">)</span>
+</span><span id="__span-12-39"><a id="__codelineno-12-39" name="__codelineno-12-39" href="#__codelineno-12-39"></a><span class="k">else</span><span class="p">:</span>
+</span><span id="__span-12-40"><a id="__codelineno-12-40" name="__codelineno-12-40" href="#__codelineno-12-40"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Table '</span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s2">' already exists, skipping."</span><span class="p">)</span>
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Skeema käsin?</p>
+<p>Spark osaa päätellä (engl. infer) skeeman CSV-tiedostosta, aivan kuten esimerkiksi Pandas tai Polars, mutta lähtökohtaisesti on hyvä määritellä skeema itse. Tietovarasto on aika hataralla pohjalla, jos sitä ohjaa autopilot eikä ihminen.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tärkeää tietoa katalogista</p>
+<p>Tähän asti olemme käyttäneet <code>save()</code>-metodia tarkan tiedostopolun kanssa. Tämä on tyypillistä <strong>data lake</strong>-työskentelyä, eli raakojen tiedostopolkujen kanssa pelaamista. </p>
+<p>Nykyisin Sparkin ja Delta Laken kyljessä on jokin katalogi, kuten:</p>
+<ul>
+<li>Hive Metastore + Derby (embedded-katalogi, kuin SQLite)</li>
+<li>Hive Metastore + PostgreSQL-katalogi (<code>thrift://metastore-host:9083</code>)</li>
+<li>AWS Glue Data Catalog<ul>
+<li><code>spark.sql.catalog.glue_catalog.type=glue</code></li>
+<li><code>spark.sql.catalog.glue_catalog.warehouse=s3a://deltalake/warehouse</code></li>
+</ul>
+</li>
+<li>Databricks Unity Catalog</li>
+</ul>
+<p>Katalogi pitää kirjaa tauluista ja niiden sijainneista – muun metatiedon lomassa. Näin ei tarvitse koko ajan muistaa, missä mikäkin taulu sijaitsee, vaan riittää, että tietää taulun nimen. Vakiona meidän nykyisen katalogin materilisointi tapahtuu tiedostojärjestelmään, tarkemmin sanottuna hakemistoon <code>/opt/spark/work-dir/spark-warehouse/metadata_db</code>. Tämä mahdollistaa sen, että taulujen nimet pysyvät muistissa, vaikka sammuttaisit Dockerin ja käynnistäisit sen uudestaan.</p>
+<p>Voit kurkistaa katalogin sisältöön joko lokaalin hostin hakemistossa <code>data/catalog/</code> tai Dockerissa ajettavan Linuxin avulla seuraavasti:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>srk02-delta<span class="w"> </span>bash
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>ls<span class="w"> </span>-la<span class="w"> </span>/opt/spark/work-dir/catalog
+</span></code></pre></div>
+</div>
+<h2 id="8-tutki-dataa">8. Tutki dataa</h2>
+<p>Tämä <mark>ei ole tuotannossa suositeltu tapa</mark>, koska koko datasetin pitää mahtua driver-noden muistiin komennon suorittamiseksi, mutta tämän yksinkertaisen taulun kanssa voit halutessasi plärätä koko taulun sisältöä Marimo Notebookin interaktiivisella työkalulla. Tällöin siirrän taulun datat Marimo-prosessilla muistiin komennolla:</p>
+<div class="language-python highlight"><span class="filename">srk02_delta.py</span><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Lataa KOKO DATA driverin muistiin</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">"SELECT * FROM d_penguins"</span><span class="p">)</span><span class="o">.</span><span class="n">toArrow</span><span class="p">()</span>
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Tuotannossa tutkisit vain aggredaatteja tai pientä samplea kerrallaan.</p>
+</div>
+<h3 id="9-aja-tarvittavat-sql-kyselyt">9 Aja tarvittavat SQL-kyselyt</h3>
+<p>Tutustu alla vaadittuihin asioihin, joiden tulee näkyä videolla. Aja tarvittavat SQL-kyselyt Marimo Notebookissa, jotta saat tarvittavat vaiheet tehtyä. Alla on esimerkkejä SQL-kyselyistä, joita muokkaamalla saat valtaosan tehtävästä tehtyä. Periaatteessa voit käyttää myös DataFrame-syntaksia, mutta koska meillä on tietovarasto ja katalogi, SQL on luonteva valinta.</p>
+<p>Jos haluat datat aina kivasti näkyviin tekstimuodossa, aja komento formaatilla siten, että funktioketjun perässä on <code>.show()</code> tai <code>.show(truncate=False)</code>:</p>
+<div class="language-python highlight"><span class="filename">srk02_delta.py</span><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">spark</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">"SELECT your_query_here"</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span></code></pre></div>
+<p>Alla komentoja, joita voit muokata tarpeen mukaan. Huomaa, että komennot eivät välttämättä ole siinä järjestyksessä, jossa sinun ne tulisi ajaa. Nämä ovat rakennuspalikoita, joiden avulla ratkot oman tehtäväsi.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1">-- Datamäärä</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">d_penguins</span><span class="p">;</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1">-- Selvitä kunkin sarakkeen NULL-arvon korvaajaksi sopiva arvo</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="k">SELECT</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">    </span><span class="n">mean</span><span class="p">(</span><span class="n">bill_length_mm</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">mean_bill_length</span><span class="p">,</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">    </span><span class="n">mean</span><span class="p">(</span><span class="n">bill_depth_mm</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">mean_bill_depth</span><span class="p">,</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">    </span><span class="n">mean</span><span class="p">(</span><span class="n">flipper_length_mm</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">mean_flipper_length</span><span class="p">,</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">    </span><span class="n">mean</span><span class="p">(</span><span class="n">body_mass_g</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">mean_body_mass</span><span class="p">,</span>
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">    </span><span class="k">mode</span><span class="p">(</span><span class="n">sex</span><span class="p">)</span>
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="k">FROM</span><span class="w"> </span><span class="n">d_penguins</span>
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">ALL</span><span class="p">;</span>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="c1">-- Päivitä yhden sarakkeen NULL-arvot sopivalla korvaavalla arvolla</span>
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="k">UPDATE</span><span class="w"> </span><span class="n">d_penguins</span>
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="k">SET</span><span class="w"> </span><span class="n">bill_length_mm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">43</span><span class="p">.</span><span class="mi">92</span>
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">bill_length_mm</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span>
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>
+</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a><span class="c1">-- Laskee NULL arvot kussakin sarakkeessa</span>
+</span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="k">SELECT</span>
+</span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="w">    </span><span class="n">COUNT_IF</span><span class="p">(</span><span class="k">ISNULL</span><span class="p">(</span><span class="n">id</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">null_id</span><span class="p">,</span>
+</span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="w">    </span><span class="n">COUNT_IF</span><span class="p">(</span><span class="k">ISNULL</span><span class="p">(</span><span class="n">species</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">null_species</span><span class="p">,</span>
+</span><span id="__span-16-23"><a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="w">    </span><span class="n">COUNT_IF</span><span class="p">(</span><span class="k">ISNULL</span><span class="p">(</span><span class="n">island</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">null_island</span><span class="p">,</span>
+</span><span id="__span-16-24"><a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a><span class="w">    </span><span class="n">COUNT_IF</span><span class="p">(</span><span class="k">ISNULL</span><span class="p">(</span><span class="n">bill_length_mm</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">null_bill_length</span><span class="p">,</span>
+</span><span id="__span-16-25"><a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a><span class="w">    </span><span class="n">COUNT_IF</span><span class="p">(</span><span class="k">ISNULL</span><span class="p">(</span><span class="n">bill_depth_mm</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">null_bill_depth</span><span class="p">,</span>
+</span><span id="__span-16-26"><a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a><span class="w">    </span><span class="n">COUNT_IF</span><span class="p">(</span><span class="k">ISNULL</span><span class="p">(</span><span class="n">flipper_length_mm</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">null_flipper_length</span><span class="p">,</span>
+</span><span id="__span-16-27"><a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a><span class="w">    </span><span class="n">COUNT_IF</span><span class="p">(</span><span class="k">ISNULL</span><span class="p">(</span><span class="n">body_mass_g</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">null_body_mass</span><span class="p">,</span>
+</span><span id="__span-16-28"><a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a><span class="w">    </span><span class="n">COUNT_IF</span><span class="p">(</span><span class="k">ISNULL</span><span class="p">(</span><span class="n">sex</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">null_sex</span>
+</span><span id="__span-16-29"><a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a><span class="k">FROM</span><span class="w"> </span><span class="n">d_penguins</span><span class="p">;</span>
+</span><span id="__span-16-30"><a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a>
+</span><span id="__span-16-31"><a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a><span class="c1">-- Optimoi taulu</span>
+</span><span id="__span-16-32"><a id="__codelineno-16-32" name="__codelineno-16-32" href="#__codelineno-16-32"></a><span class="n">OPTIMIZE</span><span class="w"> </span><span class="n">d_penguins</span><span class="p">;</span>
+</span><span id="__span-16-33"><a id="__codelineno-16-33" name="__codelineno-16-33" href="#__codelineno-16-33"></a>
+</span><span id="__span-16-34"><a id="__codelineno-16-34" name="__codelineno-16-34" href="#__codelineno-16-34"></a><span class="c1">-- Aja VACUUM</span>
+</span><span id="__span-16-35"><a id="__codelineno-16-35" name="__codelineno-16-35" href="#__codelineno-16-35"></a><span class="k">VACUUM</span><span class="w"> </span><span class="n">d_penguins</span><span class="w"> </span><span class="n">RETAIN</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">HOURS</span><span class="p">;</span>
+</span><span id="__span-16-36"><a id="__codelineno-16-36" name="__codelineno-16-36" href="#__codelineno-16-36"></a>
+</span><span id="__span-16-37"><a id="__codelineno-16-37" name="__codelineno-16-37" href="#__codelineno-16-37"></a><span class="c1">-- Näe wanha taulun versio</span>
+</span><span id="__span-16-38"><a id="__codelineno-16-38" name="__codelineno-16-38" href="#__codelineno-16-38"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">d_penguins</span><span class="w"> </span><span class="k">VERSION</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">OF</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-16-39"><a id="__codelineno-16-39" name="__codelineno-16-39" href="#__codelineno-16-39"></a>
+</span><span id="__span-16-40"><a id="__codelineno-16-40" name="__codelineno-16-40" href="#__codelineno-16-40"></a><span class="c1">-- Tuhoa taulu</span>
+</span><span id="__span-16-41"><a id="__codelineno-16-41" name="__codelineno-16-41" href="#__codelineno-16-41"></a><span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">d_penguins</span><span class="p">;</span>
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Jos tarvitset dokumentaatiota, niin Databricksin <a href="https://docs.databricks.com/aws/en/sql/language-manual">SQL Language Reference</a> on mainio.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Älä turhaan keuli SQL-taitojen kanssa siten, että rakennat 300-rivisen CTE/view/alikysely-himmelin tekoälyn avulla. Tämän harjoituksen kannalta on parempi, että irrallisia kyselyitä on useita, jotta lokihakemiston sisältö kasvaa komento komennolta.</p>
+<p>TUOTANNOSSA tietenkin kannattaa välttää miljoonaa pientä yksittäistä muutosta tietovarastoon, koska se aiheuttaa datan kopiointia ja tilan tuhlausta. Tämä on harjoitus, joten epäoptimaalinen toiminta sallittakoon.</p>
+</div>
+<p>Alla vielä erikseen ohjeet CDC-datan mergeä varten. Tässä on oletuksena, että jokin louhija on saanut pääteltyä, että kannassa on tehty Insert, Update ja Delete operaatioita. Tämä onnistuisi esimerkiksi BINLOG tai WAL dataa seuraamalla. Tästä aiheesta on erikseen harjoituksia, joten emme käsittele sitä sen tarkemmin. Hyväksy vain, että muutoshistoriaa on saatu noudattua lähdejärjestelmästä, ja haluamme varmistaa, että meidän dimensiotaulu pingiineistä on ajan tasalla.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1">-- Lisää uusi pingviini, jos ei ole jo olemassa preppaus:</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="c1">-- VAIHE 1: Luoda CDC-dataa</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="c1">-- Op ==&gt; I=insert, U=update, D=delete</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">REPLACE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">cdc_updates</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="k">USING</span><span class="w"> </span><span class="n">DELTA</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="k">AS</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="k">FROM</span><span class="w"> </span><span class="k">VALUES</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="w">    </span><span class="p">(</span><span class="s1">'I'</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="s1">'Duplicate'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Event'</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s1">'unknown'</span><span class="p">),</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="w">    </span><span class="p">(</span><span class="s1">'D'</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">  </span><span class="s1">'Adelie'</span><span class="p">,</span><span class="w">   </span><span class="s1">'Torgersen'</span><span class="p">,</span><span class="w"> </span><span class="mi">39</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">17</span><span class="p">.</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">186</span><span class="p">,</span><span class="w"> </span><span class="mi">3800</span><span class="p">,</span><span class="w"> </span><span class="s1">'MALE'</span><span class="p">),</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="w">    </span><span class="p">(</span><span class="s1">'U'</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">  </span><span class="s1">'Kana'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Ahvenanmaa'</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">.</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">.</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="mi">1337</span><span class="p">,</span><span class="w"> </span><span class="s1">'ROBOT'</span><span class="p">),</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="w">    </span><span class="p">(</span><span class="s1">'I'</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w"> </span><span class="s1">'Pulu'</span><span class="p">,</span><span class="w">  </span><span class="s1">'Ahvenanmaa'</span><span class="p">,</span><span class="w"> </span><span class="mi">39</span><span class="p">.</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p">.</span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">181</span><span class="p">,</span><span class="w"> </span><span class="mi">3750</span><span class="p">,</span><span class="w"> </span><span class="s1">'MALE'</span><span class="p">),</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="w">    </span><span class="p">(</span><span class="s1">'I'</span><span class="p">,</span><span class="w"> </span><span class="mi">1001</span><span class="p">,</span><span class="w"> </span><span class="s1">'Lokki'</span><span class="p">,</span><span class="w"> </span><span class="s1">'Ahvenanmaa'</span><span class="p">,</span><span class="w"> </span><span class="mi">46</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">17</span><span class="p">.</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">192</span><span class="p">,</span><span class="w"> </span><span class="mi">3500</span><span class="p">,</span><span class="w"> </span><span class="s1">'FEMALE'</span><span class="p">)</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="k">AS</span><span class="w"> </span><span class="n">v</span><span class="p">(</span>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="w">    </span><span class="n">Op</span><span class="p">,</span>
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="w">    </span><span class="n">id</span><span class="p">,</span>
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a><span class="w">    </span><span class="n">species</span><span class="p">,</span>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a><span class="w">    </span><span class="n">island</span><span class="p">,</span>
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a><span class="w">    </span><span class="n">bill_length_mm</span><span class="p">,</span>
+</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a><span class="w">    </span><span class="n">bill_depth_mm</span><span class="p">,</span>
+</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a><span class="w">    </span><span class="n">flipper_length_mm</span><span class="p">,</span>
+</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a><span class="w">    </span><span class="n">body_mass_g</span><span class="p">,</span>
+</span><span id="__span-17-23"><a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a><span class="w">    </span><span class="n">sex</span>
+</span><span id="__span-17-24"><a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a><span class="p">);</span>
+</span><span id="__span-17-25"><a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a>
+</span><span id="__span-17-26"><a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a><span class="c1">-- UPSERT</span>
+</span><span id="__span-17-27"><a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a><span class="c1">-- VAIHE 2: Merge.  </span>
+</span><span id="__span-17-28"><a id="__codelineno-17-28" name="__codelineno-17-28" href="#__codelineno-17-28"></a><span class="n">MERGE</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">d_penguins</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">target</span>
+</span><span id="__span-17-29"><a id="__codelineno-17-29" name="__codelineno-17-29" href="#__codelineno-17-29"></a><span class="k">USING</span><span class="w"> </span><span class="n">cdc_updates</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">source</span>
+</span><span id="__span-17-30"><a id="__codelineno-17-30" name="__codelineno-17-30" href="#__codelineno-17-30"></a><span class="k">ON</span><span class="w"> </span><span class="n">target</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">source</span><span class="p">.</span><span class="n">id</span>
+</span><span id="__span-17-31"><a id="__codelineno-17-31" name="__codelineno-17-31" href="#__codelineno-17-31"></a><span class="k">WHEN</span><span class="w"> </span><span class="n">MATCHED</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">source</span><span class="p">.</span><span class="n">Op</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'D'</span><span class="w"> </span><span class="k">THEN</span>
+</span><span id="__span-17-32"><a id="__codelineno-17-32" name="__codelineno-17-32" href="#__codelineno-17-32"></a><span class="w">    </span><span class="k">DELETE</span>
+</span><span id="__span-17-33"><a id="__codelineno-17-33" name="__codelineno-17-33" href="#__codelineno-17-33"></a><span class="k">WHEN</span><span class="w"> </span><span class="n">MATCHED</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">source</span><span class="p">.</span><span class="n">Op</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'U'</span><span class="w"> </span><span class="k">THEN</span>
+</span><span id="__span-17-34"><a id="__codelineno-17-34" name="__codelineno-17-34" href="#__codelineno-17-34"></a><span class="w">    </span><span class="k">UPDATE</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="o">*</span>
+</span><span id="__span-17-35"><a id="__codelineno-17-35" name="__codelineno-17-35" href="#__codelineno-17-35"></a><span class="k">WHEN</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">MATCHED</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">source</span><span class="p">.</span><span class="n">Op</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'I'</span><span class="w"> </span><span class="k">THEN</span>
+</span><span id="__span-17-36"><a id="__codelineno-17-36" name="__codelineno-17-36" href="#__codelineno-17-36"></a><span class="w">    </span><span class="k">INSERT</span><span class="w"> </span><span class="o">*</span><span class="p">;</span>
+</span><span id="__span-17-37"><a id="__codelineno-17-37" name="__codelineno-17-37" href="#__codelineno-17-37"></a>
+</span><span id="__span-17-38"><a id="__codelineno-17-38" name="__codelineno-17-38" href="#__codelineno-17-38"></a><span class="c1">-- Näytä lopputulos</span>
+</span><span id="__span-17-39"><a id="__codelineno-17-39" name="__codelineno-17-39" href="#__codelineno-17-39"></a><span class="c1">-- VAIHE 3: Tarkista, että HALUTUT päivitykset ovat tietovarastossa.</span>
+</span><span id="__span-17-40"><a id="__codelineno-17-40" name="__codelineno-17-40" href="#__codelineno-17-40"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">d_penguins</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p">,</span><span class="w"> </span><span class="mi">1001</span><span class="p">);</span>
+</span></code></pre></div>
+<p>Näiden komentojen dokumentaatioon on hyvä lähde Delta Lake -sivusto. Esimerkiksi artikkeli <a href="https://docs.delta.io/delta-update/">Table deletes, updates, and merges</a> sekä <a href="https://docs.delta.io/delta-change-data-feed/">Change data feed</a>.</p>
+<h2 id="videolla-esitettava">Videolla esitettävä</h2>
+<p>Tässä harjoituksessa videon tulee osoittaa vähintään seuraavat asiat:</p>
+<ol>
+<li>Kerrot, kuinka monta tuntia käytit harjoitukseen.</li>
+<li>Selität lyhyesti, mitä Delta Lake on ja mikä on <code>__delta_log</code>-hakemiston
+   rooli.</li>
+<li>Käynnistät Docker Compose -palvelun videolla (<code>docker compose up -d</code>).</li>
+<li>Avaat Marimo Notebookin ja näytät, kuinka yhdistät Spark Connectiin.</li>
+<li>Näytät Delta-taulun luonnin ja tarkastelet <code>__delta_log</code>-hakemistoa.</li>
+<li>Lisää/päivitä/poista dataa ja näytät, kuinka delta log elää.</li>
+<li>Suorita myös MERGE-operaatio feikki CDC-datan avulla.</li>
+<li>Näytät ja selität, mitkä CDC-operaatiot aiheuttivat pingviinitauluun muutoksia ja miksi.</li>
+<li>Suoritat time travel -kyselyn ja näytät, kuinka sama taulu palauttaa eri datan eri versioissa.</li>
+<li>Suoritat <code>VACUUM</code> ja näytät, kuinka vanhat tiedostot poistuvat.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 <a href="https://www.kamk.fi">Kajaanin Ammattikorkeakoulu Oy</a>. 
+Licenced under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Kopioitu leikep\u00f6yd\u00e4lle", "clipboard.copy": "Kopioi leikep\u00f6yd\u00e4lle", "search.result.more.one": "1 lis\u00e4\u00e4 t\u00e4ll\u00e4 sivulla", "search.result.more.other": "# lis\u00e4\u00e4 t\u00e4ll\u00e4 sivulla", "search.result.none": "Ei t\u00e4sm\u00e4\u00e4vi\u00e4 dokumentteja", "search.result.one": "1 t\u00e4sm\u00e4\u00e4v\u00e4 dokumentti", "search.result.other": "# t\u00e4sm\u00e4\u00e4v\u00e4\u00e4 dokumenttia", "search.result.placeholder": "Kirjoita aloittaaksesi haun", "search.result.term.missing": "Puuttuu", "select.version": "Valitse versio"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
