@@ -100,7 +100,9 @@ docker compose up -d
 
 Jos ajat komennon `docker ps`, huomaa seuraavan:
 
-> 245286dd5b55   docker.redpanda.com/redpandadata/redpanda:v26.1.9   "/entrypoint.sh redp…"    15 seconds ago   Up 15 seconds   0.0.0.0:18081-18082->18081-18082/tcp, [::]:18081-18082->18081-18082/tcp, 0.0.0.0:19092->19092/tcp, [::]:19092->19092/tcp, 0.0.0.0:19644->9644/tcp, [::]:19644->9644/tcp   redpanda-0
+```
+245286dd5b55   docker.redpanda.com/redpandadata/redpanda:v26.1.9   "/entrypoint.sh redp…"    15 seconds ago   Up 15 seconds   0.0.0.0:18081-18082->18081-18082/tcp, [::]:18081-18082->18081-18082/tcp, 0.0.0.0:19092->19092/tcp, [::]:19092->19092/tcp, 0.0.0.0:19644->9644/tcp, [::]:19644->9644/tcp   redpanda-0
+```
 
 Tästä voi päätellä, että sinulla on seuraavat API:t olemassa:
 
