@@ -1,0 +1,1716 @@
+
+<!doctype html>
+<html lang="fi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../str01_redpanda/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>BIG01: Juna-alusta - Data-alustat</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#big01-juna-alusta" class="md-skip">
+          Hyppää sisältöön
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Ylätunniste">
+    <a href="../.." title="Data-alustat" class="md-header__button md-logo" aria-label="Data-alustat" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Data-alustat
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              BIG01: Juna-alusta
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Hae" placeholder="Hae" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Haku">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Tyhjää" aria-label="Tyhjää" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Aloitetaan hakua
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigaatio" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Data-alustat" class="md-nav__button md-logo" aria-label="Data-alustat" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Data-alustat
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tervetuloa kurssille
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aloituspaketti
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Aloituspaketti
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aloituspaketti/aloita_tasta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aloita tästä
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aloituspaketti/olap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OLAP vs OLTP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aloituspaketti/historia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Historia
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aloituspaketti/arkkitehtuurit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arkkitehtuurit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Harjoitukset
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Harjoitukset
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../yleisohjeet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Yleisohjeet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csc01_cpouta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSC01: cPouta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lak01_ducklake/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LAK01: Duck Lake
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../srk01_spark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SRK01: Apache Spark
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../srk02_delta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SRK02: Delta Lake
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cdc01_mealie/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CDC01: Mealie
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../orc01_airflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ORC01: Apache Airflow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../orc02_dagster/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ORC02: Dagster
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../str01_redpanda/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    STR01: Redpanda Streaming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BIG01: Juna-alusta
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BIG01: Juna-alusta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Sisällysluettelo">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sisällysluettelo
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#videon-vaiheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Videon vaiheet
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Videon vaiheet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#luento-1-jaateloauto-rest-api-to-staging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Luento 1: Jaateloauto REST API to staging
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Luento 1: Jaateloauto REST API to staging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#part-13-projektin-aloitus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1/3: Projektin aloitus
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-23-jaateloauto-rest-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2/3: Jaateloauto REST API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-33-ingestion-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3/3: Ingestion Tool
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#luento-2-staging-to-bronze-using-dbt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Luento 2: Staging to Bronze using dbt
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Luento 2: Staging to Bronze using dbt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#part-13-dbt-ja-duckdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1/3: dbt ja DuckDB
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-23-dbt-ja-fake-csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2/3: dbt ja Fake CSV
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-33-dbt-jaatelo-bronzelle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3/3: dbt Jaatelo Bronzelle
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#luento-3-silver-and-gold-modelling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Luento 3: Silver and Gold modelling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Luento 3: Silver and Gold modelling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#part-13-silver-timetable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1/3: Silver Timetable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-23-silver-fact-and-dim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2/3: Silver Fact and Dim
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-33-gold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3/3: Gold
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#luento-4-evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Luento 4: Evidence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Luento 4: Evidence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#part-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1/2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2/2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#videolla-esitettava" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Videolla esitettävä
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Sisällysluettelo">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sisällysluettelo
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#videon-vaiheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Videon vaiheet
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Videon vaiheet">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#luento-1-jaateloauto-rest-api-to-staging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Luento 1: Jaateloauto REST API to staging
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Luento 1: Jaateloauto REST API to staging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#part-13-projektin-aloitus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1/3: Projektin aloitus
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-23-jaateloauto-rest-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2/3: Jaateloauto REST API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-33-ingestion-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3/3: Ingestion Tool
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#luento-2-staging-to-bronze-using-dbt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Luento 2: Staging to Bronze using dbt
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Luento 2: Staging to Bronze using dbt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#part-13-dbt-ja-duckdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1/3: dbt ja DuckDB
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-23-dbt-ja-fake-csv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2/3: dbt ja Fake CSV
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-33-dbt-jaatelo-bronzelle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3/3: dbt Jaatelo Bronzelle
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#luento-3-silver-and-gold-modelling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Luento 3: Silver and Gold modelling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Luento 3: Silver and Gold modelling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#part-13-silver-timetable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1/3: Silver Timetable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-23-silver-fact-and-dim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2/3: Silver Fact and Dim
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-33-gold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 3/3: Gold
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#luento-4-evidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Luento 4: Evidence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Luento 4: Evidence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#part-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1/2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#part-22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2/2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#videolla-esitettava" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Videolla esitettävä
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="big01-juna-alusta">BIG01: Juna-alusta</h1>
+<p>Tämä harjoitus poikkeaa muista harjoituksista siten, että alustan toteutukseen löytyy YouTube-soittolista avuksi. Soittolistan videoissa kasataan lähes identtinen alusta siitä, mitä sinä kasaat. Erona on eri data, mikä vaikuttaa pienissä määrin tiedon lataukseen, tiedon mallintamiseen ja visualisointiin.</p>
+<ul>
+<li>Videot: <a href="https://youtube.com/playlist?list=PL7AbISYtmmfgzyf95jbLMWoVp5DqzEJSl">YouTube Playlist: Data-alustat BIG101 demo</a></li>
+<li>Esimerkkitoteutuksen data: <a href="https://gitlab.dclabra.fi/jani-public/jaateloauto">Jäätelöauto API</a></li>
+<li>Esimerkkitoteutuksen koodi: <a href="https://gitlab.dclabra.fi/jani-public/data-alustat-demo/">data-alustat-demo</a></li>
+</ul>
+<p>Soittolistan videoilla kasataan alusta, joka:</p>
+<ul>
+<li>Tuo feikkidataa jaateloauto-API:sta</li>
+<li>Edustaa <a href="https://sourander.github.io/data-alustat/aloituspaketti/arkkitehtuurit/">Data-alustat/Arkkitehtuuri</a> mukaista yhden koneen ja yhden tietolähteen arkkitehtuuria</li>
+<li>Mallintaa datan Kimballin tähtimallia muotoilevaksi Silver-kerrokseksi</li>
+<li>Mallinta datan one big table -tyyppiseksi aggregaattitauluksi Gold-kerrokselle</li>
+<li>Tarjoaa loppukäyttäjille Evidence BI-työkalun, jolla valittu bisnesongelma visualisoidaan</li>
+</ul>
+<p>Sinun tehtäväsi on luoda mahdollisimman automatisoitu putki, joka hyödyntää dbt:tä, DuckDB:tä ja Evidenceä työkaluina, ja DuckDB-tietovarastoon tehdään medaljonkiarkkitehtuuri (bronze, silver, gold).</p>
+<div class="admonition warning">
+<p class="admonition-title">Muokkaa monorepoksi</p>
+<p>Vuoden 2025 toteutuksessa tämä oli kurssin loppupuoliskon käytännön toteutus, ja täten se eli yksin omassa repositoriossaan. Vuodesta 2026 alkaen toteutuksessa on käytetty monorepoa. Älä siis toista laput silmillä opettajan komentoja vanhasta videosta: tee samat asiat nykyisen <code>etunimisukunimi/</code> repositoriosi sisään, esimerkiksi hakemistoon <code>etunimisukunimi/big01/</code>.</p>
+<p>Voi olla kannattavaa avata tuo hakemisto omaan VS Code -ikkunaan. Osa VS Coden ominaisuuksista, erityisesti Python virtuaaliympäristöön liittyvät, toimivat parhaiten kun ne ovat VS Coden näkökulmasta projektin juurihakemistossa.</p>
+</div>
+<h2 id="videon-vaiheet">Videon vaiheet</h2>
+<p>Soittolistan videoissa näkyy TODO-lista, jota opettaja seuraa. Alla on sama lista tarjottuna sinulle, siltä varalta, että se helpottaa tehtävän tekemistä tai videoiden seuraamista. Jos siitä ei ole apua, hyppää yli.</p>
+<p>Demossa valittu bisnesongelma on: Jäätelöautojen viikoittainen kumulatiivinen sekä keskimääräinen (p50 ja p90) pysäkiltä myöhässä lähteminen (eli <em>"departure lateness"</em>).</p>
+<h3 id="luento-1-jaateloauto-rest-api-to-staging">Luento 1: Jaateloauto REST API to staging</h3>
+<h4 id="part-13-projektin-aloitus">Part 1/3: Projektin aloitus</h4>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Valitse bisnesongelma<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tutustu REST API:n dokumentaatioon ja varmista että valitsemasi ongelmaa vastaava data on olemassa. Jos ei, vaihda bisnesongelma.</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Alusta repositorio</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Asenna uv<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Asenna Python 3.12 (<code>uv python install 3.12</code>)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Pinnaa versio (<code>uv python pin 3.12</code>)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Alusta uv-projekti (<code>uv init --lib --name "ope-data-alusta" .</code>) <ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>--lib</code> selitetään myöhemmin hakemistorakenteessa.</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Luo virtuaaliympäristö (<code>uv sync</code>)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> ... ja varmista, että VS Code käyttää sitä Python Interpreterinä.</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Päätä projektihakemiston rakenne, esim:<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Data menee aina <code>./data/</code><ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Raakadata louhitaan <code>./data/lake/*/*</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tietovarasto sijoitetaan <code>./data/warehouse/jotain.db</code></li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Koodi sijoitetaan <code>./src/</code> (uv huolehti jo tästä)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Automaatioskriptit sijoitetaan <code>./scripts/</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tee tyhjistä hakemistoista pysyviä <code>.gitkeep</code>-tiedostojen avulla. </li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Puske GitLabiin (muista <code>git status -u</code> !!!)</li>
+</ul>
+</li>
+</ul>
+<p><strong>HOX!</strong> Oikeaa tehtävää tehdessä tässä välissä olisi hyvä pitää dokumentaatio kunnossa. Onhan sinulla README.md-tiedosto vähintään jo otsikkotasolla päivitetty?</p>
+<h4 id="part-23-jaateloauto-rest-api">Part 2/3: Jaateloauto REST API</h4>
+<p><strong>HOX!</strong> Tähän väliin käytännön vinkki: teille on täysin sallittua sijoittaa repositorioon <code>MEMO.md</code> tai <code>./notes/*.md</code> tai ylläpitää muistiinpanoja Notionissa tai käyttää fyysistä muistivihkoa. Minä en sitä tee videoilla, mutta opiskellesssa suosittelen tekemään muistiinpanoja. Ethän aja itseäsi tilanteeseen, jossa <em>"Ajoin komennon, jota en muista, ja sit tuli virhe, jota en muista, mutta nyt tämä ei enää toimi."</em> Tätä kannattaa käyttää myös työelämässä.</p>
+<p><strong>HOX!</strong> Tee muistiinpanoja myös kurssipalautteeseen liittyvistä asioita. Näin osaat antaa parempaa palautetta kurssin lopuksi, kun ongelmakohdat eivät ole muistin varassa. Voit käytännössä copy-pasteta palautteen intran kaavakkeeseen. Kukaan meistä ei ole täydellinen, mutta me kaikki voimme kehittyä. Palaute auttaa tässä.</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Kloonaa <a href="https://gitlab.dclabra.fi/jani-public/jaateloauto/">Jäätelöauto API</a><ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Lue README.md ja aja palvelu ylös.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tutustu Swagger UI:iin (<code>localhost:8000</code>)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tutustu <a href="https://www.digitraffic.fi/rautatieliikenne/">Rautatieliikenne</a> API:iin<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Swagger</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> (Optional) GraphQL</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tsekkaa myös Keskusteluryhmä. Näet aitoa bugi-ilmoittelua!</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tutustu REST:n olemukseen <a href="https://jsonplaceholder.typicode.com/">JSONPlaceholder</a> avulla.<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Selain</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> HTTPie</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Testaa samat vielä Jäätelöauto API:n datalla</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tsekkaa vielä <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods">HTTP verbit</a></li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Python Notebook Playground<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Asenna IPykernel ja requests (<code>uv add ipykernel requests</code>)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tee hakemisto Notebookeille (esim. <code>./notebooks/</code>)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Luo uusi Notebook, <code>rest_tutuksi.ipynb</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Kokeile <code>requests</code>-kirjastoa (<code>requests.get('url').json()</code></li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Bonus: kurkataan huvikseen myös <a href="https://www.digitraffic.fi/rautatieliikenne/#vanhat-junat-zip-paketteina">Vanhat junat zip-paketteina</a> -vaihtoehtoa. Tämä voi olla houkutteleva, mikäli jonkun bisnesongelma käsittelee pidemmän ajanjakson ongelmaa useampaan junaan liittyen. Keksitkö tavan automatisoida kaikkien näiden S3:lla olevien zip-tiedostojen lataamisen (esimerkiksi <code>./data/lake/staging/vr-zip/yyyy-mm-dd.zip</code>) ja purkamisen (<code>./data/lake/staging/vr-data/yyyy/mm/dd/???.zip</code>).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Puske GitLabiin</li>
+</ul>
+<p><strong>HOX!</strong> Varsinaiset skriptit voit kehittää <code>.ipynb</code>-Notebookissa, jos kaipaat interaktiivisuutta kehittäessä, mutta luo niistä kuitenkin lopulta <code>.py</code>-skriptit, jotta niiden parametrisointi ja automatisointi on helppoa myöhemmin.</p>
+<p><strong>HOX!</strong> Get-metodin palauttaman objektin metodi <code>.json()</code> on kiva plärätessä, mutta jos haluat Bronzen todella olevan <strong>as-raw-as-possible</strong>, kirjoita palautuneet bytet sellaisina kuin ne ovat saapuneet ilman turhia enkoodauksia, joita ko. metodi väkisinkin ujuttaa mukaan.</p>
+<p><strong>HOX!</strong> Huomaa, että sinun tulee aina lukea käyttämäsi API:n käyttöehdot ja -ohjeet. Esimerkiksi Fintrafficilla on oma <a href="https://www.digitraffic.fi/tuki/ohjeita/">Tuki &gt; Ohjeita ja lisätietoa rajapintojen käyttöön</a> -ohje, jossa neuvotaan pakolliset headerit (eli <code>'Digitraffic-User: Junamies/FoobarApp 1.0'</code>) sekä kuvaukset rajoituksista, jotka rajoittavat kyselyiden tiehyttä (default: 60 kpl/min).</p>
+<h4 id="part-33-ingestion-tool">Part 3/3: Ingestion Tool</h4>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Koodaa dummy ingestion tool.<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Jupyter Notebook (<code>./notebooks/jaateloauto_ingestion.ipynb</code>)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Hetken miete datan/skeeman tarkistukselle (e.g. Polars schema)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Hetken miete JSON koskemattomana vai esim. JSON Lines (<code>ELT</code> vs <code>EtLT</code>)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Hetken miete, saako tässä välissä tiputtaa tarpeettomia kenttiä pois</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> (Advanced:) Koodaa helpommin ajettava ingestion tool<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Python (<code>./src/ingestor/jaateloauto.py</code>) ja <code>argparse</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Immutability!</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Laita <code>data/lake/staging/</code> gitignoreen. Data ei kuulu versionhallintaan.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Puske GitLabiin.</li>
+</ul>
+<p>📅 Tähän pisteeseen teidän pitäisi päästä ensimmäisellä viikolla! Kirjoittakaa jäätelöautodatan kylkeen skriptit, jotka louhivat kyseisen dummydatan sijasta aitoa raideliikennedataa.</p>
+<h3 id="luento-2-staging-to-bronze-using-dbt">Luento 2: Staging to Bronze using dbt</h3>
+<h4 id="part-13-dbt-ja-duckdb">Part 1/3: dbt ja DuckDB</h4>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Asenna dbt <ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Aloita asentamalla <a href="https://duckdb.org/docs/installation/">DuckDB CLI</a>. (⚠️ Huomaa mahdollinen vaatimus C++ kirjastojen asentamiselle Windowsissa! ⚠️).</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tämän jälkeen asenna dbt-duckdb (<code>uv add dbt-duckdb</code>), jonka riippuvuuksina asentuvat myös <code>dbt-core</code> ja <code>duckdb</code>.</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Luo dbt-projekti<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Päätä: voit luoda joko jäätelöautolle ja junadatalle yhteisen tai kummallekin erikseen.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>uv run dbt init</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>cd &lt;projektin_nimi&gt;</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Luo lokaali <code>profiles.yml</code> (katso malli alta)</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tutustu seuraaviin tiedostoihin:<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>profiles.yml</code> (configuration precedence: Project, User, System)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>dbt_project.yml</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>models/**/*.yml</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>models/**/*.sql</code><ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Ja niissä <code>{{ jotain }}</code> -syntaksi</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Luo lokaali <code>profiles.yml</code>:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">dbt_warehouse</span><span class="p">:</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">target</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dev</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">outputs</span><span class="p">:</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nt">dev</span><span class="p">:</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">duckdb</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">'../data/warehouse/warehouse.duckdb'</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">      </span><span class="nt">schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">main</span>
+</span></code></pre></div>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Aja ensimmäinen malli<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>uv run dbt run</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>uv run dbt test</code> &lt;= 🚧 Noteeraa virhe 🚧</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tutki tiedostoja, etsi virhe, korjaa se.</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tutustu DuckDB UI:in<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Aja <code>duckdb -ui polku/sinun/warehouseen.duckdb</code>. Selaimeen aukeaa etäisesti Jupyter Notebookin oloinen SQL-client.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Huomaa, että se luo Notebookit ja muun datan kotikansioosi <code>~/.duckdb/extension_data/ui/</code></li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tutustu docsiin<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>uv run dbt docs generate</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>uv run dbt docs serve</code></li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Puske GitLabiin</li>
+</ul>
+<h4 id="part-23-dbt-ja-fake-csv">Part 2/3: dbt ja Fake CSV</h4>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Luo tiedostot<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>data/lake/staging/csvtest/customers.csv</code> (id, name, email)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>.../orders.csv</code> (id, customer_id, product, quantity)</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Luo datamalli Bronzelle<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Hakemisto <code>&lt;projektin_nimi&gt;/models/bronze/csvtest</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tiedostot <code>csvtest_customers.sql</code> ja <code>csvtest_orders.sql</code><ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <strong>HOX</strong>! Harjoittele SQL:ää DuckDB UI:ssa!</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tutustu <a href="https://duckdb.org/docs/stable/data/csv/overview.html">DuckDB:n CSV Importtiin</a></li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Lisää <code>dbt_project.yml</code> tiedostoon model<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> materialized: table</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> schema: bronze (muokkaa profilesiin <code>target: dev</code>, jotta DuckDB schemaksi tulee <code>dev_bronze</code>)</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Kirjoita myös <code>schema.yml</code> (tai <code>whatever.yml</code>)<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> (Optional:) Käytä <code>docs.md</code> tiedostoa ja tuo se näin: <code>'{{ doc("customers_desc") }}'</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Puske GitLabiin</li>
+</ul>
+<h4 id="part-33-dbt-jaatelo-bronzelle">Part 3/3: dbt Jaatelo Bronzelle</h4>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tarkastele tiedostoja<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>data/lake/staging/jaatelo/&lt;junanro&gt;/&lt;date&gt;.json</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tiedosta, että REST API saa olla nyt alhaalla.</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Luo datamalli Bronzelle<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Hakemisto <code>models/bronze/jaatelo</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tiedosto <code>jaateloauto_api.sql</code><ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Suunnittele, älä hutki!</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Luo primääriavain <code>sk_jaateloauto</code> (truckId + departureDate + operatorId)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> ... käytä myös concat_ws, coalesce tai ifnull ja md5 hash</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> ... ja dbt:ssä käytä <a href="https://hub.getdbt.com/dbt-labs/dbt_utils/latest/">dbt utils</a> (<code>packages.yml</code> ja <code>uv run dbt deps</code>)</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Lisää <code>dbt_project.yml</code> tiedostoon modelseihin</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Dokumentoi <code>schema.yml</code></li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Puske GitLabiin</li>
+</ul>
+<h3 id="luento-3-silver-and-gold-modelling">Luento 3: Silver and Gold modelling</h3>
+<h4 id="part-13-silver-timetable">Part 1/3: Silver Timetable</h4>
+<ul class="task-list">
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Luo datamalli Silverille</p>
+<ul class="task-list">
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <strong>Suunnittele ennen kuin teet!</strong> Sinun pitää tietää, mikä yksi rivi yhdessä taulussa edustaa!</p>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tästä alkaen työ on mekaanista toistoa yllä olevasta, mutta kaikki tehdään <code>models/silver</code> ja <code>gold</code> kansioon</p>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> SQL kannattaa taas harjoitella interaktiivisessa DuckDB UI -tilassa ja myöhemmin liittää <code>.sql</code>-tiedostoon.</p>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Luotavat 🥈 Silver taulut:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>jaateloauto_timetable</code> : one row per an event (arrive, departure) that has ever happened. In other words, this is the unnested JSON data from Bronze. Primary key needs to be a <strong>surrogate key</strong>.<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>timetable_row -&gt; '$.station' as method_a</code> (<a href="https://duckdb.org/docs/stable/data/json/json_functions.html">JSON Functions</a>) (json_extract) sopii kaikille paitsi stringeille.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>timetable_row --&gt; '$.stopName' as method_b</code> (json_extract_string) parsii pois hipsukat stringeistä.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Yhdistä castin kanssa: <code>json_extract(ttr, '$stopId')::INT</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Jos kenttä on yhä nestattu: <code>json_extract(ttr, '$.latenessCauses')::JSON[]</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> PK/SK: <code>sk_jaateloauto_timetable</code> : (sk_jaateloauto + stop_id + stop_direction)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Lisää modeliksi ja dokumentoi taulu.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Puske GitLabiin</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="part-23-silver-fact-and-dim">Part 2/3: Silver Fact and Dim</h4>
+<p>Luotavat 🥈 Silver taulut hakevat kumpikin tiedot yllä tehdystä aputaulusta.</p>
+<ul class="task-list">
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>f_stop</code> : A fact table representing one row per stop - including arrival and departure. The ice cream trucks stops to sell ice cream. It will include columns for arrives lateness and depature lateness. In short, the data is nearly the same as in the one above, but granularity has been reduced to stop (instead of stop-event). The moment of a truck stopping to sell ice cream has been chosen as a business event that is tracked. Primary key needs to be a <strong>surrogate key</strong>, since we don't get a unifying UUID from source system of other suitable id.</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> PK/SK: <code>sk_stop</code> (sk_jaateloauto + stop_id) using </li>
+</ul>
+</li>
+<li class="task-list-item">
+<p><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>d_truck</code> : One row per truck. In real life, we would most likely enrich this data with other information such as route length, amount of stops on the truck's route et cetera. Primary key is <strong>truck_id</strong>, which is essentially a natural key, since customer's would see this truck id in the time schedule.</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> PK: <code>truck_id</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Huomaa, että koska jäätelöauton perustiedot pysyvät päivästä toiseen samana, voimme noutaa kaiken tiedon kyseisen trukin uusimmasta rivistä, ja voimme myös pitää esimerkiksi pelkästään departuren.</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Puske GitLabiin</li>
+</ul>
+<h4 id="part-33-gold">Part 3/3: Gold</h4>
+<p>Luotavat 🥇 Gold taulut:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>jaateloauto_weekly_lateness</code> : one row per <code>week + truck_id + operator_name</code> combo. We will focus on departure times. Aggregated fields field be e.g. <code>total_departure_lateness</code>,  <code>p50_departure_lateness</code> (alias median) and <code>p90_departure_lateness</code>.<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tsekkaa <a href="https://duckdb.org/docs/stable/sql/functions/aggregates.html">Aggregate Functions: quantile cont</a></li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tarkista, että dbt docsissa lineage näkyy oikein.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Puske GitLabiin</li>
+</ul>
+<h3 id="luento-4-evidence">Luento 4: Evidence</h3>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Jos haluat, voit korvata Evidencen jollakin toisella BI-työkalulla. Vaihtoehtoja ovat esimerkiksi:</p>
+<ul>
+<li>Marimo Notebook + Altair</li>
+<li>Streamlit + Matplotlib/Plotly/Altair/etc.</li>
+<li>Power BI tai Tableau</li>
+<li>JavaScript + D3.js</li>
+</ul>
+<p>Evidencen setup on aiheuttanut joillakin Windows-käyttäjillä päänvaivaa, joten sallin myös vaihtoehtoiset ratkaisut. BI-kerros ei ole tämän harjoituksen pääpointti, mutta se pitää kuitenkin olla olemassa, jotta Gold-tason tauluille on jokin merkitys olemassa.</p>
+</div>
+<h4 id="part-12">Part 1/2</h4>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tutustu <a href="https://docs.evidence.dev/">Evidencen dokumentaatioon</a><ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Ja <a href="https://github.com/evidence-dev/docker-devenv/tree/main">gh:evidence-dev/docker-devenv</a> esimerkkiin</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Ja minun vastaaviin Docker Compose ja Dockerfile tiedostoihin</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Aja ensin init<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>docker compose -f docker-compose.init.yml up --build</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>docker compose -f docker-compose.init.yml down</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> ... jotta saat <code>bi/workspace</code> kansion.</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Lisää GitLabiin</li>
+</ul>
+<p>Tässä välissä, jos haluat, voit tutkia mitä uusi volume sisältää.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Huomaat, että sinulle on uusi volume evidence_node_modules</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span>volume<span class="w"> </span>ls
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Luo tilapäinen kontti, johon volume on mountattu</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>-v<span class="w"> </span>evidence_node_modules:/mnt<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span>ubuntu<span class="w"> </span>bash
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># Kontin sisällä voit ajaa seuraavat komennot.</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Ctrl + D sulkee ja tuhoaa kontin (mutta ei volumea)</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nb">cd</span><span class="w"> </span>/mnt
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>ls
+</span></code></pre></div>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Aja sitten palvelu ylös<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tarpeen mukaan <code>docker compose build</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>docker compose up --watch</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Kokeile muokata index.md:tä. Sivun pitäisi päivittyä.</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Puske GitLabiin</li>
+</ul>
+<p>Tässä välissä vaihdan <strong>Windowsiin</strong>, jotta homma olisi hieman cross OS -testattua:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Aja ensin <code>dbt</code>-komennot, jotta <code>warehouse.duckdb</code> on ajan tasalla.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Testaa kummatkin tilanteet:<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> on ensin ajettu <code>rm -r bi/workspace</code> ja sitten ajetaan kummatkin <code>docker</code>-komennot. Kontin pitäisi päivittyä kun <code>index.md</code>:tä muokataan.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> workspace on valmiiksi olemassa, mutta tämän koneen Docker-ympäristöstä puuttuu <code>evidence_node_modules</code>. Muista tuhota se ensin yllä olevan testin jäljiltä. Muutoin testi on sama kuin yllä.</li>
+</ul>
+</li>
+</ul>
+<h4 id="part-22">Part 2/2</h4>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Kirjoita <code>update_data.sh</code> skripti, joka ajaa tarvittavat <code>dbt</code>-rimpsut, jotta warehouse on ajan tasalla, ja lopulta kopioi sen <code>bi/workspaces/sources/warehouse/warehouse.duckdb</code> tiedoston päälle.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Tutustu <a href="https://docs.evidence.dev/build-your-first-app/">Evidence Docs: Build Your First App</a></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Luo source:<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> HOX! Koska Compose Watch:n sync on yksisuuntainen <code>host -&gt; container</code>, et voi luoda tietolähteitä Evidence GUI:ssa. Tee tämä ihan vain luomalla tiedostoja.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Luo <code>connection.yaml</code> ja <code>jaateloauto_weekly_lateness.sql</code> esimerkkinä toimivan <code>needful_things</code> kaltaisesti.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Testaa Evidence SQL Consolessa <code>select * from warehouse.jaateloauto_weekly_lateness</code></li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Luo itse sivu:<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Muokkaa <code>index.md</code>-tiedostoa.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Luo perus SQL code block, kuten ohjeissa neuvotaan, jotta saat datan aliakseen.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Kokeile ihan vain <code>&lt;DataTable data={code_block_nimi_ylta} /&gt;</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Lisää <code>&lt;BarChart /&gt;</code>, jonka pitäisi istua tähän käyttöön varsin hyvin.<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>data=</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>x=week_monday</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>y=p50_departure_lateness</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>y2=p90_depatrure_lateness</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>xFmt=shortdate</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>xAxisTitle=Week</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> <code>yAxisTitle=Minutes</code></li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Ja toinen, jossa on lisäksi <code>series=truck_id</code> ja <code>type=grouped</code> tai <code>=stacked</code></li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Puske GitLabiin</li>
+</ul>
+<h2 id="videolla-esitettava">Videolla esitettävä</h2>
+<p>Tässä harjoituksessa videon tulee osoittaa alustasi ja datarakenteesi keskeisimmät oivallukset. Koska teit tässä useita vaiheita, tiivistä presentaatio näyttämään prosessin kulku. Videolla näkyy <strong>vähimmillään</strong> seuraavat vaiheet:</p>
+<ol>
+<li><strong>Aloitus ja tavoite:</strong> Kerro valitsemasi junadatan bisnesongelma (esim. joidenkin tiettyjen junien myöhästymiset) ja näytä, mihin REST API -päätepisteeseen olet yhdistänyt.</li>
+<li><strong>Raakadatan nouto:</strong> Näytä Python-skriptisi (ingestion tool), joka hakee datan, ja demonstroi, että raakadata tallentuu onnistuneesti <code>.json</code> tai <code>.csv</code> -muodossa Datalaken staging-kansioon.</li>
+<li><strong>Bronze (dbt &amp; DuckDB):</strong> Esittele, miten dbt tekee raakadatasta DuckDB-tietovaraston Bronze-tason taulun (näytä esim. SQL-kyselysi tai DuckDB UI -näkymä).</li>
+<li><strong>Silver &amp; Gold -mallinnus (dbt):</strong> Esittele tekemäsi dimensionalinen mallinnus (Silver-tason ratkaisut) sekä lopputuloksena syntyvä Gold-tason aggregaatiotaulu.</li>
+<li><strong>dbt Docs &amp; Lineage:</strong> Avaa <code>dbt docs</code> selaimessa ja näytä projektisi data lineage -graafi varmistaaksesi putken oikeellisuuden.</li>
+<li><strong>BI:</strong> Esittele lopuksi dashboard, joka hyödyntää DuckDB:n Gold-tasoa ja vastaa alussa asettamaasi bisnesongelmaan. Voit tehdä kerroksen valitsemallasi työkaulla; ei ole pakko käyttää Evidenceä.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 <a href="https://www.kamk.fi">Kajaanin Ammattikorkeakoulu Oy</a>. 
+Licenced under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">BY-NC-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Kopioitu leikep\u00f6yd\u00e4lle", "clipboard.copy": "Kopioi leikep\u00f6yd\u00e4lle", "search.result.more.one": "1 lis\u00e4\u00e4 t\u00e4ll\u00e4 sivulla", "search.result.more.other": "# lis\u00e4\u00e4 t\u00e4ll\u00e4 sivulla", "search.result.none": "Ei t\u00e4sm\u00e4\u00e4vi\u00e4 dokumentteja", "search.result.one": "1 t\u00e4sm\u00e4\u00e4v\u00e4 dokumentti", "search.result.other": "# t\u00e4sm\u00e4\u00e4v\u00e4\u00e4 dokumenttia", "search.result.placeholder": "Kirjoita aloittaaksesi haun", "search.result.term.missing": "Puuttuu", "select.version": "Valitse versio"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
