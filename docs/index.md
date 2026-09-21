@@ -2,7 +2,7 @@
 
 !!! warning
 
-    Tämä materiaali on refaktoroinnin alla. Uusi toteutus käynnistyy syksyllä 2026.
+    Tämä materiaali on kehittyy kurssin myötä syksyllä 2026. Ethän aloita keskeneräiseksi merkityn tehtävän tekemistä.
 
 ## Kenelle?
 
@@ -10,7 +10,7 @@ Oppimateriaali on tarkoitettu Kajaanin Ammattikorkeakoulun toisen vuoden IT-alan
 
 ## Pisteytysmalli
 
-Kurssi koostuu harjoituksista, jotka kukin arvostellaan [Arviointityökalun](https://arviointi.munpaas.com/) kriteeristöllä nimeltään ==videoitu demo==. Videot palautetaan Reppu-alustaan linkkeinä. 
+Kurssi koostuu harjoituksista, jotka kukin arvostellaan [Arviointityökalun](https://arviointi.munpaas.com/) kriteeristöllä nimeltään ==videoitu demo==. Videot palautetaan Reppu-alustaan linkkeinä.
 
 Kustakin videosta saa `raakapistemäärän`, joka on välillä 0–5. Tämä pistemäärä kerrotaan harjoitukselle määritellyllä kertoimella, jolloin saadaan harjoituksesta saatavat kurssipisteet. Opiskelijana voit käytännössä unohtaa tämän kaavan ja seurata harjoituksesta saatuja loppupisteitä. Jos aihe kuitenkin kiinnostaa, avaa alla olevat admonition-laatikot.
 
@@ -39,7 +39,7 @@ Kustakin videosta saa `raakapistemäärän`, joka on välillä 0–5. Tämä pis
     =sum([[CSC01]] * 2, [[LAK01]] * 2, [[SRK01]] * 2, ..., [[BIG01]] * 8)
     ```
 
-Kertoimet on valittu siten, että *max pisteet* kuvastaa *keskimääräisiä* opiskelijan tehtävään kuluttamia tunteja. Kerään tilastotietoa harjoituksiin käyttämästänne ajasta, jotta voin optimoida tätä pisteytysmallia tulevaisuudessa. Sinun tulee siis kertoa tehtävään käyttämäsi aika videodemossa.
+Kertoimet on valittu siten, että _max pisteet_ kuvastaa _keskimääräisiä_ opiskelijan tehtävään kuluttamia tunteja. Kerään tilastotietoa harjoituksiin käyttämästänne ajasta, jotta voin optimoida tätä pisteytysmallia tulevaisuudessa. Sinun tulee siis kertoa tehtävään käyttämäsi aika videodemossa.
 
 Alla listattuna kurssin harjoitukset (==HUOM! TÄMÄ ON YHÄ TODO eli WORK IN PROGRESS==):
 
@@ -48,9 +48,9 @@ Alla listattuna kurssin harjoitukset (==HUOM! TÄMÄ ON YHÄ TODO eli WORK IN PR
 | [CSC01](harjoitukset/csc01_cpouta.md)        | cPouta       | Metaharjoitus, jossa opit ajamaan seuraavat harjoitukset oman koneen sijasta CSC cPouta -palvelussa. | 10                    | A        |
 | [LAK01](harjoitukset/lak01_ducklake.md)      | Duck Lake    | Duck Lake -harjoitus, jossa kasataan minimaalinen Data Lakehouse.                                    | 10                    | A        |
 | [SRK01](harjoitukset/srk01_spark.md)         | Apache Spark | Apache Spark -tutuksi kontitetun `Spark`:n ja `spark-client`:n avulla.                               | 10                    | A        |
-| [SRK02](harjoitukset/srk02_delta.md)         | Spark Delta  | Apache Spark -harjoitus, jossa käytetään Delta Lakea.                                                | 15                    | A        |
+| [SRK02](harjoitukset/srk02_delta.md)         | Delta Lake   | Apache Spark -harjoitus, jossa käytetään Delta Lakea.                                                | 15                    | A        |
 | [CDC01](harjoitukset/cdc01_mealie.md)        | Mealie CDC   | Mealie-sovelluksen CDC-tiedonkeruuharjoitus.                                                         | 20                    | A        |
-| [STR01](harjoitukset/str01_redpanda.md)      | Redpanda     | Redpanda TODO! Streaming -harjoitus. Kafka producer ja consumer toteutetaan Pythonilla.              | 10                    | B        |
+| [STR01](harjoitukset/str01_redpanda.md)      | Redpanda     | Kafka producer ja consumer toteutetaan Pythonilla ja kokeillaan Schema Registryä.                    | 10                    | B        |
 | [ORC01](harjoitukset/orc01_airflow.md)       | Airflow      | Orkestraatioharjoitus, jossa käytetään Airflow-työkalua.                                             | 15                    | B        |
 | ORC02                                        | Dagster      | Orkestraatioharjoitus, jossa käytetään Dagster-työkalua.                                             | 10                    | B        |
 | KIM01                                        | Kimball      | Dimensionaalisen mallintamisen harjoitus.                                                            | 10                    | B        |
@@ -84,5 +84,5 @@ Alla listattuna kurssin harjoitukset (==HUOM! TÄMÄ ON YHÄ TODO eli WORK IN PR
 
 Mikäli oppimateriaali sisältää virheellistä tietoa, tee jompi kumpi:
 
-* Forkkaa GitHubin repository ja tarjoa Pull Request, joka sisältää korjausehdotukset.
-* Ota yhteyttä ylläpitoon ja esittele virheellisen tiedon korjaus.
+- Forkkaa GitHubin repository ja tarjoa Pull Request, joka sisältää korjausehdotukset.
+- Ota yhteyttä ylläpitoon ja esittele virheellisen tiedon korjaus.

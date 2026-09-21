@@ -298,7 +298,7 @@ print("SparkContext default parallelism: ", spark.sparkContext.defaultParallelis
 print("Shuffle partition count: ", spark.conf.get("spark.sql.shuffle.partitions"))
 ```
 
-## 7. Pingviinit tietovarastoon
+### 7. Pingviinit tietovarastoon
 
 ```python title="srk02_delta.py"
 from urllib.request import urlretrieve
@@ -370,7 +370,7 @@ else:
     ```
 
 
-## 8. Tutki dataa
+### 8. Tutki dataa
 
 Tämä ==ei ole tuotannossa suositeltu tapa==, koska koko datasetin pitää mahtua driver-noden muistiin komennon suorittamiseksi, mutta tämän yksinkertaisen taulun kanssa voit halutessasi plärätä koko taulun sisältöä Marimo Notebookin interaktiivisella työkalulla. Tällöin siirrän taulun datat Marimo-prosessilla muistiin komennolla:
 
