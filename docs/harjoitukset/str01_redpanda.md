@@ -127,7 +127,7 @@ Luo Python-skripti, joka toimii Kafka producerina. Alla on aihio, josta sinun tu
 # dependencies = [
 #     "confluent-kafka==2.14.2",
 # ]
-# requires-python = ">=3.11"
+# requires-python = ">=3.13"
 # ///
 
 import argparse
@@ -191,7 +191,7 @@ Producer lähettää viestejä topiciin, mutta tarvitsemme myös consumerin, jok
 # dependencies = [
 #     "confluent-kafka==2.14.2",
 # ]
-# requires-python = ">=3.11"
+# requires-python = ">=3.13"
 # ///
 
 import argparse
@@ -388,7 +388,7 @@ Luo uusi Python-skripti, joka validoi viestin skeeman mukaan. Käytä `fastavro`
 #     "requests",
 #     "fastavro",
 # ]
-# requires-python = ">=3.11"
+# requires-python = ">=3.13"
 # ///
 
 import argparse
