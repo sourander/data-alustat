@@ -307,16 +307,12 @@ with DAG(
 
 ## Videolla esitettävä
 
-!!! warning
-
-    Tämä lista on WORK IN PROGRESS. Tarkista se.
-
 Tässä harjoituksessa videon tulee osoittaa vähintään seuraavat asiat:
 
 1. Kerrot, kuinka monta tuntia käytit harjoitukseen.
 2. Selität lyhyesti, mikä on Apache Airflow ja mikä on DAGin rooli (yleisönä toisen tiimin jäsen, ei datainsinööri).
 3. Käynnistät Docker Compose -palvelun videolla (`docker compose up -d`) tai osoitat, että se on jo käynnissä.
 4. Avaat Web UI:n (`localhost:8080`) ja näytät, mistä `copycat`-DAG löytyy.
-5. Ajat DAGin manuaalisesti ja näytät Graph-näkymästä, kuinka taskit etenevät `success`-tilaan (mukaan lukien `t4`).
+5. Ajat `copycat`-DAGin manuaalisesti ja näytät Graph-näkymästä, kuinka taskit etenevät `success`-tilaan (mukaan lukien lisäämäsi `both_done`-task).
 6. Avaat yhden taskin lokitiedot Web UI:sta ja esität, mitä se teki.
-7. Esittelet, kuinka `penguins` ja `penguins_summary`-DAG:t hyödyntävät Assettia, ja kuinka `penguins_summary`-DAG käynnistyy, kun `penguins`-DAG päivittää assetin.
+7. Esittelet, kuinka `penguins`- ja `penguins_summary`-DAGit hyödyntävät Assettia, ja kuinka `penguins_summary`-DAG käynnistyy, kun `penguins`-DAG päivittää Assetin.
