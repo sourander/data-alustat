@@ -8,4 +8,6 @@ nav:
   - str01_redpanda.md
   - orc01_airflow.md
   - orc02_dagster.md
+  - kim01_kimball.md
+  # todo: - cub01_olapkuutio.md
   - big01_raideliikenne.md

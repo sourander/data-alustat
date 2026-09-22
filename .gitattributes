@@ -1,1 +1,2 @@
+gitlfs-store/** filter=lfs diff=lfs merge=lfs -text
 solutions/** filter=git-crypt diff=git-crypt

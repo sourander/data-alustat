@@ -53,7 +53,7 @@ Alla listattuna kurssin harjoitukset (==HUOM! TÄMÄ ON YHÄ TODO eli WORK IN PR
 | [STR01](harjoitukset/str01_redpanda.md)      | Redpanda     | Kafka producer ja consumer toteutetaan Pythonilla ja kokeillaan Schema Registryä.                    | 10                    | B        |
 | [ORC01](harjoitukset/orc01_airflow.md)       | Airflow      | Orkestraatioharjoitus, jossa käytetään Airflow-työkalua.                                             | 15                    | B        |
 | ORC02                                        | Dagster      | Orkestraatioharjoitus, jossa käytetään Dagster-työkalua.                                             | 10                    | B        |
-| KIM01                                        | Kimball      | Dimensionaalisen mallintamisen harjoitus.                                                            | 10                    | B        |
+| [KIM01](harjoitukset/kim01_kimball.md)       | Kimball      | Dimensionaalisen mallintamisen harjoitus Mealie-dataa käyttäen.                                      | 10                    | B        |
 | CUB01                                        | OLAP-kuutio  | OLAP-kuutio rakentaminen Marimo Notebookissa.                                                        | 10                    | B        |
 | [BIG01](harjoitukset/big01_raideliikenne.md) | Juna-alusta  | Digitrafficin Rautatieliikennedataa hyödyntävä End-to-End OLAP-alusta.                               | 40                    | B        |
 
