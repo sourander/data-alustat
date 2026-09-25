@@ -65,40 +65,35 @@ RUN find ${IVY_HOME} -name "*.jar" -exec cp {} ${SPARK_HOME}/jars/ \;
 RUN rm -rf ${IVY_HOME}
 # Own addition ends ---------------------------
 
-FROM delta AS startup
+# ... (keep everything before this line the same) ...
 
-ARG NB_USER=NBuser
-ARG NB_UID=1000
-ARG NB_GID=1000
+FROM delta AS startup
+ARG NBuser=NBuser
+ARG GROUP=NBuser
 ARG WORKDIR=/opt/spark/work-dir
 
-RUN groupadd --gid "${NB_GID}" "${NB_USER}" \
-    && useradd \
-        --uid "${NB_UID}" \
-        --gid "${NB_GID}" \
-        --create-home \
-        --shell /bin/bash \
-        "${NB_USER}"
+# NEW: Accept UID and GID with standard Ubuntu defaults (1000)
+ARG UID=1000
+ARG GID=1000
+
+# NEW: Create the group and user using the provided IDs
+RUN groupadd -g ${GID} ${GROUP} && \
+    useradd -u ${UID} -m -g ${GROUP} ${NBuser}
 
 RUN apt-get -qq update \
     && apt-get -qq -y install --no-install-recommends \
         vim nano curl tree \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --chown=${NB_UID}:${NB_GID} startup.sh "${WORKDIR}/startup.sh"
+COPY --chown=${NBuser}:${GROUP} startup.sh "${WORKDIR}/"
 
-RUN mkdir -p \
-        /opt/spark/logs \
-        "${WORKDIR}/notebooks" \
-        "${WORKDIR}/data/lake" \
-        "${WORKDIR}/spark-warehouse" \
-        "${WORKDIR}/catalog" \
-    && chown -R "${NB_UID}:${NB_GID}" \
-        /opt/spark/logs \
-        "/home/${NB_USER}" \
-        "${WORKDIR}"
+RUN mkdir -p /opt/spark/logs && \
+    chown -R ${NBuser}:${GROUP} /opt/spark/logs
 
-USER ${NB_UID}:${NB_GID}
+RUN chown -R ${NBuser}:${GROUP} /home/${NBuser}/ \
+    && chown -R ${NBuser}:${GROUP} ${WORKDIR}
+
+USER ${NBuser}
 WORKDIR ${WORKDIR}
 
 ENTRYPOINT ["bash", "startup.sh"]
@@ -129,20 +124,28 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        NB_UID: "${UID:-1000}"
-        NB_GID: "${GID:-1000}"
+        # Pass host IDs to the Dockerfile
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
     container_name: srk02-delta
     ports:
       - "4040:4040"
       - "8888:8888"
     volumes:
       - ./notebooks:/opt/spark/work-dir/notebooks
-      - ./data/lake:/opt/spark/work-dir/data/lake
-      - ./data/warehouse:/opt/spark/work-dir/spark-warehouse
+      - ./data/lake:/opt/spark/work-dir/data/lake/
+      - ./data/warehouse:/opt/spark/work-dir/spark-warehouse/
       - ./data/catalog:/opt/spark/work-dir/catalog
+  
 ```
 
-Käynnistä ympäristö:
+TÄRKEÄÄ! Aja seuraavat komennot, jotta hakemistot ovat olemassa host-koneellasi sinun käyttäjälläsi (esim. UID=1000, GID=1000) ennen kuin ajat kontin ylös. Muutoin käy helposti siten, että Docker, jota mahdollisesti ajat roottina, luo hakemistot sinun puolestasi Docker Composen `volumes`-määrityksen mukaisesti, mutta ne ovat roottikäyttäjän omistuksessa. Silloin et voi kirjoittaa niihin host-koneeltasi.
+
+```bash
+mkdir -p ./notebooks ./data/lake ./data/warehouse ./data/catalog
+```
+
+Käynnistä ympäristö ==vasta kun olet ajanut yllä olevat komennot==:
 
 ```bash
 docker compose up -d
