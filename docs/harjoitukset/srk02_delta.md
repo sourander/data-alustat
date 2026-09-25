@@ -17,7 +17,7 @@ Ympäristö poikkeaa SRK01-harjoituksesta siten, että tässä kaikki pyörii Do
 
 Luo hakemisto harjoitustasi varten. Lisää sinne alla oleva `Dockerfile`:
 
-```dockerfile
+```dockerfile title="Dockerfile"
 # ------------------------------------------------
 # Dockerfile for SRK02: Delta Lake + Marimo
 # ------------------------------------------------
@@ -66,28 +66,39 @@ RUN rm -rf ${IVY_HOME}
 # Own addition ends ---------------------------
 
 FROM delta AS startup
-ARG NBuser=NBuser
-ARG GROUP=NBuser
+
+ARG NB_USER=NBuser
+ARG NB_UID=1000
+ARG NB_GID=1000
 ARG WORKDIR=/opt/spark/work-dir
 
-
-RUN groupadd -r ${GROUP} && useradd -r -m -g ${GROUP} ${NBuser}
+RUN groupadd --gid "${NB_GID}" "${NB_USER}" \
+    && useradd \
+        --uid "${NB_UID}" \
+        --gid "${NB_GID}" \
+        --create-home \
+        --shell /bin/bash \
+        "${NB_USER}"
 
 RUN apt-get -qq update \
     && apt-get -qq -y install --no-install-recommends \
         vim nano curl tree \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --chown=${NBuser}:${GROUP} startup.sh "${WORKDIR}/"
+COPY --chown=${NB_UID}:${NB_GID} startup.sh "${WORKDIR}/startup.sh"
 
-RUN mkdir -p /opt/spark/logs && \
-    chown -R ${NBuser}:${GROUP} /opt/spark/logs
+RUN mkdir -p \
+        /opt/spark/logs \
+        "${WORKDIR}/notebooks" \
+        "${WORKDIR}/data/lake" \
+        "${WORKDIR}/spark-warehouse" \
+        "${WORKDIR}/catalog" \
+    && chown -R "${NB_UID}:${NB_GID}" \
+        /opt/spark/logs \
+        "/home/${NB_USER}" \
+        "${WORKDIR}"
 
-
-RUN chown -R ${NBuser}:${GROUP} /home/${NBuser}/ \
-    && chown -R ${NBuser}:${GROUP} ${WORKDIR}
-
-USER ${NBuser}
+USER ${NB_UID}:${NB_GID}
 WORKDIR ${WORKDIR}
 
 ENTRYPOINT ["bash", "startup.sh"]
@@ -117,14 +128,18 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        NB_UID: "${UID:-1000}"
+        NB_GID: "${GID:-1000}"
     container_name: srk02-delta
     ports:
       - "4040:4040"
       - "8888:8888"
     volumes:
       - ./notebooks:/opt/spark/work-dir/notebooks
-      - ./data/lake:/opt/spark/work-dir/data/lake/
-      - ./data/warehouse:/opt/spark/work-dir/spark-warehouse/
+      - ./data/lake:/opt/spark/work-dir/data/lake
+      - ./data/warehouse:/opt/spark/work-dir/spark-warehouse
+      - ./data/catalog:/opt/spark/work-dir/catalog
 ```
 
 Käynnistä ympäristö:
