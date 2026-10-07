@@ -82,9 +82,9 @@ cd src/orc02/defs/data
 curl -O $PENGUINS
 ```
 
-### 5: Määrittele processed_penguins assetti
+### 5: Määrittele processed_penguins_csv assetti
 
-Muokkaa aiemmin mainittua `src/orc02/defs/assets.py`-tiedostoa. Lisää sinne seuraava koodi:
+Muokkaa aiemmin mainittua `src/orc02/defs/assets.py`-tiedostoa. Lisää sinne seuraava koodi. Assetti tuottaa `processed_penguins.csv`-tiedoston:
 
 ```python title="src/orc02/defs/assets.py"
 import polars as pl
@@ -94,7 +94,7 @@ penguins_file = "src/orc02/defs/data/penguins.csv"
 processed_penguins_file = "src/orc02/defs/data/processed_penguins.csv"
 
 @dg.asset
-def processed_penguins():
+def processed_penguins_csv():
     # Read data from the CSV
     df = pl.read_csv(penguins_file)
 
@@ -144,7 +144,7 @@ Aja assetin pipeline web-käyttöliittymästä:
     Dagsterin CLI ja sen dokumentaatio on kovin vahvasti Cloud-versioon kallellaan. Huomannet, että `--help` ei yleensä tarjoa mitään hyödyllistä. Dagsterin tutoriaalin perusteella seuraava komento kuitenkin toimii:
 
     ```bash
-    uv run dg launch --assets "processed_penguins"
+    uv run dg launch --assets "processed_penguins_csv"
     ```
 
     Ainakaan opettajan kokeilulla tämä ei kuitenkaan tuota täysin haluttua tulosta. Web UI:ssa "Materilized"-kenttä ei päivity assetin kohdalla, kun sen ajaa CLI:stä. Kenties Dagster on kirjoitushetkellä jossain limbo-siirtymävaiheessa, jossa CLI ja web UI eivät ole täysin synkronissa. Joka tapauksessa, web UI:n kautta ajaminen toimii.
@@ -167,11 +167,41 @@ Jatkossa voimme käyttää DuckDB:tä Dagsterin assettien kanssa.
 
 ### 10: Tallenna käsitelty data DuckDB-tauluun
 
-Muuta `processed_penguins`-assetti niin, että se tallentaa käsitellyn datan CSV-tiedoston lisäksi DuckDB-tietokantaan. Lisää `src/orc02/defs/assets.py`-tiedostoon tarvittava koodi. Alla on vihje, mutta ei koko uutta koodia:
+Lisää uusi assetti, joka lukee käsitellyn CSV-tiedoston ja tallentaa sen DuckDB-tauluun. Tämä vaatii kaksi palasta: DuckDB-yhteyden määrittelevän resurssin ja assetin, joka käyttää sitä. Alla on vihje resurssista ja assetin rungosta, mutta ei koko uutta koodia.
+
+Dagsterin tutoriaalin tapaan resurssi kannattaa sijoittaa omaan `resources.py`-tiedostoon. Voit luoda sen komennolla:
+
+```bash
+uv run dg scaffold defs dagster.resources resources.py
+```
+
+Täydennä tiedosto seuraavasti:
+
+```python title="src/orc02/defs/resources.py"
+import dagster as dg
+from dagster_duckdb import DuckDBResource
+
+database_resource = DuckDBResource(database="src/orc02/defs/data/penguins.duckdb")
+
+
+@dg.definitions
+def resources():
+    return dg.Definitions(resources={"duckdb": database_resource})
+```
+
+Assetissa riittää, että määrittelet riippuvuuden `processed_penguins_csv`-assettiin, otat resurssin vastaan `duckdb`-nimisenä parametrina ja avaat yhteyden:
 
 ```python title="src/orc02/defs/assets.py"
-# TODO! Pohdi sopiva määrä annettavaa boilerplatea.
+@dg.asset(deps=[processed_penguins_csv])
+def processed_penguins(duckdb: DuckDBResource):
+    with duckdb.get_connection() as conn:
+        # Lue processed_penguins.csv ja luo siitä taulu
+        ...
 ```
+
+!!! tip
+
+    DuckDB osaa lukea CSV-tiedoston suoraan `read_csv_auto`-funktiolla, joten voit luoda taulun aiemmin kirjoitetusta `processed_penguins.csv`-tiedostosta. Käytä taulun luonnissa lausetta `CREATE OR REPLACE TABLE`, niin voit ajaa assetin uudelleen ilman virhettä.
 
 ### 11: Luo riippuva penguins_summary assetti
 
@@ -193,7 +223,7 @@ Lisää `penguins_summary`-assettiin check, joka tarkistaa, että taulussa on v�
 
 1. Materialisoi koko asset-ketju
 2. Avaa UI:ssa lineage-näkymä
-3. Tunnista, että `penguins_summary`-assetti on riippuvainen `processed_penguins`-assetista
+3. Tunnista ketju: `processed_penguins_csv` → `processed_penguins` → `penguins_summary`
 
 ### 14: Tutustu ulkoisten palveluiden orkestrointiin
 
@@ -221,8 +251,8 @@ Vastaukseen ei tarvitse sisällyttää toimivaa koodia. Voit halutessasi piirtä
 1. Kerrot, kuinka monta tuntia käytit harjoitukseen.
 2. Selität lyhyesti, mitä asset tarkoittaa Dagsterissa.
 3. Käynnistät Dagsterin komennolla uv run dg dev.
-4. Näytät Catalog- tai Assets-näkymästä assetit processed_penguins ja penguins_summary.
-5. Näytät lineage-näkymästä assettien välisen riippuvuuden.
+4. Näytät Catalog- tai Assets-näkymästä assetit processed_penguins_csv, processed_penguins ja penguins_summary.
+5. Näytät lineage-näkymästä assettien väliset riippuvuudet.
 6. Materialisoit koko asset-ketjun.
 7. Avaat yhden ajon lokit ja kerrot, mitä siinä tapahtui.
 8. Näytät DuckDB:n penguins_summary-taulun sisällön.
