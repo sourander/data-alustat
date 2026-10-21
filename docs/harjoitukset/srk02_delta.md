@@ -41,15 +41,17 @@ LABEL authors="Jani Sourander"
 
 USER root
 
-ARG DELTA_SPARK_VERSION="4.1.0"
-ARG DELTALAKE_VERSION="1.4.2"
-ARG MARIMO_VERSION="0.23.6"
+ARG DELTA_SPARK_VERSION="4.3.1"
+ARG DELTALAKE_VERSION="1.6.2"
+ARG MARIMO_VERSION="0.25.2"
 ARG SPARK_SCALA_SUFFIX="4.1_2.13"
+ARG NUMPY_VERSION="2.2.6"
 
 RUN pip install --quiet --no-cache-dir \
     delta-spark==${DELTA_SPARK_VERSION} \
     deltalake==${DELTALAKE_VERSION} \
-    "marimo[recommended]==${MARIMO_VERSION}"
+    "marimo[recommended]==${MARIMO_VERSION}" \
+    numpy==${NUMPY_VERSION}
 
 # Own addition begins ---------------------------
 ENV IVY_HOME="/tmp/.ivy2"
