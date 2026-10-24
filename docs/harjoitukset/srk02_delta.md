@@ -166,7 +166,8 @@ Käynnistä Docker-palvelu ja tarkastele, mitä hakemistoja on luotu:
 
 ```bash
 docker compose exec srk02-delta bash
-ls -la ls $SPARK_HOME/jars | grep delta
+ls -la
+ls $SPARK_HOME/jars | grep delta
 ```
 
 !!! tip
@@ -470,7 +471,7 @@ DROP TABLE d_penguins;
 
     TUOTANNOSSA tietenkin kannattaa välttää miljoonaa pientä yksittäistä muutosta tietovarastoon, koska se aiheuttaa datan kopiointia ja tilan tuhlausta. Tämä on harjoitus, joten epäoptimaalinen toiminta sallittakoon.
 
-Alla vielä erikseen ohjeet CDC-datan mergeä varten. Tässä on oletuksena, että jokin louhija on saanut pääteltyä, että kannassa on tehty Insert, Update ja Delete operaatioita. Tämä onnistuisi esimerkiksi BINLOG tai WAL dataa seuraamalla. Tästä aiheesta on erikseen harjoituksia, joten emme käsittele sitä sen tarkemmin. Hyväksy vain, että muutoshistoriaa on saatu noudattua lähdejärjestelmästä, ja haluamme varmistaa, että meidän dimensiotaulu pingiineistä on ajan tasalla.
+Alla vielä erikseen ohjeet CDC-datan mergeä varten. Tässä on oletuksena, että jokin louhija on saanut pääteltyä, että kannassa on tehty Insert, Update ja Delete operaatioita. Tämä onnistuisi esimerkiksi BINLOG tai WAL dataa seuraamalla. Tästä aiheesta on erikseen harjoituksia, joten emme käsittele sitä sen tarkemmin. Hyväksy vain, että muutoshistoriaa on saatu noudattua lähdejärjestelmästä, ja haluamme varmistaa, että meidän dimensiotaulu pingviineistä on ajan tasalla.
 
 ```sql
 
