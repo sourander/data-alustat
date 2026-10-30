@@ -17,7 +17,7 @@ Ympäristö poikkeaa SRK01-harjoituksesta siten, että tässä kaikki pyörii Do
 
 Luo hakemisto harjoitustasi varten. Lisää sinne alla oleva `Dockerfile`:
 
-```dockerfile title="Dockerfile"
+``` dockerfile title="Dockerfile"
 # ------------------------------------------------
 # Dockerfile for SRK02: Delta Lake + Marimo
 # ------------------------------------------------
@@ -107,7 +107,7 @@ ENTRYPOINT ["bash", "startup.sh"]
 
 Tarvitset myös `startup.sh`-tiedoston, joka käynnistää Marimo Notebookin:
 
-```bash title="startup.sh"
+``` bash title="startup.sh"
 #!/bin/bash
 
 exec marimo edit \
@@ -119,7 +119,7 @@ exec marimo edit \
 
 Lisää samaan hakemistoon `compose.yml`:
 
-```yaml title="compose.yml"
+``` yaml title="compose.yml"
 services:
   srk02-delta:
     build:
@@ -143,13 +143,13 @@ services:
 
 TÄRKEÄÄ! Aja seuraavat komennot, jotta hakemistot ovat olemassa host-koneellasi sinun käyttäjälläsi (esim. UID=1000, GID=1000) ennen kuin ajat kontin ylös. Muutoin käy helposti siten, että Docker, jota mahdollisesti ajat roottina, luo hakemistot sinun puolestasi Docker Composen `volumes`-määrityksen mukaisesti, mutta ne ovat roottikäyttäjän omistuksessa. Silloin et voi kirjoittaa niihin host-koneeltasi.
 
-```bash
+``` bash
 mkdir -p ./notebooks ./data/lake ./data/warehouse ./data/catalog
 ```
 
 Käynnistä ympäristö ==vasta kun olet ajanut yllä olevat komennot==:
 
-```bash
+``` bash
 docker compose up -d
 ```
 
@@ -164,7 +164,7 @@ docker compose up -d
 
 Käynnistä Docker-palvelu ja tarkastele, mitä hakemistoja on luotu:
 
-```bash
+``` bash
 docker compose exec srk02-delta bash
 ls -la
 ls $SPARK_HOME/jars | grep delta
@@ -174,7 +174,6 @@ ls $SPARK_HOME/jars | grep delta
 
     Voit tarkastella koneen sisältöä pitkin tehtävää. Esimerkiksi hakemisto `/opt/spark/work-dir/data` on bind mountattu host-koneen työhakemiston `bind/data-lake/`-hakmeistoon, mutta Windowsin sijasta voit penkoa tiedostoja Linux-tyylisesti Dockerin sisällä. Tämä on hyvä paikka harjoitella Linuxin komentorivin käyttöä. Imageen on asennettu `tree`, `nano` ja `vim`, jotka auttavat tiedostojen tutkimisessa.
 
-
 ### 1. Yhdistä Marimo Notebookista
 
 Tiedosto `notebooks/srk02_delta.py` on luotu jo valmiiksi sinulle (käynnistyskomennon `marimo edit /opt/spark/work-dir/notebooks/srk02_delta.py` toimesta), mutta sisältö luonnollisesti uupuu.
@@ -183,7 +182,7 @@ Tiedosto `notebooks/srk02_delta.py` on luotu jo valmiiksi sinulle (käynnistysko
 2. Tab-täydennä ja aja solu, jossa lukee `import marimo as mo`
 3. Lisää `setup cell`, jonka sisälle koodi:
 
-```python title="srk02_delta.py"
+``` python title="srk02_delta.py"
 import pyspark.sql.functions as F
 
 from pyspark.sql import SparkSession
@@ -215,18 +214,18 @@ sc.setLogLevel("ERROR")
 
     On tyypillistä, että Spark -solujen ajaminen tulostaa kohtalaisen määrän Java-krääsää solun ulostuloon. Tavallisesta `WARN`-tason varoituksesta ei yleensä ole tarve huolestua. Lue teksti läpi oppimismielessä, mutta älä ylimieti virheilmoituksia. Jos olet epävarma, kysy opettajalta, tekoälyltä tai toisilta opiskelijoilta apua. Jos haluat nähdä vähemmän tietoja, voit lisätä seuraavat rivit yllä olevien perään:
 
-    ```python title="srk02_delta.py"
+    ``` python title="srk02_delta.py"
     sc = spark.sparkContext
     sc.setLogLevel("ERROR")
     ```
 
-    Huomaa, että tästä on apua vasta *seuraavissa* soluissa.
+    Huomaa, että tästä on apua vasta _seuraavissa_ soluissa.
 
 ### 2. Tarkista Sparkin toimivuus
 
 Aivan kuten Delta Laken omassa [gh:delta-io/delta-docker/quickstart.ipynb](https://github.com/delta-io/delta-docker/blob/main/quickstart.ipynb)-Notebookissa, testaa, että Spark toimii odotetusti:
 
-```python title="srk02_delta.py"
+``` python title="srk02_delta.py"
 _data = spark.range(0, 5)
 
 (_data
@@ -242,19 +241,19 @@ Komento luo äärimmäisen yksinkertaisen 5-rivisen Delta-taulun hakemistoon `/t
 !!! tip
 
     Kannattaa nyt ja kaikissa tulevissakin komennoissa kurkata host-koneen `./data/lake/tablename`-hakemistoon. Uteliaalla insinöörillä olisi oletettavasti mielessään nyt ajatuksia:
-    
-    * Kuinka monta tiedostoa syntyi? Miksei vain 1? 
-    * Mitä tarkoittaa `*.snappy.*` tiedostonimessä?
-    * Miksi kutakin `*.parquet`-tiedostoa vasten on olemassa yksi `*.crc`-tiedosto?
-    * Mitä `__delta_log/000.json`-tiedosto sisältää?
+
+    - Kuinka monta tiedostoa syntyi? Miksei vain 1?
+    - Mitä tarkoittaa `*.snappy.*` tiedostonimessä?
+    - Miksi kutakin `*.parquet`-tiedostoa vasten on olemassa yksi `*.crc`-tiedosto?
+    - Mitä `__delta_log/000.json`-tiedosto sisältää?
 
 ### 3. Aja sama solu uudestaan
 
 Aja sama solu uudestaan poistettuasi kommenttimerkin `.mode("overwrite")`-metodikutsusta. Nyt sinulla tulisi herätä kysymyksiä, että:
 
-* Ylikirjoittiko Spark (tai Delta Lake) samat tiedostot? Moodihan on `overwrite`.
-* ... jos ei, niin mitä tapahtui?
-* Mitä tiedosto `__delta_log/001.json` sisältää?
+- Ylikirjoittiko Spark (tai Delta Lake) samat tiedostot? Moodihan on `overwrite`.
+- ... jos ei, niin mitä tapahtui?
+- Mitä tiedosto `__delta_log/001.json` sisältää?
 
 Voit ajaa solun niin monta kertaa kuin haluat.
 
@@ -262,7 +261,7 @@ Voit ajaa solun niin monta kertaa kuin haluat.
 
 Kuvitellaan, että hyväksyt tilanteen, jossa paluuta vanhaan ei ole. Tuorein versio on hyvä. Tähän auttaa `VACUUM`-komento, jota voi luonnollisesti käyttää joko SQL-kielellä tai Python-syntaksin läpi. Tämä onnistuu seuraavalla tavalla:
 
-```python title="srk02_delta.py"
+``` python title="srk02_delta.py"
 _dt = DeltaTable.forPath(spark, "/opt/spark/work-dir/data/lake/tablename")
 _dt.vacuum(0)
 ```
@@ -273,14 +272,14 @@ _dt.vacuum(0)
 
 Kunhan olet saanut virheilmoituksen pois:
 
-* Tutki `__delta_log/*.json`-tiedostoista kahta tuoreinta. Mitä löydät?
-* Tarkista, mitä `*.parquet`-tiedostoja hakemistossa yhä on.
+- Tutki `__delta_log/*.json`-tiedostoista kahta tuoreinta. Mitä löydät?
+- Tarkista, mitä `*.parquet`-tiedostoja hakemistossa yhä on.
 
 ### 5. 10,000 riviä
 
 Tämä vaihe on mukana auttamassa sinua ymmärtämään, miksi Parquet-tiedostona on aina useita. Tutki hakemiston sisältöä, kun ajat seuraavan solun tasan kerran. Laske `*.parquet`-tiedostot:
 
-```python title="srk02_delta.py"
+``` python title="srk02_delta.py"
 import multiprocessing
 
 print("# of CPUs of Threads available: ", multiprocessing.cpu_count())
@@ -298,8 +297,7 @@ Huomaa, että `spark.range()` luo oletuksena useita partitioita. Partitioiden m�
 
 ### 6. 10,000 riviä, kaksi tiedostoa
 
-
-```python title="srk02_delta.py"
+``` python title="srk02_delta.py"
 _data = spark.range(0, 10_000)
 (_data
     .coalesce(2)
@@ -314,14 +312,14 @@ Näiden tutustumisen jälkeen sinulle pitäisi olla riittävä ymmärrys siitä,
 
 Jos haluat tutkia nykyisiä arvoja, voit ajaa seuraavan solun:
 
-```python title="srk02_delta.py"
+``` python title="srk02_delta.py"
 print("SparkContext default parallelism: ", spark.sparkContext.defaultParallelism)
 print("Shuffle partition count: ", spark.conf.get("spark.sql.shuffle.partitions"))
 ```
 
 ### 7. Pingviinit tietovarastoon
 
-```python title="srk02_delta.py"
+``` python title="srk02_delta.py"
 from urllib.request import urlretrieve
 
 # Choose table name
@@ -370,32 +368,31 @@ else:
 
 !!! tip "Tärkeää tietoa katalogista"
 
-    Tähän asti olemme käyttäneet `save()`-metodia tarkan tiedostopolun kanssa. Tämä on tyypillistä **data lake**-työskentelyä, eli raakojen tiedostopolkujen kanssa pelaamista. 
+    Tähän asti olemme käyttäneet `save()`-metodia tarkan tiedostopolun kanssa. Tämä on tyypillistä **data lake**-työskentelyä, eli raakojen tiedostopolkujen kanssa pelaamista.
 
     Nykyisin Sparkin ja Delta Laken kyljessä on jokin katalogi, kuten:
 
-    * Hive Metastore + Derby (embedded-katalogi, kuin SQLite)
-    * Hive Metastore + PostgreSQL-katalogi (`thrift://metastore-host:9083`)
-    * AWS Glue Data Catalog
-        * `spark.sql.catalog.glue_catalog.type=glue`
-        * `spark.sql.catalog.glue_catalog.warehouse=s3a://deltalake/warehouse`
-    * Databricks Unity Catalog
+    -   Hive Metastore + Derby (embedded-katalogi, kuin SQLite)
+    -   Hive Metastore + PostgreSQL-katalogi (`thrift://metastore-host:9083`)
+    -   AWS Glue Data Catalog
+        - `spark.sql.catalog.glue_catalog.type=glue`
+        - `spark.sql.catalog.glue_catalog.warehouse=s3a://deltalake/warehouse`
+    -   Databricks Unity Catalog
 
     Katalogi pitää kirjaa tauluista ja niiden sijainneista – muun metatiedon lomassa. Näin ei tarvitse koko ajan muistaa, missä mikäkin taulu sijaitsee, vaan riittää, että tietää taulun nimen. Vakiona meidän nykyisen katalogin materilisointi tapahtuu tiedostojärjestelmään, tarkemmin sanottuna hakemistoon `/opt/spark/work-dir/spark-warehouse/metadata_db`. Tämä mahdollistaa sen, että taulujen nimet pysyvät muistissa, vaikka sammuttaisit Dockerin ja käynnistäisit sen uudestaan.
 
     Voit kurkistaa katalogin sisältöön joko lokaalin hostin hakemistossa `data/catalog/` tai Dockerissa ajettavan Linuxin avulla seuraavasti:
 
-    ```bash
+    ``` bash
     docker compose exec srk02-delta bash
     ls -la /opt/spark/work-dir/catalog
     ```
-
 
 ### 8. Tutki dataa
 
 Tämä ==ei ole tuotannossa suositeltu tapa==, koska koko datasetin pitää mahtua driver-noden muistiin komennon suorittamiseksi, mutta tämän yksinkertaisen taulun kanssa voit halutessasi plärätä koko taulun sisältöä Marimo Notebookin interaktiivisella työkalulla. Tällöin siirrän taulun datat Marimo-prosessilla muistiin komennolla:
 
-```python title="srk02_delta.py"
+``` python title="srk02_delta.py"
 # Lataa KOKO DATA driverin muistiin
 spark.sql("SELECT * FROM d_penguins").toArrow()
 ```
@@ -410,13 +407,13 @@ Tutustu alla vaadittuihin asioihin, joiden tulee näkyä videolla. Aja tarvittav
 
 Jos haluat datat aina kivasti näkyviin tekstimuodossa, aja komento formaatilla siten, että funktioketjun perässä on `.show()` tai `.show(truncate=False)`:
 
-```python title="srk02_delta.py"
+``` python title="srk02_delta.py"
 spark.sql("SELECT your_query_here").show()
 ```
 
 Alla komentoja, joita voit muokata tarpeen mukaan. Huomaa, että komennot eivät välttämättä ole siinä järjestyksessä, jossa sinun ne tulisi ajaa. Nämä ovat rakennuspalikoita, joiden avulla ratkot oman tehtäväsi.
 
-```sql
+``` sql
 -- Datamäärä
 SELECT COUNT(*) FROM d_penguins;
 
@@ -460,7 +457,6 @@ SELECT * FROM d_penguins VERSION AS OF 0;
 DROP TABLE d_penguins;
 ```
 
-
 !!! tip
 
     Jos tarvitset dokumentaatiota, niin Databricksin [SQL Language Reference](https://docs.databricks.com/aws/en/sql/language-manual) on mainio.
@@ -473,7 +469,7 @@ DROP TABLE d_penguins;
 
 Alla vielä erikseen ohjeet CDC-datan mergeä varten. Tässä on oletuksena, että jokin louhija on saanut pääteltyä, että kannassa on tehty Insert, Update ja Delete operaatioita. Tämä onnistuisi esimerkiksi BINLOG tai WAL dataa seuraamalla. Tästä aiheesta on erikseen harjoituksia, joten emme käsittele sitä sen tarkemmin. Hyväksy vain, että muutoshistoriaa on saatu noudattua lähdejärjestelmästä, ja haluamme varmistaa, että meidän dimensiotaulu pingviineistä on ajan tasalla.
 
-```sql
+``` sql
 
 -- Lisää uusi pingviini, jos ei ole jo olemassa preppaus:
 -- VAIHE 1: Luoda CDC-dataa
@@ -527,7 +523,7 @@ Tässä harjoituksessa videon tulee osoittaa vähintään seuraavat asiat:
 2. Selität lyhyesti, mitä Delta Lake on ja mikä on `__delta_log`-hakemiston
    rooli.
 3. Käynnistät Docker Compose -palvelun videolla (`docker compose up -d`).
-4. Avaat Marimo Notebookin ja näytät, kuinka yhdistät Spark Connectiin.
+4. Avaat Marimo Notebookin ja näytät, kuinka alustat Spark-istunnon.
 5. Näytät Delta-taulun luonnin ja tarkastelet `__delta_log`-hakemistoa.
 6. Lisää/päivitä/poista dataa ja näytät, kuinka delta log elää.
 7. Suorita myös MERGE-operaatio feikki CDC-datan avulla.
