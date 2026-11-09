@@ -1,11 +1,9 @@
 [project]
-variant = "modern"
 site_name = "Data-alustat"
 site_url = "https://sourander.github.io/data-alustat/"
 site_author = "Jani Sourander"
 repo_name = "sourander/data-alustat"
 repo_url = "https://github.com/sourander/data-alustat"
-language = "fi"
 
 copyright = """
 Copyright &copy; 2026 <a href="https://www.kamk.fi">Kajaanin Ammattikorkeakoulu Oy</a>.
@@ -18,6 +16,8 @@ Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">BY-N
 
 # Theme
 [project.theme]
+variant = "modern"
+language = "fi"
 features = [
   "content.code.annotate",      # Code annotation
   "content.code.copy",          # Copy code button
