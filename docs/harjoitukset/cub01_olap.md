@@ -18,7 +18,7 @@ Tulostaulussa arvo `NULL` ryhmittelysarakkeessa ilmaisee, että kyseinen rivi on
 
 Voit tutustua aiheeseen myös eri tietovarastojen dokumentaatioiden avulla. Esimerkiksi:
 
-- [DuckDB: GROUPING SETS](https://docs.databricks.com/aws/en/sql/language-manual/functions/cube), joka sisältää oikean vastauksen siemenen alla olevaan tehtävään.
+- [DuckDB: GROUPING SETS](https://duckdb.org/docs/2.0/sql/query_syntax/grouping_sets), joka sisältää oikean vastauksen siemenen alla olevaan tehtävään.
 - [RedShift: Aggregation extensions](https://docs.aws.amazon.com/redshift/latest/dg/r_GROUP_BY_aggregation-extensions.html)
 - [BigQuery: Group rows by CUBE](https://docs.cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax)
 - [Snowflake: GROUP BY CUBE](https://docs.snowflake.com/en/sql-reference/constructs/group-by-cube)
