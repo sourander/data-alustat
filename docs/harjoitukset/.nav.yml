@@ -9,5 +9,5 @@ nav:
   - orc01_airflow.md
   - orc02_dagster.md
   - kim01_kimball.md
-  # todo: - cub01_olapkuutio.md
+  - cub01_olap.md
   - big01_raideliikenne.md

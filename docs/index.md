@@ -16,7 +16,7 @@ Kustakin videosta saa `raakapistemäärän`, joka on välillä 0–5. Tämä pis
 
 ??? info "Miten kurssipisteet lasketaan? Python edition"
 
-    ```python
+    ``` python
     # Lista, johon kerätään kaikkien harjoitusten kurssipisteet
     tehtyjen_harjoitusten_pisteet = []
 
@@ -33,7 +33,7 @@ Kustakin videosta saa `raakapistemäärän`, joka on välillä 0–5. Tämä pis
 
 ??? info "Miten kurssipisteet lasketaan? Moodle edition"
 
-    Moodlen Grabook:ssa laskukaava on Course Totalin osalta:
+    Moodlen Gradebook:ssa laskukaava on Course Totalin osalta:
 
     ```
     =sum([[CSC01]] * 2, [[LAK01]] * 2, [[SRK01]] * 2, ..., [[BIG01]] * 8)
@@ -54,7 +54,7 @@ Alla listattuna kurssin harjoitukset (==HUOM! TÄMÄ ON YHÄ TODO eli WORK IN PR
 | [ORC01](harjoitukset/orc01_airflow.md)       | Airflow      | Orkestraatioharjoitus, jossa käytetään Airflow-työkalua.                                             | 15                    | B        |
 | [ORC02](harjoitukset/orc02_dagster.md)       | Dagster      | Orkestraatioharjoitus, jossa käytetään Dagster-työkalua.                                             | 10                    | B        |
 | [KIM01](harjoitukset/kim01_kimball.md)       | Kimball      | Dimensionaalisen mallintamisen harjoitus Mealie-dataa käyttäen.                                      | 10                    | B        |
-| CUB01                                        | OLAP-kuutio  | OLAP-kuutio rakentaminen Marimo Notebookissa.                                                        | 10                    | B        |
+| [CUB01](harjoitukset/cub01_olap.md)          | OLAP-kuutio  | OLAP-kuutio rakentaminen Marimo Notebookissa.                                                        | 10                    | B        |
 | [BIG01](harjoitukset/big01_raideliikenne.md) | Juna-alusta  | Digitrafficin Rautatieliikennedataa hyödyntävä End-to-End OLAP-alusta.                               | 40                    | B        |
 
 ??? question "Mitä tarkoittaa Deadline?"
